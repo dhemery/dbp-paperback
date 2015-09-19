@@ -1,0 +1,18 @@
+\gdef\psthis{}
+\gdef\psnext{}
+
+\def\thispagestyle#1{
+  \gdef\psthis{#1}
+  \headline{
+    {\pageheaderfont\ Head Line:\hfil\psthis}
+  }
+  \footline{
+    {\pagefooterfont Foot Line:\hfil\psthis}
+    \thispagestyle{\psnext}
+  }
+  \bodyfont
+}
+\def\pagestyle#1{
+  \gdef\psnext{#1}
+  \thispagestyle{#1}
+}

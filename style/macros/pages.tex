@@ -1,0 +1,41 @@
+\def\clearpage{\eject}
+\def\cleartorecto{\clearpage\clearpage}
+
+\def\titlepage{\maketitlepage{\title}{\author}{\publisher}}
+\def\halftitlepage{\maketitlepage{\title}{}{}}
+% An info page is a frontmatter or backmatter page
+% other than a title or halftitle page.
+\def\infopage#1{
+  \cleartorecto
+  \infopageany{#1}
+}
+
+\def\infopageany#1{
+  \clearpage
+  \infopagetitle{#1}
+  \bigskip
+}
+
+\def\maketitlepage#1#2#3{% title, author, publisher
+  \cleartorecto
+  {
+    \parindent=0pt
+    \bigskip
+    \titlepagetitle{#1}
+    \bigskip
+    \titlepageauthor{#2}
+    \vfill
+    \titlepagepublisher{#3}
+  }
+  \clearpage
+}
+
+\def\titlepagetitle#1{{\titlepagetitlestyle#1\par}}
+\def\titlepagetitlestyle{\titlepagetitlefont}
+\def\titlepageauthor#1{{\titlepageauthorstyle#1\par}}
+\def\titlepageauthorstyle{\titlepageauthorfont}
+\def\titlepagepublisher#1{{\titlepagepublisherstyle#1\par}}
+\def\titlepagepublisherstyle{\titlepagepublisherfont}
+
+\def\infopagetitle#1{{\noindent\infopagetitlestyle#1\par}}
+\def\infopagetitlestyle{\infopagetitlefont}

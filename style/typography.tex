@@ -1,9 +1,43 @@
 \emergencystretch=1.5em
 
-\font\scshape=cmcsc10
+\def\displayfontname{Myriad Pro}
+\def\bodyfontname{Big Caslon}
+\def\bodyfontsize{12}
+\def\leading{16pt}
+\baselineskip=\leading
+
+\def\pageheaderfontname{\displayfontname}
+\def\pageheaderfontsize{8}
+\font\pageheaderfont="\pageheaderfontname/S=\pageheaderfontsize" at \pageheaderfontsize pt
+\def\pagefooterfont{\pageheaderfont}
+
+\def\titlepagetitlefontname{\displayfontname}
+\def\titlepagetitlefontsize{36}
+\font\titlepagetitlefont="\titlepagetitlefontname/S=\titlepagetitlefontsize" at \titlepagetitlefontsize pt
+
+\def\titlepageauthorfontname{\displayfontname}
+\def\titlepageauthorfontsize{24}
+\font\titlepageauthorfont="\titlepageauthorfontname/S=\titlepageauthorfontsize" at \titlepageauthorfontsize pt
+
+\def\titlepagepublisherfontname{\displayfontname}
+\def\titlepagepublisherfontsize{18}
+\font\titlepagepublisherfont="\titlepagepublisherfontname/S=\titlepagepublisherfontsize" at \titlepagepublisherfontsize pt
+
+\def\infopagetitlefontname{\displayfontname}
+\def\infopagetitlefontsize{18}
+\font\infopagetitlefont="\infopagetitlefontname/S=\infopagetitlefontsize" at \infopagetitlefontsize pt
+
+\def\sectiontitlefontname{\displayfontname}
+\def\sectiontitlefontsize{18}
+\font\sectiontitlefont="\displayfontname/S=\sectiontitlefontsize" at \sectiontitlefontsize pt
+
+\font\bodyfont="\bodyfontname/S=\bodyfontsize" at \bodyfontsize pt
+\font\leadinfont="\bodyfontname/S=\bodyfontsize" at \bodyfontsize pt
+
+\def\leadin#1{{\leadinstyle#1}}
+\def\leadinstyle{\noindent\leadinfont}
 
 % TODO: Make this handle nested emphasis.
 \def\emph#1{{\it #1}}
 
-\def\leadin#1{{\leadinstyle#1}}
-\def\leadinstyle{\noindent\scshape}
+\raggedbottom
