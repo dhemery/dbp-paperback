@@ -4,3 +4,17 @@
 %\setlrmarginsandblock{5pc}{3pc}{*}
 %\setulmarginsandblock{4.5pc}{*}{1}
 %\checkandfixthelayout
+
+\newdimen\pagewidth \pagewidth=30pc
+\newdimen\pageheight \pageheight=48pc
+\newdimen\margintop \margintop=4.5pc
+\newdimen\marginbot \marginbot=\margintop
+\newdimen\margininner \margininner=5pc
+\newdimen\marginouter \marginouter=3pc
+
+\hsize=\pagewidth
+\advance\hsize by -\margininner
+\advance\hsize by -\margininner
+\voffset=\margintop
+\hoffset=\margininner
+\vsize=\pagewidth
