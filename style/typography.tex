@@ -1,43 +1,38 @@
-\emergencystretch=1.5em
-
 \def\displayfontname{Optima}
-\def\bodyfontname{Palatino}
-\def\bodyfontsize{12}
-\def\leading{16pt}
-\baselineskip=\leading
+\def\bodyfontname{Georgia}
+\newdimen\bodyfontsize \bodyfontsize=12pt
+\newdimen\leading \leading=16pt
+\normalbaselineskip=\leading
 
-\def\pageheaderfontname{\displayfontname}
-\def\pageheaderfontsize{8}
-\font\pageheaderfont="\pageheaderfontname/S=\pageheaderfontsize" at \pageheaderfontsize pt
+% \makefont{name}{system font name}{dimen}{options}
+\def\makefont#1#2#3#4{\font#1="#2#4" at #3}
+
+% \makebodyfont{name}{options}
+\def\makebodyfont#1#2{\makefont{#1}{\bodyfontname}{\bodyfontsize}{#2}}
+
+% \makedisplayfont{name}{dimen}{options}
+\def\makedisplayfont#1#2#3{\makefont{#1}{\displayfontname}{#2}{#3}}
+
+\makedisplayfont{\pageheaderfont}{8pt}{/BI}
 \def\pagefooterfont{\pageheaderfont}
 
-\def\titlepagetitlefontname{\displayfontname}
-\def\titlepagetitlefontsize{36}
-\font\titlepagetitlefont="\titlepagetitlefontname/S=\titlepagetitlefontsize" at \titlepagetitlefontsize pt
+\makedisplayfont{\titlepagetitlefont}{36pt}{/BI}
+\makedisplayfont{\titlepageauthorfont}{24pt}{/B}
+\makedisplayfont{\titlepagepublisherfont}{18pt}{/I}
 
-\def\titlepageauthorfontname{\displayfontname}
-\def\titlepageauthorfontsize{24}
-\font\titlepageauthorfont="\titlepageauthorfontname/S=\titlepageauthorfontsize" at \titlepageauthorfontsize pt
+\makedisplayfont{\infopagetitlefont}{18pt}{/BI}
+\makedisplayfont{\sectiontitlefont}{18pt}{/B}
 
-\def\titlepagepublisherfontname{\displayfontname}
-\def\titlepagepublisherfontsize{18}
-\font\titlepagepublisherfont="\titlepagepublisherfontname/S=\titlepagepublisherfontsize" at \titlepagepublisherfontsize pt
-
-\def\infopagetitlefontname{\displayfontname}
-\def\infopagetitlefontsize{18}
-\font\infopagetitlefont="\infopagetitlefontname/S=\infopagetitlefontsize" at \infopagetitlefontsize pt
-
-\def\sectiontitlefontname{\displayfontname}
-\def\sectiontitlefontsize{18}
-\font\sectiontitlefont="\displayfontname/S=\sectiontitlefontsize" at \sectiontitlefontsize pt
-
-\font\bodyfont="\bodyfontname/S=\bodyfontsize" at \bodyfontsize pt
-\font\leadinfont="\bodyfontname/S=\bodyfontsize" at \bodyfontsize pt
+\makebodyfont{\bodyrm}{}
+\makebodyfont{\bodyit}{/I}
 
 \def\leadin#1{{\leadinstyle#1}}
-\def\leadinstyle{\noindent\leadinfont}
+\def\leadinstyle{\noindent\bodyit}
 
 % TODO: Make this handle nested emphasis.
-\def\emph#1{{\it #1}}
+\def\emph#1{{\bodyit #1}}
 
+\normalbaselines
 \raggedbottom
+\bodyrm
+\emergencystretch=1.5em

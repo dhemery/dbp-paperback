@@ -1,8 +1,14 @@
 \def\clearpage{\eject}
+
+% TODO Make this work
 \def\cleartorecto{\clearpage\clearpage}
 
+% \titlepage{title}{author}{publisher}
 \def\titlepage{\maketitlepage{\title}{\author}{\publisher}}
+
+% \halftitlepage{title}
 \def\halftitlepage{\maketitlepage{\title}{}{}}
+
 % An info page is a frontmatter or backmatter page
 % other than a title or halftitle page.
 \def\infopage#1{
@@ -30,12 +36,12 @@
   \clearpage
 }
 
-\def\titlepagetitle#1{{\titlepagetitlestyle#1\par}}
+\def\titlepagetitle#1{{\titlepagetitlestyle\rightline{#1}}}
 \def\titlepagetitlestyle{\titlepagetitlefont}
-\def\titlepageauthor#1{{\titlepageauthorstyle#1\par}}
+\def\titlepageauthor#1{{\titlepageauthorstyle\rightline{#1}}}
 \def\titlepageauthorstyle{\titlepageauthorfont}
-\def\titlepagepublisher#1{{\titlepagepublisherstyle#1\par}}
+\def\titlepagepublisher#1{{\titlepagepublisherstyle\rightline{#1}}}
 \def\titlepagepublisherstyle{\titlepagepublisherfont}
 
-\def\infopagetitle#1{{\noindent\infopagetitlestyle#1\par}}
+\def\infopagetitle#1{{\noindent\infopagetitlestyle\leftline{#1}}}
 \def\infopagetitlestyle{\infopagetitlefont}
