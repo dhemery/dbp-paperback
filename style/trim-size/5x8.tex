@@ -1,20 +1,24 @@
-\special{papersize=5in,8in}
 \newdimen\paperwidth \paperwidth=5in
 \newdimen\paperheight \paperheight=8in
-
-\newdimen\pagewidth \pagewidth=\paperwidth
-\newdimen\pageheight \pageheight=\paperheight
 
 \newdimen\innermargin \innermargin=5pc
 \newdimen\outermargin \outermargin=3pc
 \newdimen\topmargin \topmargin=4.5pc
 \newdimen\bottommargin \bottommargin=\topmargin
 
+\def\setpapersize#1#2{
+  \special{papersize=#1,#2}
+}
+
+\newdimen\pagewidth \pagewidth=\paperwidth
+\newdimen\pageheight \pageheight=\paperheight
+
 \advance\pagewidth-\innermargin
 \advance\pagewidth-\outermargin
 \advance\pageheight-\topmargin
 \advance\pageheight-\bottommargin
 
+\setpapersize{\the\paperwidth}{\the\paperheight}
 \hsize=\pagewidth
 \vsize=\pageheight
 \voffset=0pt
