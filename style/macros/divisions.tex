@@ -1,15 +1,14 @@
 \def\frontmatter{
   \cleartorecto
   \pagestyle{empty}
+  \pageno=-1
 }
 \def\mainmatter{
   \cleartorecto
   \pagestyle{normal}
+  \pageno=1
 }
-\def\backmatter{
-  \cleartorecto
-  \pagestyle{empty}
-}
+\def\backmatter{\frontmatter}
 
 \def\section#1{
   \clearforscene
@@ -18,5 +17,5 @@
 }
 \def\clearforscene{\cleartorecto}
 
-\def\sectiontitle#1{{\sectiontitlestyle\rightline{#1}\par}}
+\def\sectiontitle#1{{\sectiontitlestyle#1\par}}
 \def\sectiontitlestyle{\noindent\sectiontitlefont}

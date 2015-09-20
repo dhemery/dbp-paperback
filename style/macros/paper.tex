@@ -33,8 +33,8 @@
 
 % Output routine to adjust inner margin depending on page number.
 \def\facingpages{%
-  \dimen0=\ifodd\pageno\rectoleftadjustment\else\versoleftadjustment\fi
-  \shipout\vbox{\moveright\dimen0\vbox{\vskip\topadjustment \makeheadline\pagebody\makefootline}}
+  \dimen0=\ifodd\pageno\rectoleftadjustment\else\versoleftadjustment\fi%
+  \shipout\vbox{\moveright\dimen0\vbox{\vskip\topadjustment\makeheadline\pagebody\makefootline}}%
   \advancepageno%
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
