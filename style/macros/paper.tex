@@ -1,0 +1,40 @@
+\newdimen\pdforigintopadjustment \pdforigintopadjustment=0pt
+\newdimen\pdforiginleftadjustment \pdforiginleftadjustment=0pt
+\newdimen\topadjustment \topadjustment=0pt
+\newdimen\versoleftadjustment \versoleftadjustment=0pt
+\newdimen\rectoleftadjustment \rectoleftadjustment=0pt
+
+% \setpdforigin{left adjustment}{top adjustment}
+% By default (per a configuration file) the PDF renderer
+% might start each page at somewhere other than the top
+% left corner of the paper. To compensate for that, call
+% this macro to adjust where we place the page.
+\def\adjustpdforigin#1#2{\pdforiginleftadjustment=#1\pdforigintopadjustment=#2}
+
+% \setpapersize{width}{height}
+\def\setpapersize#1#2{\pdfpagewidth=#1\pdfpageheight=#2\setmargins{0pt}{0pt}{0pt}{0pt}}
+
+% \setmargins{top}{bottom}{inner}{outer}
+% Sets the margins of the page's main content. The running
+% header will be placed above the main content, within the
+% top margin. The running footer will be placed below the
+% main content, within the bottom margin.
+\def\setmargins#1#2#3#4{%
+  \vsize=\pdfpageheight
+  \hsize=\pdfpagewidth
+  \advance\vsize by -#1
+  \advance\vsize by -#2
+  \advance\hsize by -#3
+  \advance\hsize by -#4
+  \topadjustment=#1\advance\topadjustment\pdforigintopadjustment
+  \versoleftadjustment=#4\advance\versoleftadjustment\pdforiginleftadjustment
+  \rectoleftadjustment=#3\advance\rectoleftadjustment\pdforiginleftadjustment
+}
+
+% Output routine to adjust inner margin depending on page number.
+\def\facingpages{%
+  \dimen0=\ifodd\pageno\rectoleftadjustment\else\versoleftadjustment\fi
+  \shipout\vbox{\moveright\dimen0\vbox{\vskip\topadjustment \makeheadline\pagebody\makefootline}}
+  \advancepageno%
+  \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
+}

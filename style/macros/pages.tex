@@ -1,7 +1,7 @@
 \def\clearpage{\eject}
 
 % TODO Make this work
-\def\cleartorecto{\clearpage\clearpage}
+\def\cleartorecto{\clearpage\ifodd\pageno \else\null\clearpage\fi}
 
 % \titlepage{title}{author}{publisher}
 \def\titlepage{\maketitlepage{\title}{\author}{\publisher}}
