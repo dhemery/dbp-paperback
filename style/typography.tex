@@ -1,7 +1,7 @@
 \def\displayfontname{Optima}
 \def\bodyfontname{Georgia}
 \newdimen\bodyfontsize \bodyfontsize=12pt
-\newdimen\leading \leading=16pt
+\newdimen\leading \leading=15pt
 \normalbaselineskip=\leading
 
 % \makefont{name}{system font name}{dimen}{options}
@@ -25,6 +25,7 @@
 
 \makebodyfont{\bodyrm}{}
 \makebodyfont{\bodyit}{/I}
+\makefont{\colophonfont}{\bodyfontname}{9pt}{}
 
 \def\leadin#1{{\leadinstyle#1}}
 \def\leadinstyle{\noindent\bodyit}

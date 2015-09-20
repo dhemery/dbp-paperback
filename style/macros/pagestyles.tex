@@ -3,10 +3,9 @@
 
 \def\thispagestyle#1{
   \gdef\psthis{#1}
-  \headline{
-    {\pageheaderfont\ Head Line:\hfil\psthis}
-  }
-  \footline{
+  \headline{%
+    {\pageheaderfont Head Line:\hfil\psthis}}
+  \footline{%
     {\pagefooterfont Foot Line:\hfil\psthis}
     \thispagestyle{\psnext}
   }
