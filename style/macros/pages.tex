@@ -9,21 +9,25 @@
 
 % An info page is a frontmatter or backmatter page
 % other than a title or halftitle page.
-\def\infopage#1{\cleartorecto\infopageany{#1}}
-\def\infopageany#1{\clearpage\infopagetitle{#1}}
+\def\infopagerecto#1{\cleartorecto\infopage{#1}}
+\def\infopage#1{\clearpage\infopagetitle{#1}\par}
 
 \def\maketitlepage#1#2#3{% title, author, publisher
   \cleartorecto
-  \titlepagetitle{#1}\titlepageauthor{#2}\titlepagepublisher{#3}
+  \titlepagetitle{#1}
+
+  \titlepageauthor{#2}
+
+  \titlepagepublisher{#3}
   \clearpage
 }
 
-\def\titlepagetitle#1{{\titlepagetitlestyle #1}\par}
-\def\titlepagetitlestyle{\noindent\titlepagetitlefont}
-\def\titlepageauthor#1{{\titlepageauthorstyle #1}\par}
-\def\titlepageauthorstyle{\noindent\titlepageauthorfont}
-\def\titlepagepublisher#1{{\titlepagepublisherstyle #1}\par}
-\def\titlepagepublisherstyle{\noindent\titlepagepublisherfont}
+\def\titlepagetitle#1{{\titlepagetitlestyle #1}}
+\def\titlepagetitlestyle{\titlepagetitlefont\noindent}
+\def\titlepageauthor#1{{\titlepageauthorstyle #1}}
+\def\titlepageauthorstyle{\titlepageauthorfont\noindent}
+\def\titlepagepublisher#1{{\titlepagepublisherstyle #1}}
+\def\titlepagepublisherstyle{\titlepagepublisherfont\noindent}
 
-\def\infopagetitle#1{{\infopagetitlestyle #1}\par}
-\def\infopagetitlestyle{\noindent\infopagetitlefont}
+\def\infopagetitle#1{{\infopagetitlestyle #1}}
+\def\infopagetitlestyle{\infopagetitlefont\noindent}
