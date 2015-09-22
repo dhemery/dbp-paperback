@@ -1,18 +1,3 @@
-\def\displayfontname{Optima}
-\def\bodyfontname{Georgia}
-\newdimen\bodyfontsize \bodyfontsize=12pt
-\newdimen\leading \leading=15pt
-\normalbaselineskip=\leading
-
-% \makefont{name}{system font name}{dimen}{options}
-\def\makefont#1#2#3#4{\font#1="#2#4" at #3}
-
-% \makebodyfont{name}{options}
-\def\makebodyfont#1#2{\makefont{#1}{\bodyfontname}{\bodyfontsize}{#2}}
-
-% \makedisplayfont{name}{dimen}{options}
-\def\makedisplayfont#1#2#3{\makefont{#1}{\displayfontname}{#2}{#3}}
-
 \makedisplayfont{\pageheaderfont}{8pt}{/BI}
 \def\pagefooterfont{\pageheaderfont}
 
@@ -27,11 +12,9 @@
 \makebodyfont{\bodyit}{/I}
 \makefont{\colophonfont}{\bodyfontname}{9pt}{}
 
-\def\leadin#1{{\leadinstyle#1}}
-\def\leadinstyle{\noindent\bodyit}
-
-% TODO: Make this handle nested emphasis.
-\def\emph#1{{\bodyit #1}}
+\leading=15pt
+\bodyfontsize=12pt
+\normalbaselineskip=\leading
 
 \normalbaselines
 \raggedbottom

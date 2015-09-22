@@ -1,0 +1,171 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Output
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newdimen\pdforigintopadjustment
+\newdimen\pdforiginleftadjustment
+\newdimen\topadjustment
+\newdimen\versoleftadjustment
+\newdimen\rectoleftadjustment
+
+% Default values
+\pdforigintopadjustment=0pt
+\pdforiginleftadjustment=0pt
+\topadjustment=0pt
+\versoleftadjustment=0pt
+\rectoleftadjustment=0pt
+
+% \setpdforigin{left adjustment}{top adjustment}
+% By default (per a configuration file) the PDF renderer
+% might start each page at somewhere other than the top
+% left corner of the paper. To compensate for that, call
+% this macro to adjust where we place the page.
+\def\adjustpdforigin#1#2{\pdforiginleftadjustment=#1\pdforigintopadjustment=#2}
+
+% \setpapersize{width}{height}
+\def\setpapersize#1#2{\pdfpagewidth=#1\pdfpageheight=#2\setmargins{0pt}{0pt}{0pt}{0pt}}
+
+% \setmargins{top}{bottom}{inner}{outer}
+% Sets the margins of the page's main content. The running
+% header will be placed above the main content, within the
+% top margin. The running footer will be placed below the
+% main content, within the bottom margin.
+\def\setmargins#1#2#3#4{%
+  \vsize=\pdfpageheight
+  \hsize=\pdfpagewidth
+  \advance\vsize by -#1
+  \advance\vsize by -#2
+  \advance\hsize by -#3
+  \advance\hsize by -#4
+  \topadjustment=#1\advance\topadjustment\pdforigintopadjustment
+  \versoleftadjustment=#4\advance\versoleftadjustment\pdforiginleftadjustment
+  \rectoleftadjustment=#3\advance\rectoleftadjustment\pdforiginleftadjustment
+}
+
+% Output routine to adjust inner margin depending on page number.
+\def\facingpages{%
+  \beforeoutput%
+  \dimen0=\ifodd\pageno\rectoleftadjustment\else\versoleftadjustment\fi%
+  \shipout\vbox{\moveright\dimen0\vbox{\vskip\topadjustment\makeheadline\pagebody\makefootline}}%
+  \advancepageno%
+  \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Pages
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\clearpage{\eject}
+\def\cleartorecto{\eject\ifodd\pageno \else\line{}\vfil\eject\fi}
+
+% \titlepage{title}{author}{publisher}
+\def\titlepage{\maketitlepage{\title}{\author}{\publisher}}
+
+% \halftitlepage{title}
+\def\halftitlepage{\maketitlepage{\title}{}{}}
+
+% An info page is a frontmatter or backmatter page
+% other than a title or halftitle page.
+\def\infopagerecto#1{\cleartorecto\infopage{#1}}
+\def\infopage#1{\clearpage\infopagetitle{#1}\par}
+
+\def\maketitlepage#1#2#3{% title, author, publisher
+  \cleartorecto
+  \titlepagetitle{#1}
+
+  \titlepageauthor{#2}
+
+  \titlepagepublisher{#3}
+  \clearpage
+}
+
+\def\titlepagetitle#1{{\titlepagetitlestyle #1}}
+\def\titlepagetitlestyle{\titlepagetitlefont\noindent}
+\def\titlepageauthor#1{{\titlepageauthorstyle #1}}
+\def\titlepageauthorstyle{\titlepageauthorfont\noindent}
+\def\titlepagepublisher#1{{\titlepagepublisherstyle #1}}
+\def\titlepagepublisherstyle{\titlepagepublisherfont\noindent}
+
+\def\infopagetitle#1{{\infopagetitlestyle #1}}
+\def\infopagetitlestyle{\infopagetitlefont\noindent}
+
+\def\emptyheadfoot{\global\headline={}\global\footline={}}
+
+\def\openerheadfoot{
+  \global\headline={}
+  \global\footline={{\pageheaderfont\hss\folio\hss}}
+  \gdef\beforeoutput{\normalheadfoot}
+}
+
+\def\normalheadfoot{
+  \global\headline={{\pageheaderfont\normalheadline}}
+  \global\footline={}
+}
+
+\def\normalheadline{\ifodd\pageno\author\hss\folio\else\folio\hss\title\fi}
+
+\def\beforeoutput{\emptyheadfoot}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Divisions
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\frontmatter{\cleartorecto\pageno=-1\gdef\beforeoutput{\emptyheadfoot}}
+\def\mainmatter{\cleartorecto\pageno=1\gdef\beforeoutput{\normalheadfoot}}
+\def\backmatter{\frontmatter}
+
+\def\section#1{\clearforscene\sectiontitle{#1}}
+\def\clearforscene{\cleartorecto\gdef\beforeoutput{\openerheadfoot}}
+
+\def\sectiontitle#1{{\sectiontitlestyle#1\par}}
+\def\sectiontitlestyle{\noindent\sectiontitlefont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Fonts
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newdimen\bodyfontsize
+\newdimen\leading
+
+% \makefont{name}{system font name}{dimen}{options}
+\def\makefont#1#2#3#4{\font#1="#2#4" at #3}
+
+% \makebodyfont{name}{options}
+\def\makebodyfont#1#2{\makefont{#1}{\bodyfontname}{\bodyfontsize}{#2}}
+
+% \makedisplayfont{name}{dimen}{options}
+\def\makedisplayfont#1#2#3{\makefont{#1}{\displayfontname}{#2}{#3}}
+
+% Defaults
+\def\displayfontname{Optima}
+\def\bodyfontname{Georgia}
+\bodyfontsize=12pt
+\leading=15pt
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Text Effects
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\leadin#1{{\leadinstyle#1}}
+\def\leadinstyle{\noindent\bodyit}
+
+% TODO: Make this handle nested emphasis.
+\def\emph#1{{\bodyit #1}}
