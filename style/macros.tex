@@ -52,7 +52,7 @@
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
 
-
+\def\makeheadline{\global\headline={\title}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -84,11 +84,12 @@
   \clearpage
 }
 
-\def\titlepagetitle#1{{\titlepagetitlestyle #1}}
-\def\titlepagetitlestyle{\titlepagetitlefont\noindent}
-\def\titlepageauthor#1{{\titlepageauthorstyle #1}}
+\def\raggedleft#1{{\leftskip=0pt plus \hsize minus \parindent \parfillskip=0pt #1\par}}
+\def\titlepagetitle#1{{\titlepagetitlestyle \raggedleft{#1}}}
+\def\titlepagetitlestyle{\titlepagetitlefont}
+\def\titlepageauthor#1{{\titlepageauthorstyle \raggedleft{#1}}}
 \def\titlepageauthorstyle{\titlepageauthorfont\noindent}
-\def\titlepagepublisher#1{{\titlepagepublisherstyle #1}}
+\def\titlepagepublisher#1{{\titlepagepublisherstyle \raggedleft{#1}}}
 \def\titlepagepublisherstyle{\titlepagepublisherfont\noindent}
 
 \def\infopagetitle#1{{\infopagetitlestyle #1}}
@@ -127,7 +128,7 @@
 \def\scene#1{\clearforscene\scenetitle{#1}}
 \def\clearforscene{\cleartorecto\gdef\beforeoutput{\openerheadfoot}}
 
-\def\scenetitle#1{{\scenetitlestyle#1\par}}
+\def\scenetitle#1{{\scenetitlestyle\raggedleft{#1}}}
 \def\scenetitlestyle{\noindent\scenetitlefont}
 
 \def\chapter#1{\scene{#1}}
@@ -162,7 +163,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\leadin#1{{\leadinstyle#1}}
-\def\leadinstyle{\noindent\bodyit}
+\def\leadinstyle{\noindent\bodysc}
 
 % TODO: Make this handle nested emphasis.
 \def\emph#1{{\bodyit #1}}
