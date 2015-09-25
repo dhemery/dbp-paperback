@@ -1,24 +1,26 @@
+% Select the fonts and sizes
+
+\def\displayfontfamily{Optima}
+\def\bodyfontfamily{Georgia}
+\bodyfontsize=12pt
+
+% Make the fonts
 \makedisplayfont{\pageheaderfont}{8pt}{/BI}
 \def\pagefooterfont{\pageheaderfont}
-
 \makedisplayfont{\titlepagetitlefont}{36pt}{/BI}
 \makedisplayfont{\titlepageauthorfont}{24pt}{/B}
 \makedisplayfont{\titlepagepublisherfont}{18pt}{/I}
-
 \makedisplayfont{\infopagetitlefont}{18pt}{/BI}
-\makedisplayfont{\sectiontitlefont}{18pt}{/B}
-
+\makedisplayfont{\scenetitlefont}{18pt}{/B}
 \makebodyfont{\bodyrm}{}
 \makebodyfont{\bodyit}{/I}
-\makefont{\colophonfont}{\bodyfontname}{9pt}{}
+\makefont{\colophonfont}{\bodyfontfamily}{9pt}{}
 
 \leading=15pt
-\bodyfontsize=12pt
-\normalbaselineskip=\leading
 
+\normalbaselineskip=\leading
 \normalbaselines
 \raggedbottom
 \bodyrm
 \emergencystretch=1.5em
 \parindent=1.5em
-\tolerance=1000

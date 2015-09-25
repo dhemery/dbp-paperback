@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Output
+% Paper and margins
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -46,7 +46,6 @@
 
 % Output routine to adjust inner margin depending on page number.
 \def\facingpages{%
-  \beforeoutput%
   \dimen0=\ifodd\pageno\rectoleftadjustment\else\versoleftadjustment\fi%
   \shipout\vbox{\moveright\dimen0\vbox{\vskip\topadjustment\makeheadline\pagebody\makefootline}}%
   \advancepageno%
@@ -125,11 +124,15 @@
 \def\mainmatter{\cleartorecto\pageno=1\gdef\beforeoutput{\normalheadfoot}}
 \def\backmatter{\frontmatter}
 
-\def\section#1{\clearforscene\sectiontitle{#1}}
+\def\scene#1{\clearforscene\scenetitle{#1}}
 \def\clearforscene{\cleartorecto\gdef\beforeoutput{\openerheadfoot}}
 
-\def\sectiontitle#1{{\sectiontitlestyle#1\par}}
-\def\sectiontitlestyle{\noindent\sectiontitlefont}
+\def\scenetitle#1{{\scenetitlestyle#1\par}}
+\def\scenetitlestyle{\noindent\scenetitlefont}
+
+\def\chapter#1{\scene{#1}}
+\def\label#1{}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -144,16 +147,10 @@
 \def\makefont#1#2#3#4{\font#1="#2#4" at #3}
 
 % \makebodyfont{name}{options}
-\def\makebodyfont#1#2{\makefont{#1}{\bodyfontname}{\bodyfontsize}{#2}}
+\def\makebodyfont#1#2{\makefont{#1}{\bodyfontfamily}{\bodyfontsize}{#2}}
 
 % \makedisplayfont{name}{dimen}{options}
-\def\makedisplayfont#1#2#3{\makefont{#1}{\displayfontname}{#2}{#3}}
-
-% Defaults
-\def\displayfontname{Optima}
-\def\bodyfontname{Georgia}
-\bodyfontsize=12pt
-\leading=15pt
+\def\makedisplayfont#1#2#3{\makefont{#1}{\displayfontfamily}{#2}{#3}}
 
 
 
