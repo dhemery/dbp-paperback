@@ -54,6 +54,8 @@
 
 \def\ensureevenpagecount{\ifodd\pageno\onrectopage\else\fi}
 
+\output{\facingpages}
+
 
 
 
@@ -64,12 +66,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\onrectopage{\eject\ifodd\pageno \else\line{}\vfil\eject\fi}
-
-% \titlepage{title}{author}{publisher}
-\def\titlepage{\maketitlepage{\title}{\author}{\publisher}}
-
-% \halftitlepage{title}
-\def\halftitlepage{\maketitlepage{\title}{}{}}
 
 \def\maketitlepage#1#2#3{% title, author, publisher
   \onrectopage
