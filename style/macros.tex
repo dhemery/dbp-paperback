@@ -117,6 +117,7 @@
     \line{}\vskip5\baselineskip
     {\raggedleft\chaptertitlefont#1\par}
   }
+  \nobreak
 }
 
 \def\scene#1{
@@ -129,6 +130,7 @@
     {\raggedleft\scenetitlefont#1\par}
     \vskip\baselineskip
   }
+  \nobreak
 }
 
 % Ignore labels added by pandoc and Scrivener
@@ -162,7 +164,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\leadin#1{{\nobreak\noindent\bodysc#1}}
+\def\leadin#1{\noindent{\bodysc#1}}
 
 % TODO: Make this handle nested emphasis.
 \def\emph#1{{\bodyit #1}}
