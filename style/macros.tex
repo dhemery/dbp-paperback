@@ -44,7 +44,7 @@
   \rectoleftadjustment=#3\advance\rectoleftadjustment\pdforiginleftadjustment
 }
 
-% Output routine to adjust inner margin depending on page number.
+% Output routine that adjusts left margin for verso and recto pages.
 \def\facingpages{%
   \dimen0=\ifodd\pageno\rectoleftadjustment\else\versoleftadjustment\fi%
   \shipout\vbox{\moveright\dimen0\vbox{\vskip\topadjustment\makeheadline\pagebody\makefootline}}%
@@ -52,9 +52,36 @@
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
 
+\output{\facingpages}
+
 \def\ensureevenpagecount{\ifodd\pageno\onrectopage\else\fi}
 
-\output{\facingpages}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Page Frame (Header and Footer)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Empty headline and footline
+\def\useemptypageframe{
+  \global\def\makeheadline{\headlinefont\line{}}
+  \global\def\makefootline{\footlinefont\line{}}
+}
+
+% Empty headline on this page, then normal page frame
+\def\usedisplaypageframe{
+  \global\def\makeheadline{\headlinefont\line{}\usenormalpageframe}
+}
+
+% Headline: Centered author (verso) and title (recto)
+% Footline: Centered page number
+\def\usenormalpageframe{
+  \global\def\makeheadline{\line{\headlinefont\hfil\ifodd\pageno\title\else\author\fi\hfil}}
+  \global\def\makefootline{\line{\footlinefont\hfil\folio\hfil}}
+}
 
 
 
@@ -89,27 +116,6 @@
 \def\infopage#1{\eject{\infopagetitlefont\centered\noindent#1\par}}
 \def\infoheading#1{\bigskip{\infoheadingfont\centered\noindent#1\par}}
 \def\infoitem#1{\smallskip{\centered\noindent #1\par}}
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% Page Frame (Header and Footer)
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\def\useemptypageframe{
-  \global\def\makeheadline{\headlinefont\line{}}
-  \global\def\makefootline{\footlinefont\line{}}
-}
-\def\usedisplaypageframe{
-  \global\def\makeheadline{\headlinefont\line{}\usenormalpageframe}
-}
-\def\usenormalpageframe{
-  \global\def\makeheadline{\line{\headlinefont\hfil\ifodd\pageno\title\else\author\fi\hfil}}
-  \global\def\makefootline{\line{\footlinefont\hfil\folio\hfil}}
-}
 
 
 
