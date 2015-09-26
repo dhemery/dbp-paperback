@@ -1,13 +1,11 @@
+\input publication/metadata
 \input style/macros
-\input style/typography
+\input style/fiction
 
 \setpapersize{5 true in}{8 true in}
 \adjustpdforigin{-1 true in}{-1 true in}
 \setmargins{4.5pc}{4.5pc}{5pc}{3pc}
 \output{\facingpages}
-
-\input publisher/metadata
-\input publication/metadata
 
 \frontmatter
 \input publication/teaser
@@ -24,6 +22,6 @@
 \input author/connect
 \input author/books
 
-\ifodd\pageno\cleartorecto\else\fi
+\ensureevenpagecount
 
 \bye

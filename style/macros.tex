@@ -52,7 +52,9 @@
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
 
-\def\makeheadline{\global\headline={\title}}
+\def\ensureevenpagecount{\ifodd\pageno\cleartorecto\else\fi}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -60,6 +62,7 @@
 % Pages
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \def\clearpage{\eject}
 \def\cleartorecto{\eject\ifodd\pageno \else\line{}\vfil\eject\fi}
 
@@ -68,11 +71,6 @@
 
 % \halftitlepage{title}
 \def\halftitlepage{\maketitlepage{\title}{}{}}
-
-% An info page is a frontmatter or backmatter page
-% other than a title or halftitle page.
-\def\infopagerecto#1{\cleartorecto\infopage{#1}}
-\def\infopage#1{\clearpage\infopagetitle{#1}\par}
 
 \def\maketitlepage#1#2#3{% title, author, publisher
   \cleartorecto
@@ -86,17 +84,19 @@
   \clearpage
 }
 
-\def\raggedleft#1{{\leftskip=0pt plus \hsize minus \parindent \parfillskip=0pt #1\par}}
-\long\def\centered#1{{\leftskip=0pt plus \hsize minus \parindent \rightskip=0pt plus \hsize minus \parindent \parfillskip=0pt #1\par}}
-\def\titlepagetitle#1{{\titlepagetitlestyle \raggedleft{#1}}}
-\def\titlepagetitlestyle{\titlepagetitlefont}
-\def\titlepageauthor#1{{\titlepageauthorstyle \raggedleft{#1}}}
-\def\titlepageauthorstyle{\titlepageauthorfont\noindent}
-\def\titlepagepublisher#1{{\titlepagepublisherstyle \raggedleft{#1}}}
-\def\titlepagepublisherstyle{\titlepagepublisherfont\noindent}
+\def\titlepagetitle#1{{\titlepagetitlestyle#1\par}}
+\def\titlepagetitlestyle{\titlepagetitlefont\raggedleft}
+\def\titlepageauthor#1{{\titlepageauthorstyle#1\par}}
+\def\titlepageauthorstyle{\titlepageauthorfont\raggedleft}
+\def\titlepagepublisher#1{{\titlepagepublisherstyle#1\par}}
+\def\titlepagepublisherstyle{\titlepagepublisherfont\raggedleft}
 
-\def\infopagetitle#1{{\infopagetitlestyle \centered{#1}}}
-\def\infopagetitlestyle{\infopagetitlefont\noindent}
+% An info page is a frontmatter or backmatter page
+% other than a title or halftitle page.
+\def\infopagerecto#1{\cleartorecto\infopage{#1}}
+\def\infopage#1{\clearpage\infopagetitle{#1}}
+\def\infopagetitle#1{{\infopagetitlestyle{#1}\par}}
+\def\infopagetitlestyle{\infopagetitlefont\centered}
 
 \def\emptyheadfoot{\global\headline={}\global\footline={}}
 
@@ -131,8 +131,8 @@
 \def\scene#1{\clearforscene\scenetitle{#1}}
 \def\clearforscene{\cleartorecto\gdef\beforeoutput{\openerheadfoot}}
 
-\def\scenetitle#1{{\scenetitlestyle\raggedleft{#1}}}
-\def\scenetitlestyle{\noindent\scenetitlefont}
+\def\scenetitle#1{{\scenetitlestyle#1\par}}
+\def\scenetitlestyle{\noindent\scenetitlefont\raggedleft}
 
 \def\chapter#1{\scene{#1}}
 \def\label#1{}
@@ -170,3 +170,7 @@
 
 % TODO: Make this handle nested emphasis.
 \def\emph#1{{\bodyit #1}}
+
+\def\raggedleft{\leftskip=0pt plus \hsize minus \parindent \parfillskip=0pt\relax}
+\def\raggedright{\rightskip=0pt plus \hsize minus \parindent \parfillskip=0pt\relax}
+\def\centered{\raggedleft\raggedright}
