@@ -76,15 +76,18 @@
 
 \def\maketitlepage#1#2#3{% title, author, publisher
   \cleartorecto
+  \null\vskip1in
   \titlepagetitle{#1}
-
+  \vfill
   \titlepageauthor{#2}
-
+  \vfill
   \titlepagepublisher{#3}
+  \vskip1in\null
   \clearpage
 }
 
 \def\raggedleft#1{{\leftskip=0pt plus \hsize minus \parindent \parfillskip=0pt #1\par}}
+\long\def\centered#1{{\leftskip=0pt plus \hsize minus \parindent \rightskip=0pt plus \hsize minus \parindent \parfillskip=0pt #1\par}}
 \def\titlepagetitle#1{{\titlepagetitlestyle \raggedleft{#1}}}
 \def\titlepagetitlestyle{\titlepagetitlefont}
 \def\titlepageauthor#1{{\titlepageauthorstyle \raggedleft{#1}}}
@@ -92,7 +95,7 @@
 \def\titlepagepublisher#1{{\titlepagepublisherstyle \raggedleft{#1}}}
 \def\titlepagepublisherstyle{\titlepagepublisherfont\noindent}
 
-\def\infopagetitle#1{{\infopagetitlestyle #1}}
+\def\infopagetitle#1{{\infopagetitlestyle \centered{#1}}}
 \def\infopagetitlestyle{\infopagetitlefont\noindent}
 
 \def\emptyheadfoot{\global\headline={}\global\footline={}}

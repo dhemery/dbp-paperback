@@ -7,15 +7,17 @@
 % Make the fonts
 \makedisplayfont{\pageheaderfont}{8pt}{/BI}
 \def\pagefooterfont{\pageheaderfont}
-\makedisplayfont{\titlepagetitlefont}{36pt}{/BI}
-\makedisplayfont{\titlepageauthorfont}{24pt}{/B}
-\makedisplayfont{\titlepagepublisherfont}{18pt}{/I}
-\makedisplayfont{\infopagetitlefont}{18pt}{/BI}
+\makedisplayfont{\titlepagetitlefont}{36pt}{/BI:+smcp}
+\makedisplayfont{\titlepageauthorfont}{24pt}{/B:+smcp}
+\makedisplayfont{\titlepagepublisherfont}{18pt}{/I:+smcp}
+\makedisplayfont{\infopagetitlefont}{18pt}{:+smcp}
 \makedisplayfont{\scenetitlefont}{18pt}{/B}
 \makebodyfont{\bodyrm}{:mapping=tex-text}
 \makebodyfont{\bodyit}{/I:mapping=tex-text}
 \makebodyfont{\bodysc}{:+smcp:mapping=tex-text}
 \makefont{\colophonfont}{\bodyfontfamily}{9pt}{}
+
+\makebodyfont{\infoheadingfont}{/B:+smcp}
 
 \leading=15pt
 
