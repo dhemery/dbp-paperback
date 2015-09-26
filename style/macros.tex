@@ -94,23 +94,6 @@
 \def\infoheading#1{\bigskip{\infoheadingfont\centered\noindent#1\par}}
 \def\infoitem#1{\smallskip{\centered\noindent #1\par}}
 
-\def\emptyheadfoot{\global\headline={}\global\footline={}}
-
-\def\openerheadfoot{
-  \global\headline={}
-  \global\footline={{\pageheaderfont\hss\folio\hss}}
-  \gdef\beforeoutput{\normalheadfoot}
-}
-
-\def\normalheadfoot{
-  \global\headline={{\pageheaderfont\normalheadline}}
-  \global\footline={}
-}
-
-\def\normalheadline{\ifodd\pageno\author\hss\folio\else\folio\hss\title\fi}
-
-\def\beforeoutput{\emptyheadfoot}
-
 
 
 
