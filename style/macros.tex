@@ -103,16 +103,35 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\frontmatter{\onrectopage\pageno=-1\gdef\beforeoutput{\emptyheadfoot}}
-\def\mainmatter{\onrectopage\pageno=1\gdef\beforeoutput{\normalheadfoot}}
+\def\frontmatter{\onrectopage\pageno=-1}
+\def\mainmatter{\onrectopage\pageno=1}
 \def\backmatter{\frontmatter}
 
-\def\scene#1{\clearforscene\scenetitle{#1}}
-\def\clearforscene{\onrectopage\gdef\beforeoutput{\openerheadfoot}}
+\def\chapter#1{
+  \onrectopage
+  \typesetchapterheading{#1}
+}
 
-\def\scenetitle#1{{\scenetitlefont\raggedleft#1\par}}
+\def\typesetchapterheading#1{
+  \vbox{
+    \line{}\vskip5\baselineskip
+    {\raggedleft\chaptertitlefont#1\par}
+  }
+}
 
-\def\chapter#1{\scene{#1}}
+\def\scene#1{
+  \typesetsceneheading{#1}
+}
+
+\def\typesetsceneheading#1{
+  \vbox{
+    \vskip3\baselineskip
+    {\raggedleft\scenetitlefont#1\par}
+    \vskip\baselineskip
+  }
+}
+
+% Ignore labels added by pandoc and Scrivener
 \def\label#1{}
 
 
@@ -143,7 +162,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\leadin#1{{\noindent\bodysc#1}}
+\def\leadin#1{{\nobreak\noindent\bodysc#1}}
 
 % TODO: Make this handle nested emphasis.
 \def\emph#1{{\bodyit #1}}
