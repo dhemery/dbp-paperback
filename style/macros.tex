@@ -52,7 +52,7 @@
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
 
-\def\ensureevenpagecount{\ifodd\pageno\cleartorecto\else\fi}
+\def\ensureevenpagecount{\ifodd\pageno\onrectopage\else\fi}
 
 
 
@@ -63,8 +63,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\clearpage{\eject}
-\def\cleartorecto{\eject\ifodd\pageno \else\line{}\vfil\eject\fi}
+\def\onrectopage{\eject\ifodd\pageno \else\line{}\vfil\eject\fi}
 
 % \titlepage{title}{author}{publisher}
 \def\titlepage{\maketitlepage{\title}{\author}{\publisher}}
@@ -73,7 +72,7 @@
 \def\halftitlepage{\maketitlepage{\title}{}{}}
 
 \def\maketitlepage#1#2#3{% title, author, publisher
-  \cleartorecto
+  \onrectopage
   \null\vskip1in
   \titlepagetitle{#1}
   \vfill
@@ -81,22 +80,19 @@
   \vfill
   \titlepagepublisher{#3}
   \vskip1in\null
-  \clearpage
+  \eject
 }
 
-\def\titlepagetitle#1{{\titlepagetitlestyle#1\par}}
-\def\titlepagetitlestyle{\titlepagetitlefont\raggedleft}
-\def\titlepageauthor#1{{\titlepageauthorstyle#1\par}}
-\def\titlepageauthorstyle{\titlepageauthorfont\raggedleft}
-\def\titlepagepublisher#1{{\titlepagepublisherstyle#1\par}}
-\def\titlepagepublisherstyle{\titlepagepublisherfont\raggedleft}
+\def\titlepagetitle#1{{\titlepagetitlefont\raggedleft#1\par}}
+\def\titlepageauthor#1{{\titlepageauthorfont\raggedleft#1\par}}
+\def\titlepagepublisher#1{{\titlepagepublisherfont\raggedleft#1\par}}
 
 % An info page is a frontmatter or backmatter page
 % other than a title or halftitle page.
-\def\infopagerecto#1{\cleartorecto\infopage{#1}}
-\def\infopage#1{\clearpage\infopagetitle{#1}}
-\def\infopagetitle#1{{\infopagetitlestyle{#1}\par}}
-\def\infopagetitlestyle{\infopagetitlefont\centered}
+\def\infopagerecto#1{\onrectopage\infopage{#1}}
+\def\infopage#1{\eject{\infopagetitlefont\centered\noindent#1\par}}
+\def\infoheading#1{\bigskip{\infoheadingfont\centered\noindent#1\par}}
+\def\infoitem#1{\smallskip{\centered\noindent #1\par}}
 
 \def\emptyheadfoot{\global\headline={}\global\footline={}}
 
@@ -124,15 +120,14 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\frontmatter{\cleartorecto\pageno=-1\gdef\beforeoutput{\emptyheadfoot}}
-\def\mainmatter{\cleartorecto\pageno=1\gdef\beforeoutput{\normalheadfoot}}
+\def\frontmatter{\onrectopage\pageno=-1\gdef\beforeoutput{\emptyheadfoot}}
+\def\mainmatter{\onrectopage\pageno=1\gdef\beforeoutput{\normalheadfoot}}
 \def\backmatter{\frontmatter}
 
 \def\scene#1{\clearforscene\scenetitle{#1}}
-\def\clearforscene{\cleartorecto\gdef\beforeoutput{\openerheadfoot}}
+\def\clearforscene{\onrectopage\gdef\beforeoutput{\openerheadfoot}}
 
-\def\scenetitle#1{{\scenetitlestyle#1\par}}
-\def\scenetitlestyle{\noindent\scenetitlefont\raggedleft}
+\def\scenetitle#1{{\scenetitlefont\raggedleft#1\par}}
 
 \def\chapter#1{\scene{#1}}
 \def\label#1{}
@@ -165,12 +160,11 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\leadin#1{{\leadinstyle#1}}
-\def\leadinstyle{\noindent\bodysc}
+\def\leadin#1{{\noindent\bodysc#1}}
 
 % TODO: Make this handle nested emphasis.
 \def\emph#1{{\bodyit #1}}
 
-\def\raggedleft{\leftskip=0pt plus \hsize minus \parindent \parfillskip=0pt\relax}
-\def\raggedright{\rightskip=0pt plus \hsize minus \parindent \parfillskip=0pt\relax}
+\def\raggedleft{\parindent=0pt\parfillskip=0pt\leftskip=0pt plus \hsize\relax}
+\def\raggedright{\parindent=0pt\parfillskip=0pt\rightskip=0pt plus \hsize\relax}
 \def\centered{\raggedleft\raggedright}
