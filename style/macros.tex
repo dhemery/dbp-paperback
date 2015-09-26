@@ -95,22 +95,44 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+% Page Frame (Header and Footer)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\useemptypageframe{
+  \global\def\makeheadline{\headlinefont\line{}}
+  \global\def\makefootline{\footlinefont\line{}}
+}
+\def\usedisplaypageframe{
+  \global\def\makeheadline{\headlinefont\line{}\usenormalpageframe}
+}
+\def\usenormalpageframe{
+  \global\def\makeheadline{\line{\headlinefont\hfil\ifodd\pageno\title\else\author\fi\hfil}}
+  \global\def\makefootline{\line{\footlinefont\hfil\folio\hfil}}
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Divisions
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\frontmatter{\onrectopage\pageno=-1}
-\def\mainmatter{\onrectopage\pageno=1}
+\def\frontmatter{\onrectopage\pageno=-1\useemptypageframe}
+\def\mainmatter{\onrectopage\pageno=1\usenormalpageframe}
 \def\backmatter{\frontmatter}
 
 \def\chapter#1{
   \onrectopage
+  \usedisplaypageframe
   \typesetchapterheading{#1}
 }
 
 \def\typesetchapterheading#1{
   \vbox{
-    \line{}\vskip5\baselineskip
+    \vskip5\baselineskip
     {\raggedleft\chaptertitlefont#1\par}
   }
   \nobreak
