@@ -67,20 +67,20 @@
 
 % Empty headline and footline
 \def\useemptypageframe{
-  \global\def\makeheadline{\headlinefont\line{}}
-  \global\def\makefootline{\footlinefont\line{}}
+  \global\headline={\line{}}
+  \global\footline={\line{}}
 }
 
 % Empty headline on this page, then normal page frame
 \def\usedisplaypageframe{
-  \global\def\makeheadline{\headlinefont\line{}\usenormalpageframe}
+  \global\headline={\line{}\usenormalpageframe}
 }
 
 % Headline: Centered author (verso) and title (recto)
 % Footline: Centered page number
-\def\usenormalpageframe{
-  \global\def\makeheadline{\line{\headlinefont\hfil\ifodd\pageno\title\else\author\fi\hfil}}
-  \global\def\makefootline{\line{\footlinefont\hfil\folio\hfil}}
+\def\usenormalpageframe{%
+  \global\headline={\headlinefont\hfil\ifodd\pageno\title\else\author\fi\hfil}%
+  \global\footline={\footlinefont\hfil\folio\hfil}%
 }
 
 
