@@ -96,19 +96,19 @@
 
 \def\maketitlepage#1#2#3{% title, author, publisher
   \onrectopage
-  \null\vskip1in
+  \null\vskip5\baselineskip
   \titlepagetitle{#1}
   \vfill
   \titlepageauthor{#2}
   \vfill
   \titlepagepublisher{#3}
-  \vskip1in\null
+  \vskip5\baselineskip\null
   \eject
 }
 
-\def\titlepagetitle#1{{\titlepagetitlefont\raggedleft#1\par}}
-\def\titlepageauthor#1{{\titlepageauthorfont\raggedleft#1\par}}
-\def\titlepagepublisher#1{{\titlepagepublisherfont\raggedleft#1\par}}
+\def\titlepagetitle#1{{\titlepagetitlefont\baselineskip=\fontdimen6\titlepagetitlefont\raggedleft\uppercase{#1}\par}}
+\def\titlepageauthor#1{{\titlepageauthorfont\raggedleft\uppercase{#1}\par}}
+\def\titlepagepublisher#1{{\titlepagepublisherfont\raggedleft\uppercase{#1}\par}}
 
 % An info page is a frontmatter or backmatter page
 % other than a title or halftitle page.
@@ -145,6 +145,8 @@
 }
 
 \def\scene#1{
+  \eject
+  \usedisplaypageframe
   \typesetsceneheading{#1}
 }
 

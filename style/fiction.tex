@@ -1,26 +1,25 @@
 % Select the fonts and sizes
 
 \def\displayfontfamily{Optima}
-\def\bodyfontfamily{Gandhi Serif}
-\bodyfontsize=12pt
+\def\bodyfontfamily{Georgia}
 
 % Make the fonts
-\makedisplayfont{\headlinefont}{8pt}{/BI}
+\makedisplayfont{\headlinefont}{8pt}{:+smcp}
 \def\footlinefont{\headlinefont}
-\makedisplayfont{\titlepagetitlefont}{36pt}{/BI:+smcp}
-\makedisplayfont{\titlepageauthorfont}{24pt}{/B:+smcp}
-\makedisplayfont{\titlepagepublisherfont}{18pt}{/I:+smcp}
+\makedisplayfont{\titlepagetitlefont}{30pt}{}
+\makedisplayfont{\titlepageauthorfont}{20pt}{}
+\makefont{\titlepagepublisherfont}{Proxima Nova Semibold}{16pt}{}
 \makedisplayfont{\infopagetitlefont}{18pt}{:+smcp}
+\makedisplayfont{\infoheadingfont}{14pt}{:+smcp}
 
-\makedisplayfont{\chaptertitlefont}{18pt}{/B}
-\makedisplayfont{\scenetitlefont}{14pt}{/I}
+\makedisplayfont{\chaptertitlefont}{24pt}{:+smcp}
+\makedisplayfont{\scenetitlefont}{14pt}{/I:+smcp}
 
+\bodyfontsize=11pt
 \makebodyfont{\bodyrm}{:mapping=tex-text}
 \makebodyfont{\bodyit}{/I:mapping=tex-text}
 \makebodyfont{\bodysc}{:+smcp:mapping=tex-text}
-\makefont{\colophonfont}{\bodyfontfamily}{9pt}{}
-
-\makebodyfont{\infoheadingfont}{/B:+smcp}
+\makefont{\colophonfont}{\bodyfontfamily}{10pt}{}
 
 \leading=15pt
 
@@ -29,4 +28,4 @@
 \raggedbottom
 \bodyrm
 \emergencystretch=1.5em
-\parindent=1.5em
+\parindent=1.25em
