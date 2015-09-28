@@ -1,32 +1,36 @@
 % Select the fonts and sizes
 
-\def\displayfontfamily{Optima}
-\def\bodyfontfamily{Georgia}
-\def\logofontfamily{Georgia}
+\def\displayfontfamily{Optima nova LT Pro}
 
-% Make the fonts
+% Display Fonts
 \makedisplayfont{\headlinefont}{8pt}{:+smcp}
 \def\footlinefont{\headlinefont}
 \makedisplayfont{\titlepagetitlefont}{30pt}{}
 \makedisplayfont{\titlepageauthorfont}{20pt}{}
-\makefont{\titlepagepublisherfont}{\logofontfamily}{16pt}{}
 \makedisplayfont{\infopagetitlefont}{18pt}{:+smcp}
 \makedisplayfont{\infoheadingfont}{14pt}{:+smcp}
-
 \makedisplayfont{\chaptertitlefont}{24pt}{:+smcp}
 \makedisplayfont{\scenetitlefont}{14pt}{/I:+smcp}
 
+% Publisher Logo Font
+\def\logofontfamily{Proxima Nova}
+\makefont{\titlepagepublisherfont}{\logofontfamily}{16pt}{}
+
+% Text Fonts
+\def\bodyfontfamily{Minion Pro}
 \bodyfontsize=11pt
-\makebodyfont{\bodyrm}{:mapping=tex-text}
+\makebodyfont{\bodyrm}{:+nrml:mapping=tex-text}
 \makebodyfont{\bodyit}{/I:mapping=tex-text}
 \makebodyfont{\bodysc}{:+smcp:mapping=tex-text}
 \makefont{\colophonfont}{\bodyfontfamily}{10pt}{}
 
+% Paragraphs
+\bodyrm
 \leading=15pt
-
 \normalbaselineskip=\leading
 \normalbaselines
-\raggedbottom
-\bodyrm
 \emergencystretch=1.5em
 \parindent=1em
+
+% Pages
+\raggedbottom
