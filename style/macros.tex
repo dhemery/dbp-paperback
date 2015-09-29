@@ -46,6 +46,7 @@
 
 % Output routine that adjusts left margin for verso and recto pages.
 \def\facingpages{%
+  \preparepageframe%
   \dimen0=\ifodd\pageno\rectoleftadjustment\else\versoleftadjustment\fi%
   \shipout\vbox{\moveright\dimen0\vbox{\vskip\topadjustment\makeheadline\pagebody\makefootline}}%
   \advancepageno%
@@ -54,33 +55,51 @@
 
 \output{\facingpages}
 
-\def\ensureevenpagecount{\ifodd\pageno\onrectopage\else\fi}
+\def\ensureevenpagecount{\ifodd\pageno\gotorectopage\else\fi}
 
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Page Frame (Header and Footer)
+% Page Frame (Headline and Footline)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Empty headline and footline
+\def\clearedpageheadline{\line{}}
+\def\clearedpagefootline{\line{}}
+\def\emptypageheadline{\line{}}
+\def\emptypagefootline{\line{}}
+\def\normalpageheadline{\ifodd\pageno\normalrectopageheadline\else\normalversopageheadline\fi}
+\def\normalpagefootline{\line{}}
+\def\normalrectopageheadline{\headlinefont\title\hfil\folio}
+\def\normalversopageheadline{\headlinefont\folio\hfil\author}
+\def\displaypageheadline{\line{}}
+\def\displaypagefootline{\hfil\headlinefont\folio\hfil}
+
+\newif\ifclearedpage
+\newif\ifdisplaypage
+\def\preparepageframe{%
+  \ifclearedpage\headline={\clearedpageheadline}\footline={\clearedpagefootline}\fi%
+  \ifdisplaypage\headline={\displaypageheadline}\footline={\displaypagefootline}\fi%
+  \global\clearedpagefalse%
+  \global\displaypagefalse%
+}
+
 \def\useemptypageframe{
-  \global\headline={\line{}}
-  \global\footline={\line{}}
+  \global\headline={\emptypageheadline}
+  \global\footline={\emptypagefootline}
+  \global\clearedpagefalse
+  \global\displaypagefalse
+  \message{Using empty page frame}
 }
 
-% Empty headline on this page, then normal page frame
-\def\usedisplaypageframe{
-  \global\headline={\line{}\usenormalpageframe}
-}
-
-% Headline: Centered author (verso) and title (recto)
-% Footline: Centered page number
-\def\usenormalpageframe{%
-  \global\headline={\headlinefont\hfil\ifodd\pageno\title\else\author\fi\hfil}%
-  \global\footline={\footlinefont\hfil\folio\hfil}%
+\def\usenormalpageframe{
+  \global\headline={\normalpageheadline}
+  \global\footline={\normalpagefootline}
+  \global\clearedpagefalse
+  \global\displaypagefalse
+  \message{Using normal page frame}
 }
 
 
@@ -92,10 +111,12 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\onrectopage{\eject\ifodd\pageno \else\line{}\vfil\eject\fi}
+\def\gotonextpage{\eject\global\clearedpagetrue\global\displaypagefalse\relax}
+\def\gotorectopage{\gotonextpage\ifodd\pageno{}\else\line{}\vfil\gotonextpage\fi}
 
 \def\maketitlepage#1#2#3{% title, author, publisher
-  \onrectopage
+  \gotorectopage
+  \useemptypageframe
   \null\vskip5\baselineskip
   \titlepagetitle{#1}
   \vfill
@@ -112,8 +133,8 @@
 
 % An info page is a frontmatter or backmatter page
 % other than a title or halftitle page.
-\def\infopagerecto#1{\onrectopage\infopage{#1}}
-\def\infopage#1{\eject{\infopagetitlefont\centered\noindent#1\par}}
+\def\infopagerecto#1{\gotorectopage\infopage{#1}}
+\def\infopage#1{\gotonextpage\useemptypageframe{\infopagetitlefont\centered\noindent#1\par}}
 \def\infoheading#1{\bigskip{\infoheadingfont\centered\noindent#1\par}}
 \def\infoitem#1{\smallskip{\centered\noindent #1\par}}
 
@@ -126,13 +147,13 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\frontmatter{\onrectopage\pageno=-1\useemptypageframe}
-\def\mainmatter{\onrectopage\pageno=1\usenormalpageframe}
+\def\frontmatter{\gotorectopage\pageno=-1\useemptypageframe}
+\def\mainmatter{\gotorectopage\pageno=1\usenormalpageframe}
 \def\backmatter{\frontmatter}
 
 \def\chapter#1{
-  \onrectopage
-  \usedisplaypageframe
+  \gotorectopage
+  \displaypagetrue
   \typesetchapterheading{#1}
 }
 
@@ -145,8 +166,6 @@
 }
 
 \def\scene#1{
-  \eject
-  \usedisplaypageframe
   \typesetsceneheading{#1}
 }
 
