@@ -7,15 +7,15 @@
 \newdimen\pdforigintopadjustment
 \newdimen\pdforiginleftadjustment
 \newdimen\topadjustment
-\newdimen\versoleftadjustment
-\newdimen\rectoleftadjustment
+\newdimen\evenpageleftadjustment
+\newdimen\oddpageleftadjustment
 
 % Default values
 \pdforigintopadjustment=0pt
 \pdforiginleftadjustment=0pt
 \topadjustment=0pt
-\versoleftadjustment=0pt
-\rectoleftadjustment=0pt
+\evenpageleftadjustment=0pt
+\oddpageleftadjustment=0pt
 
 % \setpdforigin{left adjustment}{top adjustment}
 % By default (per a configuration file) the PDF renderer
@@ -40,22 +40,20 @@
   \advance\hsize by -#3
   \advance\hsize by -#4
   \topadjustment=#1\advance\topadjustment\pdforigintopadjustment
-  \versoleftadjustment=#4\advance\versoleftadjustment\pdforiginleftadjustment
-  \rectoleftadjustment=#3\advance\rectoleftadjustment\pdforiginleftadjustment
+  \evenpageleftadjustment=#4\advance\evenpageleftadjustment\pdforiginleftadjustment
+  \oddpageleftadjustment=#3\advance\oddpageleftadjustment\pdforiginleftadjustment
 }
 
-% Output routine that adjusts left margin for verso and recto pages.
+% Output routine that adjusts left margin for odd and even pages.
 \def\facingpages{%
   \preparepageframe%
-  \dimen0=\ifodd\pageno\rectoleftadjustment\else\versoleftadjustment\fi%
+  \dimen0=\ifodd\pageno\oddpageleftadjustment\else\evenpageleftadjustment\fi%
   \shipout\vbox{\moveright\dimen0\vbox{\vskip\topadjustment\makeheadline\pagebody\makefootline}}%
   \advancepageno%
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
 
 \output{\facingpages}
-
-\def\ensureevenpagecount{\ifodd\pageno\gotorectopage\else\fi}
 
 
 
@@ -70,10 +68,10 @@
 \def\clearedpagefootline{\line{}}
 \def\emptypageheadline{\line{}}
 \def\emptypagefootline{\line{}}
-\def\normalpageheadline{\ifodd\pageno\normalrectopageheadline\else\normalversopageheadline\fi}
+\def\normalpageheadline{\ifodd\pageno\normaloddpageheadline\else\normalevenpageheadline\fi}
 \def\normalpagefootline{\line{}}
-\def\normalrectopageheadline{\headlinefont\title\hfil\folio}
-\def\normalversopageheadline{\headlinefont\folio\hfil\author}
+\def\normaloddpageheadline{\headlinefont\uppercase\expandafter{\title}\hfil\folio}
+\def\normalevenpageheadline{\headlinefont\folio\hfil\uppercase\expandafter{\author}}
 \def\displaypageheadline{\line{}}
 \def\displaypagefootline{\hfil\headlinefont\folio\hfil}
 
@@ -111,11 +109,12 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\gotonextpage{\eject\global\clearedpagetrue\global\displaypagefalse\relax}
-\def\gotorectopage{\gotonextpage\ifodd\pageno{}\else\line{}\vfil\gotonextpage\fi}
+\def\nextpage{\vfil\eject\global\clearedpagetrue\global\displaypagefalse\relax}
+\def\nextoddpage{\nextpage\ifodd\pageno \else \line{}\nextpage\fi}
+\def\nextevenpage{\nextpage\ifodd\pageno \line{}\nextpage\else \fi}
 
 \def\maketitlepage#1#2#3{% title, author, publisher
-  \gotorectopage
+  \nextoddpage
   \useemptypageframe
   \null\vskip5\baselineskip
   \titlepagetitle{#1}
@@ -133,10 +132,10 @@
 
 % An info page is a frontmatter or backmatter page
 % other than a title or halftitle page.
-\def\infopagerecto#1{\gotorectopage\infopage{#1}}
-\def\infopage#1{\gotonextpage\useemptypageframe{\infopagetitlefont\centered\noindent#1\par}}
-\def\infoheading#1{\bigskip{\infoheadingfont\centered\noindent#1\par}}
-\def\infoitem#1{\smallskip{\centered\noindent #1\par}}
+\def\oddinfopage#1{\nextoddpage\infopage{#1}}
+\def\infopage#1{\nextpage\useemptypageframe{\infopagetitlefont\centered#1\par}}
+\def\infoheading#1{\bigskip{\infoheadingfont\centered#1\par}}
+\def\infoitem#1{\smallskip{\centered#1\par}}
 
 
 
@@ -147,12 +146,12 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\frontmatter{\gotorectopage\pageno=-1\useemptypageframe}
-\def\mainmatter{\gotorectopage\pageno=1\usenormalpageframe}
+\def\frontmatter{\nextoddpage\pageno=-1\useemptypageframe}
+\def\mainmatter{\nextoddpage\pageno=1\usenormalpageframe}
 \def\backmatter{\frontmatter}
 
 \def\chapter#1{
-  \gotorectopage
+  \nextoddpage
   \displaypagetrue
   \typesetchapterheading{#1}
 }
@@ -160,7 +159,7 @@
 \def\typesetchapterheading#1{
   \vbox{
     \vskip5\baselineskip
-    {\raggedleft\chaptertitlefont#1\par}
+    {\raggedleft\chaptertitlefont\uppercase{#1}\par}
   }
   \nobreak
 }
