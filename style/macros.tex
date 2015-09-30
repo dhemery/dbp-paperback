@@ -137,6 +137,20 @@
 \def\infoheading#1{\bigskip{\infoheadingfont\centered#1\par}}
 \def\infoitem#1{\smallskip{\centered#1\par}}
 
+\def\previewannouncementpage{
+  \nextoddpage
+  {\centered Driscoll Brook Press proudly announces {\previewtitle} by \previewauthor\par}
+  {\centered Turn the page for a preview of \previewtitle $\ldots$\par}
+}
+\def\previewpage{
+  \nextoddpage
+}
+\def\previewavailablepage{
+  \nextoddpage
+  {\centered {\previewtitle} by {\previewauthor}\par}
+  {\centered Available now at your favorite retailer.\par}
+}
+
 
 
 
@@ -159,7 +173,7 @@
 \def\typesetchapterheading#1{
   \vbox{
     \vskip5\baselineskip
-    {\raggedleft\chaptertitlefont\uppercase{#1}\par}
+    {\raggedleft\chaptertitlefont#1\par}
   }
   \nobreak
 }
