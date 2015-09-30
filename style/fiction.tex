@@ -1,36 +1,133 @@
-% Select the fonts and sizes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Paper and Margins
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\output{\facingpages}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Page Frame (Headline and Footline)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\normalpageheadline{\ifodd\pageno\normaloddpageheadline\else\normalevenpageheadline\fi}
+\def\normalpagefootline{\line{}}
+\def\normaloddpageheadline{\headlinefont\uppercase\expandafter{\title}\hfil\folio}
+\def\normalevenpageheadline{\headlinefont\folio\hfil\uppercase\expandafter{\author}}
+\def\displaypageheadline{\line{}}
+\def\displaypagefootline{\hfil\headlinefont\folio\hfil}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Pages
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Title page:     \titlepage{title}{author}{publisher}
+% Halftitle page: \titlepage{title}{}{}
+\def\titlepage#1#2#3{
+  \nextoddpage
+  \useemptypageframe
+  \null\vskip5\baselineskip
+  \titlepagetitle{#1}
+  \vfill
+  \titlepageauthor{#2}
+  \vfill
+  \titlepagepublisher{#3}
+  \vskip5\baselineskip\null
+  \eject
+}
+
+\def\titlepagetitle#1{{\titlepagetitlefont\baselineskip=\fontdimen6\titlepagetitlefont\raggedleft\uppercase{#1}\par}}
+\def\titlepageauthor#1{{\titlepageauthorfont\raggedleft\uppercase{#1}\par}}
+\def\titlepagepublisher#1{{\titlepagepublisherfont\raggedleft\uppercase{#1}\par}}
+
+\def\previewannouncementpage{
+  \nextoddpage
+  {\centered Driscoll Brook Press proudly announces {\previewtitle} by \previewauthor\par}
+  {\centered Turn the page for a preview of \previewtitle $\ldots$\par}
+}
+\def\previewpage{
+  \nextoddpage
+}
+\def\previewavailablepage{
+  \nextoddpage
+  {\centered {\previewtitle} by {\previewauthor}\par}
+  {\centered Available now at your favorite retailer.\par}
+}
+
+\raggedbottom
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Fonts
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\bodyfontfamily{Minion Pro}
+\def\headlinefontfamily{Garamond Premier Pro Caption}
 \def\displayfontfamily{Garamond Premier Pro Display}
+\def\titlepagepublisherfontfamily{Proxima Nova}
 
-% Display Fonts
-\makefont{\headlinefont}{Garamond Premier Pro Caption}{8pt}{:+cpsp}
+\newdimen\bodyfontsize \bodyfontsize=11pt
+\newdimen\bodysmallfontsize \bodysmallfontsize=10pt
+\newdimen\leading \leading=15pt
+
+\newdimen\headlinefontsize \headlinefontsize=8pt
+\newdimen\titlepagetitlefontsize \titlepagetitlefontsize=30pt
+\newdimen\titlepageauthorfontsize \titlepageauthorfontsize=24pt
+\newdimen\titlepagepublisherfontsize \titlepagepublisherfontsize=16pt
+
+\newdimen\aheadsize \aheadsize=24pt
+\newdimen\bheadsize \bheadsize=18pt
+\newdimen\cheadsize \cheadsize=14pt
+
+% Headline and Footline Fonts
+\makefont{\headlinefont}{\headlinefontfamily}{\headlinefontsize}{:+cpsp}
 \def\footlinefont{\headlinefont}
-\makedisplayfont{\titlepagetitlefont}{30pt}{}
-\makedisplayfont{\titlepageauthorfont}{20pt}{}
-\makedisplayfont{\infopagetitlefont}{18pt}{:+smcp}
-\makedisplayfont{\infoheadingfont}{14pt}{:+smcp}
-\makedisplayfont{\chaptertitlefont}{24pt}{:+smcp}
-\makedisplayfont{\scenetitlefont}{14pt}{:+smcp}
+
+% Heading and Title Fonts
+\makefont{\titlepagetitlefont}{\displayfontfamily}{\titlepagetitlefontsize}{}
+\makefont{\titlepageauthorfont}{\displayfontfamily}{\titlepageauthorfontsize}{}
+\makefont{\chaptertitlefont}{\displayfontfamily}{\aheadsize}{:+smcp}
+\makefont{\scenetitlefont}{\displayfontfamily}{\bheadsize}{:+smcp}
+\makefont{\infopagetitlefont}{\displayfontfamily}{\bheadsize}{:+smcp}
+\makefont{\infoheadingfont}{\displayfontfamily}{\bodyfontsize}{:+cpsp}
 
 % Publisher Logo Font
-\def\logofontfamily{Proxima Nova}
-\makefont{\titlepagepublisherfont}{\logofontfamily}{16pt}{}
+\makefont{\titlepagepublisherfont}{\titlepagepublisherfontfamily}{\titlepagepublisherfontsize}{}
 
 % Text Fonts
-\def\bodyfontfamily{Garamond Premier Pro}
-\bodyfontsize=11pt
-\makebodyfont{\bodyrm}{:+nrml}
-\makebodyfont{\bodyit}{/I}
-\makebodyfont{\bodysc}{:+smcp}
-\makefont{\colophonfont}{\bodyfontfamily}{10pt}{}
+\makefont{\bodyrm}{\bodyfontfamily}{\bodyfontsize}{:+nrml}
+\makefont{\bodyit}{\bodyfontfamily}{\bodyfontsize}{/I}
+\makefont{\bodysc}{\bodyfontfamily}{\bodyfontsize}{:+smcp}
+\makefont{\bodysmallfont}{\bodyfontfamily}{\bodysmallfontsize}{}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Paragraphs and Lines
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Paragraphs
-\bodyrm
-\leading=15pt
+\def\leadin#1{\noindent{\bodysc#1}}
+\parindent=1em
+
+% Lines
 \normalbaselineskip=\leading
 \normalbaselines
 \emergencystretch=1.5em
-\parindent=1em
 
-% Pages
-\raggedbottom
+% Body font
+\bodyrm

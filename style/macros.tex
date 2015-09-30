@@ -1,9 +1,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Paper and margins
+% Paper and Margins
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Consider hiding these variables with @
 \newdimen\pdforigintopadjustment
 \newdimen\pdforiginleftadjustment
 \newdimen\topadjustment
@@ -46,14 +47,15 @@
 
 % Output routine that adjusts left margin for odd and even pages.
 \def\facingpages{%
-  \preparepageframe%
+  \ifclearedpage\headline={\clearedpageheadline}\footline={\clearedpagefootline}\fi%
+  \ifdisplaypage\headline={\displaypageheadline}\footline={\displaypagefootline}\fi%
+  \global\clearedpagefalse%
+  \global\displaypagefalse%
   \dimen0=\ifodd\pageno\oddpageleftadjustment\else\evenpageleftadjustment\fi%
   \shipout\vbox{\moveright\dimen0\vbox{\vskip\topadjustment\makeheadline\pagebody\makefootline}}%
   \advancepageno%
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
-
-\output{\facingpages}
 
 
 
@@ -64,25 +66,9 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\clearedpageheadline{\line{}}
-\def\clearedpagefootline{\line{}}
-\def\emptypageheadline{\line{}}
-\def\emptypagefootline{\line{}}
-\def\normalpageheadline{\ifodd\pageno\normaloddpageheadline\else\normalevenpageheadline\fi}
-\def\normalpagefootline{\line{}}
-\def\normaloddpageheadline{\headlinefont\uppercase\expandafter{\title}\hfil\folio}
-\def\normalevenpageheadline{\headlinefont\folio\hfil\uppercase\expandafter{\author}}
-\def\displaypageheadline{\line{}}
-\def\displaypagefootline{\hfil\headlinefont\folio\hfil}
-
+% Hide these ifs?
 \newif\ifclearedpage
 \newif\ifdisplaypage
-\def\preparepageframe{%
-  \ifclearedpage\headline={\clearedpageheadline}\footline={\clearedpagefootline}\fi%
-  \ifdisplaypage\headline={\displaypageheadline}\footline={\displaypagefootline}\fi%
-  \global\clearedpagefalse%
-  \global\displaypagefalse%
-}
 
 \def\useemptypageframe{
   \global\headline={\emptypageheadline}
@@ -100,6 +86,16 @@
   \message{Using normal page frame}
 }
 
+% Default headlines and footlines (all empty)
+\def\clearedpageheadline{\line{}}
+\def\clearedpagefootline{\line{}}
+\def\displaypageheadline{\line{}}
+\def\displaypagefootline{\line{}}
+\def\emptypageheadline{\line{}}
+\def\emptypagefootline{\line{}}
+\def\normalpageheadline{\line{}}
+\def\normalpagefootline{\line{}}
+
 
 
 
@@ -112,44 +108,6 @@
 \def\nextpage{\vfil\eject\global\clearedpagetrue\global\displaypagefalse\relax}
 \def\nextoddpage{\nextpage\ifodd\pageno \else \line{}\nextpage\fi}
 \def\nextevenpage{\nextpage\ifodd\pageno \line{}\nextpage\else \fi}
-
-\def\maketitlepage#1#2#3{% title, author, publisher
-  \nextoddpage
-  \useemptypageframe
-  \null\vskip5\baselineskip
-  \titlepagetitle{#1}
-  \vfill
-  \titlepageauthor{#2}
-  \vfill
-  \titlepagepublisher{#3}
-  \vskip5\baselineskip\null
-  \eject
-}
-
-\def\titlepagetitle#1{{\titlepagetitlefont\baselineskip=\fontdimen6\titlepagetitlefont\raggedleft\uppercase{#1}\par}}
-\def\titlepageauthor#1{{\titlepageauthorfont\raggedleft\uppercase{#1}\par}}
-\def\titlepagepublisher#1{{\titlepagepublisherfont\raggedleft\uppercase{#1}\par}}
-
-% An info page is a frontmatter or backmatter page
-% other than a title or halftitle page.
-\def\oddinfopage#1{\nextoddpage\infopage{#1}}
-\def\infopage#1{\nextpage\useemptypageframe{\infopagetitlefont\centered#1\par}}
-\def\infoheading#1{\bigskip{\infoheadingfont\centered#1\par}}
-\def\infoitem#1{\smallskip{\centered#1\par}}
-
-\def\previewannouncementpage{
-  \nextoddpage
-  {\centered Driscoll Brook Press proudly announces {\previewtitle} by \previewauthor\par}
-  {\centered Turn the page for a preview of \previewtitle $\ldots$\par}
-}
-\def\previewpage{
-  \nextoddpage
-}
-\def\previewavailablepage{
-  \nextoddpage
-  {\centered {\previewtitle} by {\previewauthor}\par}
-  {\centered Available now at your favorite retailer.\par}
-}
 
 
 
@@ -191,8 +149,14 @@
   \nobreak
 }
 
-% Ignore labels added by pandoc and Scrivener
-\def\label#1{}
+% An info page is a frontmatter or backmatter page
+% other than a title or halftitle page.
+\def\oddinfopage#1{\nextoddpage\infopage{#1}}
+\def\infopage#1{\nextpage\useemptypageframe{\infopagetitlefont\centered#1\par}}
+\def\infoheading#1{\bigskip{\infoheadingfont\centered\uppercase\expandafter{#1}\par}}
+\def\infoitem#1{\smallskip{\centered#1\par}}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -201,28 +165,17 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newdimen\bodyfontsize
-\newdimen\leading
-
-% \makefont{name}{system font name}{dimen}{options}
+% \makefont{name}{system font name}{size}{options}
 \def\makefont#1#2#3#4{\font#1="#2#4" at #3}
 
-% \makebodyfont{name}{options}
-\def\makebodyfont#1#2{\makefont{#1}{\bodyfontfamily}{\bodyfontsize}{#2}}
-
-% \makedisplayfont{name}{dimen}{options}
-\def\makedisplayfont#1#2#3{\makefont{#1}{\displayfontfamily}{#2}{#3}}
-
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Text Effects
+% Paragraphs and Lines
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\def\leadin#1{\noindent{\bodysc#1}}
 
 % TODO: Make this handle nested emphasis.
 \def\emph#1{{\bodyit #1}}
