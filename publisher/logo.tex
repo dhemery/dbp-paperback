@@ -1,0 +1,45 @@
+% \stackedlogo{size}{left glue}{right glue}
+\def\stackedlogo#1#2#3{%
+  \begingroup%
+  \dimen0=#1\divide\dimen0 by 16%
+  \font\logofont="Proxima Nova:+cpsp" at #1\relax%
+  \logofont\baselineskip=0pt%
+  \setbox0=\hbox{DRISCOLL}%
+  \vbox{%
+    \hrule height \dimen0%
+    \vskip4\dimen0%
+    \copy0%
+    \vskip2\dimen0%
+    \hbox to \wd0{#2BROOK#3}%
+    \vskip2\dimen0%
+    \hbox to \wd0{#2PRESS#3}%
+    \vskip4\dimen0%
+    \hrule height \dimen0%
+  }%
+  \endgroup%
+}
+
+% \leftlogo{font size}
+\def\leftlogo#1{\stackedlogo{#1}{}{\hss}}
+
+% \centerlogo{font size}
+\def\centerlogo#1{\stackedlogo{#1}{\hss}{\hss}}
+
+% \rightlogo{font size}
+\def\rightlogo#1{\stackedlogo{#1}{\hss}{}}
+
+% \linelogo{font size}
+\def\linelogo#1{%
+  \begingroup%
+  \dimen0=#1\divide\dimen0 by 16%
+  \font\logofont="Proxima Nova:+cpsp" at #1\relax%
+  \logofont\baselineskip=0pt%
+  \vbox{%
+    \hrule height \dimen0%
+    \vskip4\dimen0%
+    \hbox{DRISCOLL BROOK PRESS}%
+    \vskip4\dimen0%
+    \hrule height \dimen0%
+  }%
+  \endgroup%
+}

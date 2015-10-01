@@ -45,20 +45,38 @@
 
 \def\titlepagetitle#1{{\titlepagetitlefont\baselineskip=\fontdimen6\titlepagetitlefont\raggedleft\uppercase{#1}\par}}
 \def\titlepageauthor#1{{\titlepageauthorfont\raggedleft\uppercase{#1}\par}}
-\def\titlepagepublisher#1{{\titlepagepublisherfont\raggedleft\uppercase{#1}\par}}
+\def\titlepagepublisher#1{\rightline{#1}}
 
 \def\previewannouncementpage{
   \nextoddpage
-  {\centered Driscoll Brook Press proudly announces {\previewtitle} by \previewauthor\par}
-  {\centered Turn the page for a preview of \previewtitle $\ldots$\par}
+  \line{}\vfill
+  \centerline{\linelogo{20pt}}
+  \vskip\baselineskip
+  \centerline{\sectiontitlefont proudly announces}
+  \vfill
+  {\titlepagetitlefont\baselineskip=\fontdimen6\titlepagetitlefont\centered\previewtitle\par}
+  \vskip\baselineskip
+  \centerline{by}
+  \vskip\baselineskip
+  \centerline{\titlepageauthorfont\previewauthor}
+  \vfill
+  \centerline{Turn the page for a preview}
+  \vfill
 }
-\def\previewpage{
-  \nextoddpage
-}
+\def\previewpage{\nextoddpage}
 \def\previewavailablepage{
   \nextoddpage
-  {\centered {\previewtitle} by {\previewauthor}\par}
-  {\centered Available now at your favorite retailer.\par}
+  \line{}\vfill
+  \line{\hss{\titlepagetitlefont\baselineskip=\fontdimen6\titlepagetitlefont\previewtitle}\hss}
+  \vskip\baselineskip
+  \centerline{by}
+  \vskip\baselineskip
+  \centerline{\titlepageauthorfont\previewauthor}
+  \vfill
+  \centerline{Available now from your favorite retailer}
+  \vfill
+  \centerline{\linelogo{20pt}}
+  \vfill
 }
 
 \raggedbottom
@@ -73,9 +91,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\bodyfontfamily{Minion Pro}
-\def\headlinefontfamily{Garamond Premier Pro Caption}
-\def\displayfontfamily{Garamond Premier Pro Display}
-\def\titlepagepublisherfontfamily{Proxima Nova}
+\def\headlinefontfamily{Optima nova LT Pro}
+\def\displayfontfamily{Optima nova LT Pro Titling Initials}
 
 \newdimen\bodyfontsize \bodyfontsize=11pt
 \newdimen\bodysmallfontsize \bodysmallfontsize=10pt
@@ -87,23 +104,18 @@
 \newdimen\titlepagepublisherfontsize \titlepagepublisherfontsize=16pt
 
 \newdimen\aheadsize \aheadsize=24pt
-\newdimen\bheadsize \bheadsize=18pt
-\newdimen\cheadsize \cheadsize=14pt
+\newdimen\bheadsize \bheadsize=14pt
 
 % Headline and Footline Fonts
 \makefont{\headlinefont}{\headlinefontfamily}{\headlinefontsize}{:+cpsp}
 \def\footlinefont{\headlinefont}
 
 % Heading and Title Fonts
-\makefont{\titlepagetitlefont}{\displayfontfamily}{\titlepagetitlefontsize}{}
-\makefont{\titlepageauthorfont}{\displayfontfamily}{\titlepageauthorfontsize}{}
+\makefont{\titlepagetitlefont}{\displayfontfamily}{\titlepagetitlefontsize}{:+cpsp}
+\makefont{\titlepageauthorfont}{\displayfontfamily}{\titlepageauthorfontsize}{:+cpsp}
 \makefont{\chaptertitlefont}{\displayfontfamily}{\aheadsize}{:+smcp}
-\makefont{\scenetitlefont}{\displayfontfamily}{\bheadsize}{:+smcp}
-\makefont{\infopagetitlefont}{\displayfontfamily}{\bheadsize}{:+smcp}
-\makefont{\infoheadingfont}{\displayfontfamily}{\bodyfontsize}{:+cpsp}
-
-% Publisher Logo Font
-\makefont{\titlepagepublisherfont}{\titlepagepublisherfontfamily}{\titlepagepublisherfontsize}{}
+\makefont{\sectiontitlefont}{\displayfontfamily}{\bheadsize}{:+smcp}
+\makefont{\infoheadingfont}{\displayfontfamily}{\bodysmallfontsize}{:+cpsp}
 
 % Text Fonts
 \makefont{\bodyrm}{\bodyfontfamily}{\bodyfontsize}{:+nrml}
