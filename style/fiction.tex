@@ -33,17 +33,13 @@
 \def\titlepage#1#2#3{
   \nextoddpage
   \useemptypageframe
-  \null\vskip5\baselineskip
-  \titlepagetitle{#1}
-  \vfill
-  \titlepageauthor{#2}
-  \vfill
+  \baselinebox{\titlepagetitle{#1}}{10}{0}
+  \baselinebox{\titlepageauthor{#2}}{6}{6}
   \titlepagepublisher{#3}
-  \vskip5\baselineskip\null
   \eject
 }
 
-\def\titlepagetitle#1{{\titlepagetitlefont\baselineskip=\fontdimen6\titlepagetitlefont\raggedleft\uppercase{#1}\par}}
+\def\titlepagetitle#1{{\usefont\titlepagetitlefont\raggedleft\uppercase{#1}\par}}
 \def\titlepageauthor#1{{\titlepageauthorfont\raggedleft\uppercase{#1}\par}}
 \def\titlepagepublisher#1{\rightline{#1}}
 
@@ -54,7 +50,7 @@
   \vskip\baselineskip
   \centerline{\sectiontitlefont proudly announces}
   \vfill
-  {\titlepagetitlefont\baselineskip=\fontdimen6\titlepagetitlefont\centered\previewtitle\par}
+  {\usefont\titlepagetitlefont\centered\previewtitle\par}
   \vskip\baselineskip
   \centerline{by}
   \vskip\baselineskip
@@ -67,7 +63,7 @@
 \def\previewavailablepage{
   \nextoddpage
   \line{}\vfill
-  \line{\hss{\titlepagetitlefont\baselineskip=\fontdimen6\titlepagetitlefont\previewtitle}\hss}
+  \line{\hss{\usefont\titlepagetitlefont\previewtitle}\hss}
   \vskip\baselineskip
   \centerline{by}
   \vskip\baselineskip

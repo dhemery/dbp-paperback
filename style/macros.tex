@@ -124,39 +124,38 @@
 
 \def\chapter#1{
   \nextoddpage\displaypagetrue
-  \typesetchapterheading{#1}
+  \baselinebox{\typesetchapterheading{#1}}{10}{}
   \nextoddpage
 }
 
-\def\typesetchapterheading#1{
-  \vbox{
-    \vskip5\baselineskip
-    {\raggedleft\chaptertitlefont#1\par}
-  }
-  \nobreak
-}
+\def\typesetchapterheading#1{{\raggedleft\usefont\chaptertitlefont#1\par}}
 
 \def\section#1{
   \nextpage
   \displaypagetrue
-  \typesetsectionheading{#1}
+  \baselinebox{\typesetsectionheading{#1}}{10}{1}
 }
 
-\def\typesetsectionheading#1{
-  \vbox{
-    \vskip3\baselineskip
-    {\raggedleft\sectiontitlefont\baselineskip=\fontdimen6\sectiontitlefont#1\par}
-    \vskip\baselineskip
-  }
-  \nobreak
-}
+\def\typesetsectionheading#1{{\ifodd\pageno\raggedleft\else\raggedright\fi\usefont\sectiontitlefont{#1}\par}}
 
 % An info page is a frontmatter or backmatter page
 % other than a title or halftitle page.
 \def\oddinfopage#1{\nextoddpage\infopage{#1}}
-\def\infopage#1{\nextpage\useemptypageframe{\sectiontitlefont\baselineskip=\fontdimen6\sectiontitlefont\centered#1\par}}
+\def\infopage#1{\nextpage\useemptypageframe{\usefont\sectiontitlefont\centered#1\par}}
 \def\infoheading#1{\bigskip{\infoheadingfont\centered\uppercase\expandafter{#1}\par}}
 \def\infoitem#1{\smallskip{\centered#1\par}}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Approximating a Baseline Grid
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \baselinebox{content}{bottom (baselines))}{skip (baselines)}
+\long\def\baselinebox#1#2#3{\vbox to #2\leading{\line{}\vfill#1}\vskip#3\leading}
 
 
 
@@ -169,6 +168,7 @@
 
 % \makefont{name}{system font name}{size}{options}
 \def\makefont#1#2#3#4{\font#1="#2#4" at #3}
+\def\usefont#1{#1\baselineskip=\fontdimen6#1}
 
 
 
