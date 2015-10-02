@@ -1,6 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Paper and Margins
+% TODO: Move to fiction.tex?
+% In general I don't want to take action in fiction.tex.
+% But that may be the best place to set the output routine.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -12,6 +15,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Page Frame (Headline and Footline)
+% TODO: Move to fiction.tex
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -22,9 +26,14 @@
 \def\displaypageheadline{\line{}}
 \def\displaypagefootline{\hfil\headlinefont\folio\hfil}
 
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Pages
+% TODO: Where to put the title and preview macros?
+%       They seem closely associated with the publisher.
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -75,6 +84,7 @@
   \vfill
 }
 
+% TODO Where to put this?
 \raggedbottom
 
 
@@ -83,6 +93,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Fonts
+% TODO: Move to <genre>.tex
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -125,9 +136,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Paragraphs and Lines
+% TODO: Move to <genre>.tex
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% TODO Create macros to set these parameters up.
 % Paragraphs
 \def\leadin#1{\noindent{\bodysc#1}}
 \parindent=1em
