@@ -8,6 +8,7 @@
 \def\headlinefontfamily{Optima nova LT Pro}
 \def\displayfontfamily{Optima nova LT Pro Titling Initials}
 
+% TODO: Move \newdimens to the files that use them.
 \newdimen\bodyfontsize \bodyfontsize=11pt
 \newdimen\bodysmallfontsize \bodysmallfontsize=10pt
 \newdimen\leading \leading=15pt
@@ -36,24 +37,3 @@
 \makefont{\bodyit}{\bodyfontfamily}{\bodyfontsize}{/I}
 \makefont{\bodysc}{\bodyfontfamily}{\bodyfontsize}{:+smcp}
 \makefont{\bodysmallfont}{\bodyfontfamily}{\bodysmallfontsize}{}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% Paragraph Styles
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% TODO Create macros to set these parameters up.
-\parindent=1em
-\normalbaselineskip=\leading
-\normalbaselines
-\emergencystretch=1.5em
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% Character Styles
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\def\leadin#1{\noindent{\bodysc#1}}
-\bodyrm
