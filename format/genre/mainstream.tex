@@ -1,0 +1,59 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Fonts
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\bodyfontfamily{Minion Pro}
+\def\headlinefontfamily{Optima nova LT Pro}
+\def\displayfontfamily{Optima nova LT Pro Titling Initials}
+
+\newdimen\bodyfontsize \bodyfontsize=11pt
+\newdimen\bodysmallfontsize \bodysmallfontsize=10pt
+\newdimen\leading \leading=15pt
+
+\newdimen\headlinefontsize \headlinefontsize=8pt
+\newdimen\titlepagetitlefontsize \titlepagetitlefontsize=30pt
+\newdimen\titlepageauthorfontsize \titlepageauthorfontsize=24pt
+\newdimen\titlepagepublisherfontsize \titlepagepublisherfontsize=16pt
+
+\newdimen\aheadsize \aheadsize=24pt
+\newdimen\bheadsize \bheadsize=14pt
+
+% Headline and Footline Fonts
+\makefont{\headlinefont}{\headlinefontfamily}{\headlinefontsize}{:+cpsp}
+\def\footlinefont{\headlinefont}
+
+% Heading and Title Fonts
+\makefont{\titlepagetitlefont}{\displayfontfamily}{\titlepagetitlefontsize}{:+cpsp}
+\makefont{\titlepageauthorfont}{\displayfontfamily}{\titlepageauthorfontsize}{:+cpsp}
+\makefont{\chaptertitlefont}{\displayfontfamily}{\aheadsize}{:+smcp}
+\makefont{\sectiontitlefont}{\displayfontfamily}{\bheadsize}{:+smcp}
+\makefont{\infoheadingfont}{\displayfontfamily}{\bodysmallfontsize}{:+cpsp}
+
+% Text Fonts
+\makefont{\bodyrm}{\bodyfontfamily}{\bodyfontsize}{:+nrml}
+\makefont{\bodyit}{\bodyfontfamily}{\bodyfontsize}{/I}
+\makefont{\bodysc}{\bodyfontfamily}{\bodyfontsize}{:+smcp}
+\makefont{\bodysmallfont}{\bodyfontfamily}{\bodysmallfontsize}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Paragraph Styles
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% TODO Create macros to set these parameters up.
+\parindent=1em
+\normalbaselineskip=\leading
+\normalbaselines
+\emergencystretch=1.5em
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Character Styles
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\leadin#1{\noindent{\bodysc#1}}
+\bodyrm

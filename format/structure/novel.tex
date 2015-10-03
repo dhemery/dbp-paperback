@@ -1,0 +1,22 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Divisions
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% TODO: Move to <structure>.tex
+\def\chapter#1{
+  \nextoddpage\displaypagetrue
+  \baselinebox{\typesetchapterheading{#1}}{10}{}
+  \nextoddpage
+}
+
+\def\typesetchapterheading#1{{\raggedleft\usefont\chaptertitlefont#1\par}}
+
+\def\section#1{
+  \nextpage
+  \displaypagetrue
+  \baselinebox{\typesetsectionheading{#1}}{10}{1}
+}
+
+\def\typesetsectionheading#1{{\ifodd\pageno\raggedleft\else\raggedright\fi\usefont\sectiontitlefont{#1}\par}}

@@ -1,0 +1,117 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Page Frame (Headline and Footline)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\normalpageheadline{\ifodd\pageno\normaloddpageheadline\else\normalevenpageheadline\fi}
+\def\normalpagefootline{\line{}}
+\def\normaloddpageheadline{\headlinefont\uppercase\expandafter{\title}\hfil\folio}
+\def\normalevenpageheadline{\headlinefont\folio\hfil\uppercase\expandafter{\author}}
+\def\displaypageheadline{\line{}}
+\def\displaypagefootline{\hfil\headlinefont\folio\hfil}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Pages
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Title page:     \titlepage{title}{author}{publisher}
+% Halftitle page: \titlepage{title}{}{}
+\def\titlepage#1#2#3{
+  \nextoddpage
+  \useemptypageframe
+  \baselinebox{\titlepagetitle{#1}}{10}{0}
+  \baselinebox{\titlepageauthor{#2}}{6}{6}
+  \titlepagepublisher{#3}
+  \eject
+}
+
+\def\titlepagetitle#1{{\usefont\titlepagetitlefont\raggedleft\uppercase{#1}\par}}
+\def\titlepageauthor#1{{\titlepageauthorfont\raggedleft\uppercase{#1}\par}}
+\def\titlepagepublisher#1{\rightline{#1}}
+
+\def\previewannouncementpage{
+  \nextoddpage
+  \line{}\vfill
+  \centerline{\linelogo{20pt}}
+  \vskip\baselineskip
+  \centerline{\sectiontitlefont proudly announces}
+  \vfill
+  {\usefont\titlepagetitlefont\centered\previewtitle\par}
+  \vskip\baselineskip
+  \centerline{by}
+  \vskip\baselineskip
+  \centerline{\titlepageauthorfont\previewauthor}
+  \vfill
+  \centerline{Turn the page for a preview}
+  \vfill
+}
+\def\previewpage{\nextoddpage}
+\def\previewavailablepage{
+  \nextoddpage
+  \line{}\vfill
+  \line{\hss{\usefont\titlepagetitlefont\previewtitle}\hss}
+  \vskip\baselineskip
+  \centerline{by}
+  \vskip\baselineskip
+  \centerline{\titlepageauthorfont\previewauthor}
+  \vfill
+  \centerline{Available now from your favorite retailer}
+  \vfill
+  \centerline{\linelogo{20pt}}
+  \vfill
+}
+
+% \stackedlogo{size}{left glue}{right glue}
+\def\stackedlogo#1#2#3{%
+  \begingroup%
+  \dimen0=#1\divide\dimen0 by 16%
+  \font\logofont="Proxima Nova:+cpsp" at #1\relax%
+  \logofont\baselineskip=0pt%
+  \setbox0=\hbox{DRISCOLL}%
+  \vbox{%
+    \hrule height \dimen0%
+    \vskip4\dimen0%
+    \copy0%
+    \vskip2\dimen0%
+    \hbox to \wd0{#2BROOK#3}%
+    \vskip2\dimen0%
+    \hbox to \wd0{#2PRESS#3}%
+    \vskip4\dimen0%
+    \hrule height \dimen0%
+  }%
+  \endgroup%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Logos
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \leftlogo{font size}
+\def\leftlogo#1{\stackedlogo{#1}{}{\hss}}
+
+% \centerlogo{font size}
+\def\centerlogo#1{\stackedlogo{#1}{\hss}{\hss}}
+
+% \rightlogo{font size}
+\def\rightlogo#1{\stackedlogo{#1}{\hss}{}}
+
+% \linelogo{font size}
+\def\linelogo#1{%
+  \begingroup%
+  \dimen0=#1\divide\dimen0 by 16%
+  \font\logofont="Proxima Nova:+cpsp" at #1\relax%
+  \logofont\baselineskip=0pt%
+  \vbox{%
+    \hrule height \dimen0%
+    \vskip4\dimen0%
+    \hbox{DRISCOLL BROOK PRESS}%
+    \vskip4\dimen0%
+    \hrule height \dimen0%
+  }%
+  \endgroup%
+}
