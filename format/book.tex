@@ -5,40 +5,31 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% TODO: Make these private
-% TODO: Remove default values. Require users to call
-%       \setpapersize and \setmargins to set them up.
-\newdimen\pdf@origin@top@adjustment \pdf@origin@top@adjustment=0pt
-\newdimen\pdf@origin@left@adjustment \pdf@origin@left@adjustment=0pt
-\newdimen\top@adjustment \top@adjustment=0pt
-\newdimen\even@page@left@adjustment \even@page@left@adjustment=0pt
-\newdimen\odd@page@left@adjustment \odd@page@left@adjustment=0pt
+\newdimen\paper@top
+\newdimen\paper@left
+\newdimen\textblock@top
+\newdimen\textblock@odd@left
+\newdimen\textblock@even@left
 
 % \setpdforigin{left adjustment}{top adjustment}
 % By default (per a configuration file) the PDF renderer
 % might start each page at somewhere other than the top
 % left corner of the paper. To compensate for that, call
 % this macro to adjust where we place the page.
-\def\adjustpdforigin#1#2{\pdf@origin@left@adjustment=#1\pdf@origin@top@adjustment=#2}
+\def\adjustpdforigin#1#2{\paper@left=#1\paper@top=#2}
 
-% \setpapersize{width}{height}
-\def\setpapersize#1#2{\pdfpagewidth=#1\pdfpageheight=#2\setmargins{0pt}{0pt}{0pt}{0pt}}
+\def\setpapersize#1#2{\pdfpagewidth=#1\pdfpageheight=#2}
 
-% \setmargins{top}{bottom}{inner}{outer}
-% Sets the margins of the page's main content. The running
-% header will be placed above the main content, within the
-% top margin. The running footer will be placed below the
-% main content, within the bottom margin.
-\def\setmargins#1#2#3#4{%
-  \vsize=\pdfpageheight
-  \hsize=\pdfpagewidth
-  \advance\vsize by -#1
-  \advance\vsize by -#2
-  \advance\hsize by -#3
-  \advance\hsize by -#4
-  \top@adjustment=#1\advance\top@adjustment\pdf@origin@top@adjustment
-  \even@page@left@adjustment=#4\advance\even@page@left@adjustment\pdf@origin@left@adjustment
-  \odd@page@left@adjustment=#3\advance\odd@page@left@adjustment\pdf@origin@left@adjustment
+\def\settextblocksize#1#2{\hsize=#1\vsize=#2}
+
+\def\settextblockposition#1#2{% spine margin, top margin
+  \textblock@odd@left=\paper@left%
+    \advance\textblock@odd@left by #1%
+  \textblock@even@left=\paper@left%
+    \advance\textblock@even@left by \pdfpagewidth%
+    \advance\textblock@even@left by -#1%
+    \advance\textblock@even@left by -\hsize%
+  \textblock@top=\paper@top \advance\textblock@top by #2%
 }
 
 % Output routine that adjusts left margin for odd and even pages.
@@ -47,8 +38,8 @@
   \ifdisplaypage\headline={\displaypageheadline}\footline={\displaypagefootline}\fi%
   \global\clearedpagefalse%
   \global\displaypagefalse%
-  \dimen0=\ifodd\pageno\odd@page@left@adjustment\else\even@page@left@adjustment\fi%
-  \shipout\vbox{\moveright\dimen0\vbox{\vskip\top@adjustment\makeheadline\pagebody\makefootline}}%
+  \dimen0=\ifodd\pageno\textblock@odd@left\else\textblock@even@left\fi%
+  \shipout\vbox{\moveright\dimen0\vbox{\vskip\textblock@top\makeheadline\pagebody\makefootline}}%
   \advancepageno%
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
