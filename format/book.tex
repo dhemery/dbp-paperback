@@ -1,24 +1,39 @@
 \catcode`\@=11
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Paper and Margins
+% Paper Position in the PDF
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newdimen\paper@top
 \newdimen\paper@left
+
+% \setpageposition{left}{top}
+\def\setpageposition#1#2{\paper@left=#1\paper@top=#2}
+
+% The default TeX configuration on my computers wants to
+% print starting at [1in, 1in] in the PDF. To compensate
+% for that, I'll place the page origin at [-1in, -1in] from
+% the PDF origin.
+\setpageposition{-1 true in}{-1 true in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Trim Size
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\settrimsize#1#2{\pdfpagewidth=#1\pdfpageheight=#2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Textblock Size and Position on the Page
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newdimen\textblock@top
 \newdimen\textblock@odd@left
 \newdimen\textblock@even@left
-
-% \setpdforigin{left adjustment}{top adjustment}
-% By default (per a configuration file) the PDF renderer
-% might start each page at somewhere other than the top
-% left corner of the paper. To compensate for that, call
-% this macro to adjust where we place the page.
-\def\adjustpdforigin#1#2{\paper@left=#1\paper@top=#2}
-
-\def\setpapersize#1#2{\pdfpagewidth=#1\pdfpageheight=#2}
 
 \def\settextblocksize#1#2{\hsize=#1\vsize=#2}
 
@@ -30,18 +45,6 @@
     \advance\textblock@even@left by -#1
     \advance\textblock@even@left by \paper@left
   \textblock@top=\paper@top \advance\textblock@top by #2
-}
-
-% Output routine that adjusts left margin for odd and even pages.
-\def\facingpages{%
-  \ifclearedpage\headline={\clearedpageheadline}\footline={\clearedpagefootline}\fi%
-  \ifdisplaypage\headline={\displaypageheadline}\footline={\displaypagefootline}\fi%
-  \global\clearedpagefalse%
-  \global\displaypagefalse%
-  \dimen0=\ifodd\pageno\textblock@odd@left\else\textblock@even@left\fi%
-  \shipout\vbox{\moveright\dimen0\vbox{\vskip\textblock@top\makeheadline\pagebody\makefootline}}%
-  \advancepageno%
-  \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -77,6 +80,18 @@
 \def\emptypagefootline{\line{}}
 \def\normalpageheadline{\line{}}
 \def\normalpagefootline{\line{}}
+
+% Write one page (textblock, headline, and footline).
+\def\facingpages{%
+  \ifclearedpage\headline={\clearedpageheadline}\footline={\clearedpagefootline}\fi%
+  \ifdisplaypage\headline={\displaypageheadline}\footline={\displaypagefootline}\fi%
+  \global\clearedpagefalse%
+  \global\displaypagefalse%
+  \dimen0=\ifodd\pageno\textblock@odd@left\else\textblock@even@left\fi%
+  \shipout\vbox{\moveright\dimen0\vbox{\vskip\textblock@top\makeheadline\pagebody\makefootline}}%
+  \advancepageno%
+  \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
