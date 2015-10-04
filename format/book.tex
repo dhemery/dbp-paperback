@@ -1,3 +1,4 @@
+\catcode`\@=11
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Paper and Margins
@@ -7,18 +8,18 @@
 % TODO: Make these private
 % TODO: Remove default values. Require users to call
 %       \setpapersize and \setmargins to set them up.
-\newdimen\pdforigintopadjustment \pdforigintopadjustment=0pt
-\newdimen\pdforiginleftadjustment \pdforigintopadjustment=0pt
-\newdimen\topadjustment \topadjustment=0pt
-\newdimen\evenpageleftadjustment \evenpageleftadjustment=0pt
-\newdimen\oddpageleftadjustment \oddpageleftadjustment=0pt
+\newdimen\pdf@origin@top@adjustment \pdf@origin@top@adjustment=0pt
+\newdimen\pdf@origin@left@adjustment \pdf@origin@left@adjustment=0pt
+\newdimen\top@adjustment \top@adjustment=0pt
+\newdimen\even@page@left@adjustment \even@page@left@adjustment=0pt
+\newdimen\odd@page@left@adjustment \odd@page@left@adjustment=0pt
 
 % \setpdforigin{left adjustment}{top adjustment}
 % By default (per a configuration file) the PDF renderer
 % might start each page at somewhere other than the top
 % left corner of the paper. To compensate for that, call
 % this macro to adjust where we place the page.
-\def\adjustpdforigin#1#2{\pdforiginleftadjustment=#1\pdforigintopadjustment=#2}
+\def\adjustpdforigin#1#2{\pdf@origin@left@adjustment=#1\pdf@origin@top@adjustment=#2}
 
 % \setpapersize{width}{height}
 \def\setpapersize#1#2{\pdfpagewidth=#1\pdfpageheight=#2\setmargins{0pt}{0pt}{0pt}{0pt}}
@@ -35,9 +36,9 @@
   \advance\vsize by -#2
   \advance\hsize by -#3
   \advance\hsize by -#4
-  \topadjustment=#1\advance\topadjustment\pdforigintopadjustment
-  \evenpageleftadjustment=#4\advance\evenpageleftadjustment\pdforiginleftadjustment
-  \oddpageleftadjustment=#3\advance\oddpageleftadjustment\pdforiginleftadjustment
+  \top@adjustment=#1\advance\top@adjustment\pdf@origin@top@adjustment
+  \even@page@left@adjustment=#4\advance\even@page@left@adjustment\pdf@origin@left@adjustment
+  \odd@page@left@adjustment=#3\advance\odd@page@left@adjustment\pdf@origin@left@adjustment
 }
 
 % Output routine that adjusts left margin for odd and even pages.
@@ -46,8 +47,8 @@
   \ifdisplaypage\headline={\displaypageheadline}\footline={\displaypagefootline}\fi%
   \global\clearedpagefalse%
   \global\displaypagefalse%
-  \dimen0=\ifodd\pageno\oddpageleftadjustment\else\evenpageleftadjustment\fi%
-  \shipout\vbox{\moveright\dimen0\vbox{\vskip\topadjustment\makeheadline\pagebody\makefootline}}%
+  \dimen0=\ifodd\pageno\odd@page@left@adjustment\else\even@page@left@adjustment\fi%
+  \shipout\vbox{\moveright\dimen0\vbox{\vskip\top@adjustment\makeheadline\pagebody\makefootline}}%
   \advancepageno%
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
@@ -155,3 +156,5 @@
 %       Or give a way to go back to roman.
 %       Or switch to {\rm ...} and {\it ...}.
 \def\emph#1{{\bodyit #1}}
+
+\catcode`\@=12
