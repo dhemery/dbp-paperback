@@ -23,13 +23,13 @@
 \def\settextblocksize#1#2{\hsize=#1\vsize=#2}
 
 \def\settextblockposition#1#2{% spine margin, top margin
-  \textblock@odd@left=\paper@left%
-    \advance\textblock@odd@left by #1%
-  \textblock@even@left=\paper@left%
-    \advance\textblock@even@left by \pdfpagewidth%
-    \advance\textblock@even@left by -#1%
-    \advance\textblock@even@left by -\hsize%
-  \textblock@top=\paper@top \advance\textblock@top by #2%
+  \textblock@odd@left=#1
+    \advance\textblock@odd@left by \paper@left
+  \textblock@even@left=\pdfpagewidth
+    \advance\textblock@even@left by -\hsize
+    \advance\textblock@even@left by -#1
+    \advance\textblock@even@left by \paper@left
+  \textblock@top=\paper@top \advance\textblock@top by #2
 }
 
 % Output routine that adjusts left margin for odd and even pages.
