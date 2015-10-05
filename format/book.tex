@@ -1,7 +1,7 @@
 \catcode`\@=11
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Paper Position in the PDF
+% Page Position in the PDF
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -49,26 +49,45 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+% Output Routine
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Write one page (textblock, headline, and footline).
+\def\facingpages{%
+  \if@cleared@page\headline={\clearedpageheadline}\footline={\clearedpagefootline}\fi%
+  \if@display@page\headline={\displaypageheadline}\footline={\displaypagefootline}\fi%
+  \global\@cleared@pagefalse%
+  \global\@display@pagefalse%
+  \dimen0=\ifodd\pageno\textblock@odd@left\else\textblock@even@left\fi%
+  \shipout\vbox{\moveright\dimen0\vbox{\vskip\textblock@top\makeheadline\pagebody\makefootline}}%
+  \advancepageno%
+  \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Page Frame (Headline and Footline)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% TODO: Make these private
-\newif\ifclearedpage
-\newif\ifdisplaypage
+\newif\if@cleared@page
+\newif\if@display@page
 
 \def\useemptypageframe{
   \global\headline={\emptypageheadline}
   \global\footline={\emptypagefootline}
-  \global\clearedpagefalse
-  \global\displaypagefalse
+  \global\@cleared@pagefalse
+  \global\@display@pagefalse
 }
+
+\def\usedisplaypageframe{\@display@pagetrue\@cleared@pagefalse}
 
 \def\usenormalpageframe{
   \global\headline={\normalpageheadline}
   \global\footline={\normalpagefootline}
-  \global\clearedpagefalse
-  \global\displaypagefalse
+  \global\@cleared@pagefalse
+  \global\@display@pagefalse
 }
 
 % Default headlines and footlines (all empty)
@@ -81,25 +100,13 @@
 \def\normalpageheadline{\line{}}
 \def\normalpagefootline{\line{}}
 
-% Write one page (textblock, headline, and footline).
-\def\facingpages{%
-  \ifclearedpage\headline={\clearedpageheadline}\footline={\clearedpagefootline}\fi%
-  \ifdisplaypage\headline={\displaypageheadline}\footline={\displaypagefootline}\fi%
-  \global\clearedpagefalse%
-  \global\displaypagefalse%
-  \dimen0=\ifodd\pageno\textblock@odd@left\else\textblock@even@left\fi%
-  \shipout\vbox{\moveright\dimen0\vbox{\vskip\textblock@top\makeheadline\pagebody\makefootline}}%
-  \advancepageno%
-  \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
-}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Pages
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\nextpage{\vfil\eject\global\clearedpagetrue\global\displaypagefalse\relax}
+\def\nextpage{\vfil\eject\global\@cleared@pagetrue\global\@display@pagefalse\relax}
 \def\nextoddpage{\nextpage\ifodd\pageno \else \line{}\nextpage\fi}
 \def\nextevenpage{\nextpage\ifodd\pageno \line{}\nextpage\else \fi}
 

@@ -6,7 +6,7 @@
 
 % TODO: Move to <structure>.tex
 \def\chapter#1{
-  \nextoddpage\displaypagetrue
+  \nextoddpage\usedisplaypageframe
   \baselinebox{\typesetchapterheading{#1}}{10}{}
   \nextoddpage
 }
@@ -15,7 +15,7 @@
 
 \def\section#1{
   \nextpage
-  \displaypagetrue
+  \usedisplaypageframe
   \baselinebox{\typesetsectionheading{#1}}{10}{1}
 }
 
