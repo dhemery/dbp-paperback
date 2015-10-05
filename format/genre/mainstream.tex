@@ -14,9 +14,9 @@
 \newdimen\leading \leading=15pt
 
 \newdimen\headlinefontsize \headlinefontsize=8pt
-\newdimen\titlepagetitlefontsize \titlepagetitlefontsize=30pt
-\newdimen\titlepageauthorfontsize \titlepageauthorfontsize=24pt
-\newdimen\titlepagepublisherfontsize \titlepagepublisherfontsize=16pt
+\newdimen\booktitlefontsize \booktitlefontsize=30pt
+\newdimen\authornamefontsize \authornamefontsize=24pt
+\newdimen\publishernamefontsize \publishernamefontsize=24pt
 
 \newdimen\aheadsize \aheadsize=24pt
 \newdimen\bheadsize \bheadsize=14pt
@@ -26,11 +26,12 @@
 \def\footlinefont{\headlinefont}
 
 % Heading and Title Fonts
-\makefont{\titlepagetitlefont}{\displayfontfamily}{\titlepagetitlefontsize}{:+cpsp}
-\makefont{\titlepageauthorfont}{\displayfontfamily}{\titlepageauthorfontsize}{:+cpsp}
+\makefont{\booktitlefont}{\displayfontfamily}{\booktitlefontsize}{:+cpsp}
+\makefont{\authornamefont}{\displayfontfamily}{\authornamefontsize}{:+cpsp}
 \makefont{\chaptertitlefont}{\displayfontfamily}{\aheadsize}{:+smcp}
 \makefont{\sectiontitlefont}{\displayfontfamily}{\bheadsize}{:+smcp}
-\makefont{\infoheadingfont}{\displayfontfamily}{\bodysmallfontsize}{:+cpsp}
+\def\bookinfotitlefont{\sectiontitlefont}
+\makefont{\authorinfotitlefont}{\displayfontfamily}{\bodysmallfontsize}{:+cpsp}
 
 % Text Fonts
 \makefont{\bodyrm}{\bodyfontfamily}{\bodyfontsize}{:+nrml}

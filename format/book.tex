@@ -110,17 +110,9 @@
 \def\nextoddpage{\nextpage\ifodd\pageno \else \line{}\nextpage\fi}
 \def\nextevenpage{\nextpage\ifodd\pageno \line{}\nextpage\else \fi}
 
-% An info page is a frontmatter or backmatter page
-% other than a title or halftitle page.
-% TODO: Rename as \bookinfo
-% TODO: Use \bookinfotitlefont
-\def\infopage#1{\nextpage\useemptypageframe{\usefont\sectiontitlefont\centered#1\par}}
-\def\infoheading#1{\bigskip{\infoheadingfont\centered\uppercase\expandafter{#1}\par}}
-\def\infoitem#1{\smallskip{\centered#1\par}}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Major Book Divisions
+% Divisions
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -128,13 +120,16 @@
 \def\mainmatter{\nextoddpage\pageno=1\usenormalpageframe}
 \def\backmatter{\frontmatter}
 
+% \bookinfo is a named frontmatter or backmatter division.
+\def\bookinfo#1{\nextpage\useemptypageframe{\usefont\bookinfotitlefont\centered#1\par}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Aligning Headings to a Baseline Grid
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \baselinebox{content}{bottom (baselines))}{skip (baselines)}
+% \baselinebox{content}{bottom (baselines)}{skip (baselines)}
 \long\def\baselinebox#1#2#3{\vbox to #2\leading{\line{}\vfill#1}\vskip#3\leading}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

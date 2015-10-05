@@ -22,15 +22,15 @@
 \def\titlepage#1#2#3{
   \nextoddpage
   \useemptypageframe
-  \baselinebox{\titlepagetitle{#1}}{10}{0}
-  \baselinebox{\titlepageauthor{#2}}{6}{6}
-  \titlepagepublisher{#3}
+  \baselinebox{\booktitle{#1}}{10}{0}
+  \baselinebox{\authorname{#2}}{6}{6}
+  \publisherlogo{#3}
   \eject
 }
 
-\def\titlepagetitle#1{{\usefont\titlepagetitlefont\raggedleft\uppercase{#1}\par}}
-\def\titlepageauthor#1{{\titlepageauthorfont\raggedleft\uppercase{#1}\par}}
-\def\titlepagepublisher#1{\rightline{#1}}
+\def\booktitle#1{{\usefont\booktitlefont\raggedleft\uppercase{#1}\par}}
+\def\authorname#1{{\authornamefont\raggedleft\uppercase{#1}\par}}
+\def\publisherlogo#1{\rightline{#1}}
 
 \def\previewannouncementpage{
   \nextoddpage
@@ -39,11 +39,11 @@
   \vskip\baselineskip
   \centerline{\sectiontitlefont proudly announces}
   \vfill
-  {\usefont\titlepagetitlefont\centered\previewtitle\par}
+  {\usefont\booktitlefont\centered\previewtitle\par}
   \vskip\baselineskip
   \centerline{by}
   \vskip\baselineskip
-  \centerline{\titlepageauthorfont\previewauthor}
+  \centerline{\authornamefont\previewauthor}
   \vfill
   \centerline{Turn the page for a preview}
   \vfill
@@ -52,11 +52,11 @@
 \def\previewavailablepage{
   \nextoddpage
   \line{}\vfill
-  \line{\hss{\usefont\titlepagetitlefont\previewtitle}\hss}
+  \line{\hss{\usefont\booktitlefont\previewtitle}\hss}
   \vskip\baselineskip
   \centerline{by}
   \vskip\baselineskip
-  \centerline{\titlepageauthorfont\previewauthor}
+  \centerline{\authornamefont\previewauthor}
   \vfill
   \centerline{Available now from your favorite retailer}
   \vfill
@@ -121,6 +121,12 @@
 % Paragraph Styles
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\authorinfoheading#1{\bigskip{\authorinfotitlefont\centered\uppercase\expandafter{#1}\par}}
+\def\authorinfoitem#1{\smallskip{\centered#1\par}}
+\def\connect#1#2{\authorinfoheading{#1}\authorinfoitem{#2}}
+\def\genre#1{\authorinfoheading{#1}}
+\def\genrebook#1{\authorinfoitem{\bodyit#1}}
 
 % TODO Create macros to set these parameters up.
 \parindent=1em
