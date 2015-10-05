@@ -1,0 +1,41 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Fonts
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\bodyfontfamily{Garamond Premier Pro}
+\def\headlinefontfamily{Garamond Premier Pro}
+\def\displayfontfamily{Garamond Premier Pro}
+
+% TODO: Move \newdimens to the files that use them.
+\newdimen\bodyfontsize \bodyfontsize=11pt
+\newdimen\bodysmallfontsize \bodysmallfontsize=10pt
+
+\newdimen\headlinefontsize \headlinefontsize=8pt
+\newdimen\booktitlefontsize \booktitlefontsize=30pt
+\newdimen\authornamefontsize \authornamefontsize=24pt
+\newdimen\publishernamefontsize \publishernamefontsize=24pt
+
+\newdimen\aheadsize \aheadsize=24pt
+\newdimen\bheadsize \bheadsize=14pt
+
+\newdimen\leading \leading=15pt
+
+% Headline and Footline Fonts
+\makefont{\headlinefont}{\headlinefontfamily}{\headlinefontsize}{:+cpsp}
+\def\footlinefont{\headlinefont}
+
+% Heading and Title Fonts
+\makefont{\booktitlefont}{\displayfontfamily}{\booktitlefontsize}{:+smcp+cpsp}
+\makefont{\authornamefont}{\displayfontfamily}{\authornamefontsize}{:+smcp+cpsp}
+\makefont{\chaptertitlefont}{\displayfontfamily}{\aheadsize}{:+smcp}
+\makefont{\sectiontitlefont}{\displayfontfamily}{\bheadsize}{:+smcp}
+\def\bookinfotitlefont{\sectiontitlefont}
+\makefont{\authorinfotitlefont}{\displayfontfamily}{\bodysmallfontsize}{:+cpsp}
+
+% Text Fonts
+\makefont{\bodyrm}{\bodyfontfamily}{\bodyfontsize}{:+nrml}
+\makefont{\bodyit}{\bodyfontfamily}{\bodyfontsize}{/I}
+\makefont{\bodysc}{\bodyfontfamily}{\bodyfontsize}{:+smcp}
+\makefont{\bodysmallfont}{\bodyfontfamily}{\bodysmallfontsize}{}

@@ -4,19 +4,12 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% TODO: Move to <structure>.tex
 \def\chapter#1{
   \nextoddpage\usedisplaypageframe
-  \baselinebox{\typesetchapterheading{#1}}{10}{}
-  \nextoddpage
+  \baselinebox{\typesetchapterheading{#1}\nobreak}{6}{}
 }
+
+\def\scene#1{\baselinebox{\typesetsectionheading{#1}\nobreak}{3}{1}}
 
 \def\typesetchapterheading#1{{\raggedleft\usefont\chaptertitlefont#1\par}}
-
-\def\section#1{
-  \nextpage
-  \usedisplaypageframe
-  \baselinebox{\typesetsectionheading{#1}}{10}{1}
-}
-
 \def\typesetsectionheading#1{{\ifodd\pageno\raggedleft\else\raggedright\fi\usefont\sectiontitlefont{#1}\par}}

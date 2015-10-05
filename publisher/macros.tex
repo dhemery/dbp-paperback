@@ -28,8 +28,8 @@
   \eject
 }
 
-\def\booktitle#1{{\usefont\booktitlefont\raggedleft\uppercase{#1}\par}}
-\def\authorname#1{{\authornamefont\raggedleft\uppercase{#1}\par}}
+\def\booktitle#1{{\usefont\booktitlefont\raggedleft{#1}\par}}
+\def\authorname#1{{\authornamefont\raggedleft{#1}\par}}
 \def\publisherlogo#1{\rightline{#1}}
 
 \def\previewannouncementpage{
@@ -140,5 +140,5 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\leadin#1{\noindent{\bodysc#1}}
+\def\leadin#1{\nobreak\noindent{\bodysc#1}}
 \bodyrm
