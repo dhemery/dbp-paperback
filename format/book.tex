@@ -134,12 +134,14 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Making Fonts
+% Making and Using Fonts
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % \makefont{name}{system font name}{size}{options}
 \def\makefont#1#2#3#4{\font#1="#2#4" at #3}
+
+% Sets the font and uses its size as leading.
 \def\usefont#1{#1\baselineskip=\fontdimen6#1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
