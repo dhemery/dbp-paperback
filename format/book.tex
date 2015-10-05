@@ -112,9 +112,7 @@
 
 % An info page is a frontmatter or backmatter page
 % other than a title or halftitle page.
-% TODO: Get rid of \oddinfopage. Let info pages do \nextoddpage if desired.
 % TODO: Rename as \bookinfo
-\def\oddinfopage#1{\nextoddpage\infopage{#1}}
 % TODO: Use \bookinfotitlefont
 \def\infopage#1{\nextpage\useemptypageframe{\usefont\sectiontitlefont\centered#1\par}}
 \def\infoheading#1{\bigskip{\infoheadingfont\centered\uppercase\expandafter{#1}\par}}
