@@ -4,12 +4,23 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\textsize{11pt}
-\def\fineprintsize{10pt}
-\font\rm=garamond-11-roman at \textsize
-\font\it=garamond-11-italic at \textsize
-\font\sc=garamond-11-roman-smallcap at \textsize
-\font\fineprint=garamond-11-roman at \fineprintsize
+% Garamond Premier Pro Optical Sizes
+% - Caption 8 (5.9–8.9)
+% - Regular 11 (8.9–14.9)
+% - Subhead 18 (14.9–22.9)
+% - Display 36 (22.9—72)
+
+\def\romantext{GaramondPremrPro-osf-ly1 }
+\def\italictext{GaramondPremrPro-It-osf-ly1 }
+\def\smallcaptext{GaramondPremrPro-osf-sc-ly1 }
+
+\newdimen\textsize \textsize=11pt
+\newdimen\smalltextsize \smalltextsize=10pt
+
+\font\rm=\romantext at \textsize
+\font\it=\italictext at \textsize
+\font\sc=\smallcaptext at \textsize
+\font\fineprint=\romantext at \smalltextsize
 
 \def\headlinefontfamily{Garamond Premier Pro Caption}
 \def\displayfontfamily{Garamond Premier Pro Display}
@@ -34,4 +45,4 @@
 \makefont{\chaptertitlefont}{\displayfontfamily}{\aheadsize}{:+smcp}
 \makefont{\scenetitlefont}{\displayfontfamily}{\bheadsize}{:+smcp}
 \def\bookinfotitlefont{\scenetitlefont}
-\makefont{\authorinfotitlefont}{\displayfontfamily}{\fineprintsize}{:+cpsp}
+\makefont{\authorinfotitlefont}{\displayfontfamily}{\smalltextsize}{:+cpsp}
