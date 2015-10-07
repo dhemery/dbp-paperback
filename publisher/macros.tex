@@ -126,7 +126,7 @@
 \def\authorinfoitem#1{\smallskip{\centered#1\par}}
 \def\connect#1#2{\authorinfoheading{#1}\authorinfoitem{#2}}
 \def\genre#1{\authorinfoheading{#1}}
-\def\genrebook#1{\authorinfoitem{\bodyit#1}}
+\def\genrebook#1{\authorinfoitem{\it #1}}
 
 % TODO Create macros to set these parameters up.
 \parindent=1em
@@ -140,5 +140,5 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\leadin#1{\nobreak\noindent{\bodysc#1}}
-\bodyrm
+\def\leadin#1{\nobreak\noindent{\sc #1}}
+\rm
