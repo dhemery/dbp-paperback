@@ -10,39 +10,42 @@
 % - Subhead 18 (14.9–22.9)
 % - Display 36 (22.9—72)
 
+% Font Shapes
 \def\romantext{GaramondPremrPro-osf-ly1 }
 \def\italictext{GaramondPremrPro-It-osf-ly1 }
 \def\smallcaptext{GaramondPremrPro-osf-sc-ly1 }
+\def\titlingtext{GaramondPremrPro-lf-titling-ly1 }
+\def\smallcapcaption{GaramondPremrPro-Capt-osf-sc-ly1 }
+\def\titlingdisplay{GaramondPremrPro-Disp-lf-titling-ly1 }
 
+% Font Sizes
 \newdimen\textsize \textsize=11pt
 \newdimen\smalltextsize \smalltextsize=10pt
+\newdimen\headlinesize \headlinesize=8pt
+\newdimen\booktitlesize \booktitlesize=30pt
+\newdimen\authornamesize \authornamesize=24pt
+\newdimen\publishernamesize \publishernamesize=24pt
+\newdimen\aheadsize \aheadsize=24pt
+\newdimen\bheadsize \bheadsize=14pt
 
+% Fonts
 \font\rm=\romantext at \textsize
 \font\it=\italictext at \textsize
 \font\sc=\smallcaptext at \textsize
 \font\fineprint=\romantext at \smalltextsize
 
-\def\headlinefontfamily{Garamond Premier Pro Caption}
-\def\displayfontfamily{Garamond Premier Pro Display}
+\font\headlinefont=\smallcapcaption at \headlinesize
 
-\newdimen\headlinefontsize \headlinefontsize=8pt
-\newdimen\booktitlefontsize \booktitlefontsize=30pt
-\newdimen\authornamefontsize \authornamefontsize=24pt
-\newdimen\publishernamefontsize \publishernamefontsize=24pt
+\font\booktitlefont=\titlingdisplay at \booktitlesize
+\font\authornamefont=\titlingdisplay at \authornamesize
+\font\chaptertitlefont=\titlingdisplay at \aheadsize
+\font\scenetitlefont=\titlingtext at \bheadsize
+\font\authorinfotitlefont \titlingtext at \smalltextsize
 
-\newdimen\aheadsize \aheadsize=24pt
-\newdimen\bheadsize \bheadsize=14pt
-
-\newdimen\leading \leading=15pt
-
-% Headline and Footline Fonts
-\makefont{\headlinefont}{\headlinefontfamily}{\headlinefontsize}{:+cpsp}
 \def\footlinefont{\headlinefont}
+\def\bookinfotitlefont{\scenetitlefont}
 
 % Heading and Title Fonts
-\makefont{\booktitlefont}{\displayfontfamily}{\booktitlefontsize}{:+smcp+cpsp}
-\makefont{\authornamefont}{\displayfontfamily}{\authornamefontsize}{:+smcp+cpsp}
-\makefont{\chaptertitlefont}{\displayfontfamily}{\aheadsize}{:+smcp}
-\makefont{\scenetitlefont}{\displayfontfamily}{\bheadsize}{:+smcp}
-\def\bookinfotitlefont{\scenetitlefont}
-\makefont{\authorinfotitlefont}{\displayfontfamily}{\smalltextsize}{:+cpsp}
+
+
+\newdimen\leading \leading=15pt
