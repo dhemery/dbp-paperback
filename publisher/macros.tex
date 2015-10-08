@@ -6,10 +6,10 @@
 
 \def\normalpageheadline{\ifodd\pageno\normaloddpageheadline\else\normalevenpageheadline\fi}
 \def\normalpagefootline{\line{}}
-\def\normaloddpageheadline{\headlinefont\uppercase\expandafter{\title}\hfil\folio}
-\def\normalevenpageheadline{\headlinefont\folio\hfil\uppercase\expandafter{\author}}
+\def\normaloddpageheadline{\title\hfil\folio}
+\def\normalevenpageheadline{\folio\hfil\author}
 \def\displaypageheadline{\line{}}
-\def\displaypagefootline{\hfil\headlinefont\folio\hfil}
+\def\displaypagefootline{\pageframefont\hfil\folio\hfil}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -32,27 +32,32 @@
 \def\authorname#1{{\authornamefont\raggedleft{#1}\par}}
 \def\publisherlogo#1{\rightline{#1}}
 
-\def\previewannouncementpage{
+\def\previewannouncementpage#1{
   \nextoddpage
   \line{}\vfill
   \centerline{\linelogo{20pt}}
   \vskip\baselineskip
   \centerline{\scenetitlefont proudly announces}
   \vfill
-  {\usefont\booktitlefont\centered\previewtitle\par}
+  {\usefont\booktitlefont\centered #1\par}
   \vskip\baselineskip
   \centerline{by}
   \vskip\baselineskip
-  \centerline{\authornamefont\previewauthor}
+  \centerline{\authornamefont\author}
   \vfill
   \centerline{Turn the page for a preview}
   \vfill
 }
-\def\previewpage{\nextoddpage}
-\def\previewavailablepage{
+\def\previewpage#1{
+  \nextoddpage
+  \baselinebox{\typesetchapterheading{#1}}{10}{}
+  \useemptypageframe
+}
+
+\def\previewavailablepage#1{
   \nextoddpage
   \line{}\vfill
-  \line{\hss{\usefont\booktitlefont\previewtitle}\hss}
+  \line{\hss{\usefont\booktitlefont #1}\hss}
   \vskip\baselineskip
   \centerline{by}
   \vskip\baselineskip

@@ -84,8 +84,8 @@
 \def\usedisplaypageframe{\@display@pagetrue\@cleared@pagefalse}
 
 \def\usenormalpageframe{
-  \global\headline={\normalpageheadline}
-  \global\footline={\normalpagefootline}
+  \global\headline={\pageframefont\normalpageheadline}
+  \global\footline={\pageframefont\normalpagefootline}
   \global\@cleared@pagefalse
   \global\@display@pagefalse
 }
