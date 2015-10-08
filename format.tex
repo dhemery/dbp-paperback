@@ -1,0 +1,329 @@
+\catcode`\@=11
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Textblock Size and Position on the Page
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newdimen\textblock@top
+\newdimen\textblock@odd@left
+\newdimen\textblock@even@left
+
+\def\settextblockposition#1#2{% spine margin, top margin
+  \textblock@odd@left=#1
+  \textblock@even@left=\pdfpagewidth
+    \advance\textblock@even@left by -\hsize
+    \advance\textblock@even@left by -#1
+  \textblock@top=#2
+}
+
+\pdfhorigin=0pt
+\pdfvorigin=0pt
+\pdfpagewidth=5 true in
+\pdfpageheight=8 true in
+\hsize=22pc
+\vsize=39pc
+
+\settextblockposition{5pc}{4.5pc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Output Routine
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\if@cleared@page
+\newif\if@display@page
+
+% Write one page (textblock, headline, and footline).
+\def\facingpages{%
+  \if@cleared@page\headline={\line{}}\footline={\line{}}\fi%
+  \if@display@page\headline={\line{}}\footline={\displaypagefootline}\fi%
+  \global\@cleared@pagefalse%
+  \global\@display@pagefalse%
+  \dimen0=\ifodd\pageno\textblock@odd@left\else\textblock@even@left\fi%
+  \shipout\vbox{\moveright\dimen0\vbox{\vskip\textblock@top\makeheadline\pagebody\makefootline}}%
+  \advancepageno%
+  \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
+}
+\output{\facingpages}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Fonts
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Sets the font and uses its size as leading.
+\def\usefont#1{#1\baselineskip=\fontdimen6#1}
+
+% Garamond Premier Pro Optical Sizes
+% - Caption 8 (5.9-8.9)
+% - Regular 11 (8.9-14.9)
+% - Subhead 18 (14.9-22.9)
+% - Display 36 (22.9-72)
+
+% Shapes
+\def\romantext{GaramondPremrPro-osf-ly1 }
+\def\italictext{GaramondPremrPro-It-osf-ly1 }
+\def\smallcaptext{GaramondPremrPro-osf-sc-ly1 }
+\def\romantitlingtext{GaramondPremrPro-lf-titling-ly1 }
+\def\smallcapcaption{GaramondPremrPro-Capt-osf-sc-ly1 }
+\def\romantitlingdisplay{GaramondPremrPro-Disp-lf-titling-ly1 }
+\def\proximatitling{ProximaNova-Regular-lf-titling-ly1 }
+
+% Sizes
+\newdimen\booktitlesize \booktitlesize=30pt
+\newdimen\authornamesize \authornamesize=24pt
+\newdimen\publishernamesize \publishernamesize=24pt
+\newdimen\aheadsize \aheadsize=24pt
+\newdimen\bheadsize \bheadsize=14pt
+
+\newdimen\textsize \textsize=11pt
+\newdimen\smalltextsize \smalltextsize=10pt
+\newdimen\pageframesize \pageframesize=8pt
+
+% Page Frame Fonts
+\font\pageframefont=\smallcapcaption at \pageframesize
+
+% Title Page Fonts
+\font\booktitlefont=\romantitlingdisplay at \booktitlesize
+\font\authornamefont=\romantitlingdisplay at \authornamesize
+
+% Heading Fonts
+\font\chaptertitlefont=\romantitlingdisplay at \aheadsize
+\font\scenetitlefont=\romantitlingtext at \bheadsize
+\font\authorinfotitlefont \romantitlingtext at \smalltextsize
+\def\bookinfotitlefont{\scenetitlefont}
+
+% Text Fonts
+\font\rm=\romantext at \textsize
+\font\it=\italictext at \textsize
+\font\sc=\smallcaptext at \textsize
+\font\fineprint=\romantext at \smalltextsize
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Page Frame (Headline and Footline)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\useemptypageframe{
+  \global\headline={\line{}}
+  \global\footline={\line{}}
+  \global\@cleared@pagefalse
+  \global\@display@pagefalse
+}
+
+\def\usedisplaypageframe{\@display@pagetrue\@cleared@pagefalse}
+
+\def\usenormalpageframe{
+  \global\headline={\pageframefont\normalpageheadline}
+  \global\footline={\pageframefont\normalpagefootline}
+  \global\@cleared@pagefalse
+  \global\@display@pagefalse
+}
+
+\def\displaypagefootline{\pageframefont\hfil\folio\hfil}
+\def\normalpageheadline{\ifodd\pageno\normaloddpageheadline\else\normalevenpageheadline\fi}
+\def\normalpagefootline{\line{}}
+\def\normaloddpageheadline{\title\hfil\folio}
+\def\normalevenpageheadline{\folio\hfil\author}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Pages
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\nextpage{\vfil\eject\global\@cleared@pagetrue\global\@display@pagefalse\relax}
+\def\nextoddpage{\nextpage\ifodd\pageno \else \line{}\nextpage\fi}
+\def\nextevenpage{\nextpage\ifodd\pageno \line{}\nextpage\else \fi}
+
+% Title page:     \titlepage{title}{author}{publisher}
+% Halftitle page: \titlepage{title}{}{}
+\def\titlepage#1#2#3{
+  \nextoddpage
+  \useemptypageframe
+  \baselinebox{\typesetbooktitle{#1}}{10}{0}
+  \baselinebox{\typesetauthorname{#2}}{6}{6}
+  \rightline{#3}
+  \eject
+}
+
+\def\previewannouncementpage#1{
+  \nextoddpage
+  \line{}\vfill
+  \centerline{\linelogo{20pt}}
+  \vskip\baselineskip
+  \centerline{\scenetitlefont proudly announces}
+  \vfill
+  {\usefont\booktitlefont\centered #1\par}
+  \vskip\baselineskip
+  \centerline{by}
+  \vskip\baselineskip
+  \centerline{\authornamefont\author}
+  \vfill
+  \centerline{Turn the page for a preview}
+  \vfill
+}
+\def\previewpage#1{
+  \nextoddpage
+  \baselinebox{\typesetchapterheading{#1}}{10}{}
+  \useemptypageframe
+}
+
+\def\previewavailablepage#1{
+  \nextoddpage
+  \line{}\vfill
+  \line{\hss{\usefont\booktitlefont #1}\hss}
+  \vskip\baselineskip
+  \centerline{by}
+  \vskip\baselineskip
+  \centerline{\authornamefont\previewauthor}
+  \vfill
+  \centerline{Available now from your favorite retailer}
+  \vfill
+  \centerline{\linelogo{20pt}}
+  \vfill
+}
+
+\raggedbottom
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Divisions
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\frontmatter{\nextoddpage\pageno=-1\useemptypageframe}
+\def\mainmatter{\nextoddpage\pageno=1\usenormalpageframe}
+\def\backmatter{\frontmatter}
+
+\def\chapter#1{
+  \nextoddpage\usedisplaypageframe
+  \baselinebox{\typesetchapterheading{#1}\nobreak}{6}{}
+}
+
+\def\scene#1{\baselinebox{\typesetsceneheading{#1}}{3}{1}}
+
+% \bookinfo is a named frontmatter or backmatter division.
+\def\bookinfo#1{\nextpage\useemptypageframe{\usefont\bookinfotitlefont\centered#1\par}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Headings
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \baselinebox{content}{bottom (baselines)}{skip (baselines)}
+\long\def\baselinebox#1#2#3{\vbox to #2\leading{\line{}\vfill#1}\vskip#3\leading}
+
+\def\typesetbooktitle#1{{\usefont\booktitlefont\raggedleft{#1}\par}}
+\def\typesetauthorname#1{{\authornamefont\raggedleft{#1}\par}}
+\def\typesetchapterheading#1{{\raggedleft\usefont\chaptertitlefont#1\par}}
+\def\typesetsceneheading#1{{\ifodd\pageno\raggedleft\else\raggedright\fi\usefont\scenetitlefont{#1}\par}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Logo
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \stackedlogo{size}{left glue}{right glue}
+\def\stackedlogo#1#2#3{%
+  \begingroup%
+  \dimen0=#1\divide\dimen0 by 16%
+  \font\logofont=\proximatitling at #1\relax%
+  \logofont\baselineskip=0pt%
+  \setbox0=\hbox{DRISCOLL}%
+  \vbox{%
+    \hrule height \dimen0%
+    \vskip4\dimen0%
+    \copy0%
+    \vskip2\dimen0%
+    \hbox to \wd0{#2BROOK#3}%
+    \vskip2\dimen0%
+    \hbox to \wd0{#2PRESS#3}%
+    \vskip4\dimen0%
+    \hrule height \dimen0%
+  }%
+  \endgroup%
+}
+
+% \leftlogo{font size}
+\def\leftlogo#1{\stackedlogo{#1}{}{\hss}}
+
+% \centerlogo{font size}
+\def\centerlogo#1{\stackedlogo{#1}{\hss}{\hss}}
+
+% \rightlogo{font size}
+\def\rightlogo#1{\stackedlogo{#1}{\hss}{}}
+
+% \linelogo{font size}
+\def\linelogo#1{%
+  \begingroup%
+  \dimen0=#1\divide\dimen0 by 16%
+  \font\logofont=\proximatitling at #1\relax%
+  \logofont\baselineskip=0pt%
+  \vbox{%
+    \hrule height \dimen0%
+    \vskip4\dimen0%
+    \hbox{DRISCOLL BROOK PRESS}%
+    \vskip4\dimen0%
+    \hrule height \dimen0%
+  }%
+  \endgroup%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Paragraph Styles
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\raggedleft{\parindent=0pt\parfillskip=0pt\leftskip=0pt plus \hsize\relax}
+\def\raggedright{\parindent=0pt\parfillskip=0pt\rightskip=0pt plus \hsize\relax}
+\def\centered{\raggedleft\raggedright}
+\newdimen\leading \leading=15pt
+
+\def\authorinfoheading#1{\bigskip{\authorinfotitlefont\centered\uppercase\expandafter{#1}\par}}
+\def\authorinfoitem#1{\smallskip{\centered#1\par}}
+\def\connect#1#2{\authorinfoheading{#1}\authorinfoitem{#2}}
+\def\genre#1{\authorinfoheading{#1}}
+\def\genrebook#1{\authorinfoitem{\it #1}}
+
+% TODO Create macros to set these parameters up.
+\parindent=1em
+\normalbaselineskip=\leading
+\normalbaselines
+\emergencystretch=1.5em
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Character Styles
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% TODO: Make this handle nested emphasis.
+%       Or give a way to go back to roman.
+%       Or switch to {\rm ...} and {\it ...}.
+\def\emph#1{{\it #1}}
+
+\def\leadin#1{\nobreak\noindent{\sc #1}}
+\rm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Microtypography
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pdffontexpand\rm 30 30 10 autoexpand
+\pdfadjustspacing=2
+\pdfprotrudechars=2
+
+\catcode`\@=12
