@@ -5,17 +5,8 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newdimen\paper@top
-\newdimen\paper@left
-
-% \setpageposition{left}{top}
-\def\setpageposition#1#2{\paper@left=#1\paper@top=#2}
-
-% The default TeX configuration on my computers wants to
-% print starting at [1in, 1in] in the PDF. To compensate
-% for that, I'll place the page origin at [-1in, -1in] from
-% the PDF origin.
-\setpageposition{-1 true in}{-1 true in}
+\pdfhorigin=0pt
+\pdfvorigin=0pt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -39,12 +30,10 @@
 
 \def\settextblockposition#1#2{% spine margin, top margin
   \textblock@odd@left=#1
-    \advance\textblock@odd@left by \paper@left
   \textblock@even@left=\pdfpagewidth
     \advance\textblock@even@left by -\hsize
     \advance\textblock@even@left by -#1
-    \advance\textblock@even@left by \paper@left
-  \textblock@top=\paper@top \advance\textblock@top by #2
+  \textblock@top=#2
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
