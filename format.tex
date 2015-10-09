@@ -68,11 +68,15 @@
 \newdimen\authornamesize \authornamesize=24pt
 \newdimen\publishernamesize \publishernamesize=24pt
 \newdimen\aheadsize \aheadsize=24pt
-\newdimen\bheadsize \bheadsize=14pt
+\newdimen\bheadsize \bheadsize=18pt
 
 \newdimen\textsize \textsize=11pt
 \newdimen\smalltextsize \smalltextsize=10pt
 \newdimen\pageframesize \pageframesize=8pt
+
+\font\booktitlefont=GaramondPremrPro-Disp-lf-titling-ly1
+\font\authornamefont=GaramondPremrPro-Disp-lf-titling-ly1 at \aheadsize
+\font\logofont=ProximaNova-Regular-lf-titling-ly1 at \bheadsize
 
 % Shapes
 \def\romantext{GaramondPremrPro-osf-ly1 }
@@ -86,9 +90,6 @@
 % Page Frame Fonts
 \font\pageframefont=\smallcapcaption at \pageframesize
 
-% Title Page Fonts
-\font\booktitlefont=GaramondPremrPro-Disp-lf-titling-ly1
-\font\authornamefont=GaramondPremrPro-Disp-lf-titling-ly1 at \aheadsize
 
 % Heading Fonts
 \font\chaptertitlefont=\romantitlingdisplay at \aheadsize
@@ -235,8 +236,7 @@
 % \stackedlogo{size}{left glue}{right glue}
 \def\stackedlogo#1#2#3{%
   \begingroup%
-  \dimen0=#1\divide\dimen0 by 16%
-  \font\logofont=\proximatitling at #1\relax%
+  \dimen0=\fontdimen6\logofont\divide\dimen0 by 16%
   \logofont\baselineskip=0pt%
   \setbox0=\hbox{DRISCOLL}%
   \vbox{%
@@ -265,8 +265,7 @@
 % \linelogo{font size}
 \def\linelogo#1{%
   \begingroup%
-  \dimen0=#1\divide\dimen0 by 16%
-  \font\logofont=\proximatitling at #1\relax%
+  \dimen0=\fontdimen6\logofont\divide\dimen0 by 16%
   \logofont\baselineskip=0pt%
   \vbox{%
     \hrule height \dimen0%
