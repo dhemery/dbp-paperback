@@ -63,15 +63,6 @@
 % - Subhead 18 (14.9-22.9)
 % - Display 36 (22.9-72)
 
-% Shapes
-\def\romantext{GaramondPremrPro-osf-ly1 }
-\def\italictext{GaramondPremrPro-It-osf-ly1 }
-\def\smallcaptext{GaramondPremrPro-osf-sc-ly1 }
-\def\romantitlingtext{GaramondPremrPro-lf-titling-ly1 }
-\def\smallcapcaption{GaramondPremrPro-Capt-osf-sc-ly1 }
-\def\romantitlingdisplay{GaramondPremrPro-Disp-lf-titling-ly1 }
-\def\proximatitling{ProximaNova-Regular-lf-titling-ly1 }
-
 % Sizes
 \newdimen\booktitlesize \booktitlesize=36pt
 \newdimen\authornamesize \authornamesize=24pt
@@ -83,12 +74,21 @@
 \newdimen\smalltextsize \smalltextsize=10pt
 \newdimen\pageframesize \pageframesize=8pt
 
+% Shapes
+\def\romantext{GaramondPremrPro-osf-ly1 }
+\def\italictext{GaramondPremrPro-It-osf-ly1 }
+\def\smallcaptext{GaramondPremrPro-osf-sc-ly1 }
+\def\romantitlingtext{GaramondPremrPro-lf-titling-ly1 }
+\def\smallcapcaption{GaramondPremrPro-Capt-osf-sc-ly1 }
+\def\romantitlingdisplay{GaramondPremrPro-Disp-lf-titling-ly1 }
+\def\proximatitling{ProximaNova-Regular-lf-titling-ly1 }
+
 % Page Frame Fonts
 \font\pageframefont=\smallcapcaption at \pageframesize
 
 % Title Page Fonts
-\font\booktitlefont=\romantitlingdisplay at \booktitlesize
-\font\authornamefont=\romantitlingdisplay at \authornamesize
+\font\booktitlefont=GaramondPremrPro-Disp-lf-titling-ly1
+\font\authornamefont=GaramondPremrPro-Disp-lf-titling-ly1 at \aheadsize
 
 % Heading Fonts
 \font\chaptertitlefont=\romantitlingdisplay at \aheadsize
@@ -221,7 +221,7 @@
 \long\def\baselinebox#1#2#3{\vbox to #2\leading{\line{}\vfill#1}\vskip#3\leading}
 
 \def\typesetbooktitle#1{{\usefont\booktitlefont\raggedleft{\expandafter\uppercase{#1}}\par}}
-\def\typesetauthorname#1{{\authornamefont\raggedleft{#1}\par}}
+\def\typesetauthorname#1{{\authornamefont\raggedleft{\expandafter\uppercase{#1}}\par}}
 \def\typesetchapterheading#1{{\raggedleft\usefont\chaptertitlefont#1\par}}
 \def\typesetsceneheading#1{{\ifodd\pageno\raggedleft\else\raggedright\fi\usefont\scenetitlefont{#1}\par}}
 
