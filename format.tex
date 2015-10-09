@@ -73,7 +73,7 @@
 \def\proximatitling{ProximaNova-Regular-lf-titling-ly1 }
 
 % Sizes
-\newdimen\booktitlesize \booktitlesize=30pt
+\newdimen\booktitlesize \booktitlesize=36pt
 \newdimen\authornamesize \authornamesize=24pt
 \newdimen\publishernamesize \publishernamesize=24pt
 \newdimen\aheadsize \aheadsize=24pt
@@ -220,7 +220,7 @@
 % \baselinebox{content}{bottom (baselines)}{skip (baselines)}
 \long\def\baselinebox#1#2#3{\vbox to #2\leading{\line{}\vfill#1}\vskip#3\leading}
 
-\def\typesetbooktitle#1{{\usefont\booktitlefont\raggedleft{#1}\par}}
+\def\typesetbooktitle#1{{\usefont\booktitlefont\raggedleft{\expandafter\uppercase{#1}}\par}}
 \def\typesetauthorname#1{{\authornamefont\raggedleft{#1}\par}}
 \def\typesetchapterheading#1{{\raggedleft\usefont\chaptertitlefont#1\par}}
 \def\typesetsceneheading#1{{\ifodd\pageno\raggedleft\else\raggedright\fi\usefont\scenetitlefont{#1}\par}}
