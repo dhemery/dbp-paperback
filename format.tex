@@ -73,7 +73,7 @@
 \font\logofont=ProximaNova-Regular-lf-titling-ly1 at \cheadsize
 \font\runningheaderfont=GaramondPremrPro-Capt-osf-sc-ly1 at \runningheadersize
 \font\parttitlefont=GaramondPremrPro-Disp-osf-sc-ly1  at \aheadsize
-\font\chaptertitlefont=GaramondPremrPro-Subh-osf-sc-ly1  at \cheadsize
+\font\chaptertitlefont=GaramondPremrPro-Subh-osf-sc-ly1 at \cheadsize
 
 % Text Fonts
 \font\rm=GaramondPremrPro-osf-ly1 at \textsize
@@ -149,7 +149,7 @@
 }
 \def\previewpage#1{
   \nextoddpage
-  \baselinebox{\chaptertitle{#1}}{10}{}
+  \chapter{#1}
   \useemptypageframe
 }
 
@@ -187,10 +187,10 @@
   \nextoddpage
 }
 
-\def\chapter#1{\nextpage\baselinebox{\chaptertitle{#1}}{10}{1}}
+\def\chapter#1{\nextpage\baselinebox{{\ifodd\pageno\raggedleft\else\raggedright\fi\chaptertitle{#1}}}{10}{1}}
 
 % \bookinfo is a named frontmatter or backmatter division.
-\def\bookinfo#1{\nextpage\useemptypageframe{\centered\chaptertitle#1\par}}
+\def\bookinfo#1{\nextpage\useemptypageframe{\centered\chaptertitle{#1}\par}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
