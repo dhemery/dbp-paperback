@@ -8,12 +8,11 @@
 \newdimen\textblock@odd@left
 \newdimen\textblock@even@left
 
-\def\settextblockposition#1#2{% spine margin, top margin
+\def\setspinemargin#1{
   \textblock@odd@left=#1
   \textblock@even@left=\pdfpagewidth
     \advance\textblock@even@left by -\hsize
     \advance\textblock@even@left by -#1
-  \voffset=#2
 }
 
 \pdfhorigin=0pt
@@ -22,8 +21,9 @@
 \pdfpageheight=8 true in
 \hsize=22pc
 \vsize=39pc
+\voffset=4.5pc
 
-\settextblockposition{5pc}{4.5pc}
+\setspinemargin{4.5pc}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
