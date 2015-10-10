@@ -5,7 +5,6 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newdimen\textblock@top
 \newdimen\textblock@odd@left
 \newdimen\textblock@even@left
 
@@ -14,7 +13,7 @@
   \textblock@even@left=\pdfpagewidth
     \advance\textblock@even@left by -\hsize
     \advance\textblock@even@left by -#1
-  \textblock@top=#2
+  \voffset=#2
 }
 
 \pdfhorigin=0pt
@@ -32,17 +31,17 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newif\if@cleared@page
-\newif\if@display@page
+\newif\ifclearedpage
+\newif\ifdisplaypage
 
 % Write one page (textblock, headline, and footline).
 \def\facingpages{%
-  \if@cleared@page\headline={\line{}}\footline={\line{}}\fi%
-  \if@display@page\headline={\line{}}\footline={\displaypagefootline}\fi%
-  \global\@cleared@pagefalse%
-  \global\@display@pagefalse%
+  \ifclearedpage\headline={\line{}}\footline={\line{}}\fi%
+  \ifdisplaypage\headline={\line{}}\footline={\displaypagefootline}\fi%
+  \global\clearedpagefalse%
+  \global\displaypagefalse%
   \dimen0=\ifodd\pageno\textblock@odd@left\else\textblock@even@left\fi%
-  \shipout\vbox{\moveright\dimen0\vbox{\vskip\textblock@top\makeheadline\pagebody\makefootline}}%
+  \shipout\vbox{\moveright\dimen0\vbox{\makeheadline\pagebody\makefootline}}%
   \advancepageno%
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
@@ -90,17 +89,17 @@
 \def\useemptypageframe{
   \global\headline={\line{}}
   \global\footline={\line{}}
-  \global\@cleared@pagefalse
-  \global\@display@pagefalse
+  \global\clearedpagefalse
+  \global\displaypagefalse
 }
 
-\def\usedisplaypageframe{\@display@pagetrue\@cleared@pagefalse}
+\def\usedisplaypageframe{\displaypagetrue\clearedpagefalse}
 
 \def\usenormalpageframe{
   \global\headline={\runningheaderfont\normalpageheadline}
   \global\footline={\runningheaderfont\normalpagefootline}
-  \global\@cleared@pagefalse
-  \global\@display@pagefalse
+  \global\clearedpagefalse
+  \global\displaypagefalse
 }
 
 \def\displaypagefootline{\runningheaderfont\hfil\folio\hfil}
@@ -116,7 +115,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\nextpage{\vfil\eject\global\@cleared@pagetrue\global\@display@pagefalse\relax}
+\def\nextpage{\vfil\eject\global\clearedpagetrue\global\displaypagefalse\relax}
 \def\nextoddpage{\nextpage\ifodd\pageno \else \line{}\nextpage\fi}
 \def\nextevenpage{\nextpage\ifodd\pageno \line{}\nextpage\else \fi}
 
