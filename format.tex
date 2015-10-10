@@ -124,8 +124,8 @@
 \def\titlepage#1#2#3{
   \nextoddpage
   \useemptypageframes
-  \baselinebox{{\raggedleft\booktitle{#1}\par}}{10}{0}
-  \baselinebox{{\raggedleft\authorname{#2}\par}}{6}{6}
+  \baselinebox{\raggedleft\booktitle{#1}\par}{10}{0}
+  \baselinebox{\raggedleft\authorname{#2}\par}{6}{6}
   \rightline{#3}
   \eject
 }
@@ -136,7 +136,7 @@
   \bigskip
   \centerline{by}
   \bigskip
-  \centerline{{\authorname{#2}}}
+  \centerline{\authorname{#2}}
   \vfill
 }
 
@@ -174,18 +174,17 @@
 \def\mainmatter{\nextoddpage\pageno=1\usenormalpageframes}
 \def\backmatter{\frontmatter}
 
-% TODO: Move all positioning here.
 \def\part#1{
   \nextoddpage
   \useemptyframethispage
-  \baselinebox{{\raggedleft\parttitle{#1}}}{10}{0}
+  \baselinebox{\raggedleft\parttitle#1\par}{10}{0}
   \nextoddpage
 }
 
 \def\chapter#1{
   \nextpage
   \usedisplayframethispage
-  \baselinebox{{\ifodd\pageno\raggedleft\else\raggedright\fi\chaptertitle{#1}}}{10}{1}
+  \baselinebox{{\ifodd\pageno\raggedleft\else\raggedright\fi\chaptertitle#1\par}}{10}{1}
 }
 
 % \bookinfo is a named frontmatter or backmatter division.
@@ -204,11 +203,10 @@
 % \baselinebox{content}{bottom (baselines)}{skip (baselines)}
 \long\def\baselinebox#1#2#3{\vbox to #2\leading{\line{}\vfill#1}\vskip#3\leading}
 
-% TODO: Move positioning out of here into divisions section
-\def\booktitle#1{{\booktitlefont\titlespacing\expandafter\uppercase{#1}\par}}
-\def\authorname#1{{\authornamefont\titlespacing\expandafter\uppercase{#1}\par}}
-\def\parttitle#1{{\parttitlefont\titlespacing{#1}\par}}
-\def\chaptertitle#1{{\chaptertitlefont\titlespacing{#1}\par}}
+\def\booktitle#1{\booktitlefont\titleleading\uppercase\expandafter{#1}}
+\def\authorname#1{\authornamefont\titleleading\uppercase\expandafter{#1}}
+\def\parttitle#1{\parttitlefont\titleleading#1}
+\def\chaptertitle#1{\chaptertitlefont\titleleading#1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -277,7 +275,7 @@
 \def\genre#1{\authorinfoheading{#1}}
 \def\genrebook#1{\authorinfoitem{#1}}
 
-\def\titlespacing{\linespacing{1.1}}
+\def\titleleading{\linespacing{1.1}}
 
 \def\linespacing#1{\baselineskip=#1\fontdimen6\the\font}
 
