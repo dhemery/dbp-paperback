@@ -71,8 +71,8 @@
 \font\authornamefont=GaramondPremrPro-Disp-lf-titling-ly1 at \bheadsize
 \font\logofont=ProximaNova-Regular-lf-titling-ly1 at \cheadsize
 \font\runningheaderfont=GaramondPremrPro-Capt-osf-sc-ly1 at \runningheadersize
-\font\parttitlefont=GaramondPremrPro-Disp-osf-sc-ly1  at \aheadsize
-\font\chaptertitlefont=GaramondPremrPro-Subh-osf-sc-ly1 at \cheadsize
+\font\parttitlefont=GaramondPremrPro-Disp-lf-sc-ly1  at \aheadsize
+\font\chaptertitlefont=GaramondPremrPro-Subh-lf-sc-ly1 at \cheadsize
 
 % Text Fonts
 \font\rm=GaramondPremrPro-osf-ly1 at \textsize
@@ -148,8 +148,7 @@
   \centerline{proudly announces}
   \previewtitleblock{#1}{#2}
   \centerline{Turn the page for a preview}
-  \vfill
-  \line{}\vfill
+  \vfill\line{}\vfill
   \nextoddpage
 }
 
@@ -159,9 +158,7 @@
   \centerline{Available now at your favorite retailers}
   \vfill
   \centerline{\linelogo}
-  \vfill
-  \line{}
-  \vfill
+  \vfill\line{}\vfill
 }
 
 \raggedbottom
