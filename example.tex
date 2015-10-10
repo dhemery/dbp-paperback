@@ -1,0 +1,21 @@
+\input publisher/format
+\input publication/details
+
+\frontmatter
+\input publication/teaser
+\input author/books
+\input publisher/titlepage
+\input publisher/copyright
+\input publisher/halftitlepage
+
+\mainmatter
+\input publication/content
+
+\backmatter
+\input author/about
+\input author/connect
+\input author/books
+\input publisher/preview
+
+\nextevenpage\line{} % Force an even number of pages
+\bye

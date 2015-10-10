@@ -69,7 +69,6 @@
 
 \font\booktitlefont=GaramondPremrPro-Disp-lf-titling-ly1 at \aheadsize
 \font\authornamefont=GaramondPremrPro-Disp-lf-titling-ly1 at \bheadsize
-\font\logofont=ProximaNova-Regular-lf-titling-ly1 at \cheadsize
 \font\runningheaderfont=GaramondPremrPro-Capt-osf-sc-ly1 at \runningheadersize
 \font\parttitlefont=GaramondPremrPro-Disp-lf-sc-ly1  at \aheadsize
 \font\chaptertitlefont=GaramondPremrPro-Subh-lf-sc-ly1 at \cheadsize
@@ -118,48 +117,6 @@
 \def\nextpage{\vfil\eject\global\clearedpagetrue\global\displaypagefalse\relax}
 \def\nextoddpage{\nextpage\ifodd\pageno \else \line{}\nextpage\fi}
 \def\nextevenpage{\nextpage\ifodd\pageno \line{}\nextpage\else \fi}
-
-% Title page:     \titlepage{title}{author}{publisher}
-% Halftitle page: \titlepage{title}{}{}
-\def\titlepage#1#2#3{
-  \nextoddpage
-  \useemptypageframes
-  \baselinebox{\raggedleft\booktitle{#1}\par}{10}{0}
-  \baselinebox{\raggedleft\authorname{#2}\par}{6}{6}
-  \rightline{#3}
-  \eject
-}
-
-\def\previewtitleblock#1#2{
-  \vfill
-  {\centered\booktitle{#1}\par}
-  \bigskip
-  \centerline{by}
-  \bigskip
-  \centerline{\authorname{#2}}
-  \vfill
-}
-
-\def\announcing#1#2{
-  \nextoddpage
-  \line{}\vfill
-  \centerline{\linelogo}
-  \vfill
-  \centerline{proudly announces}
-  \previewtitleblock{#1}{#2}
-  \centerline{Turn the page for a preview}
-  \vfill\line{}\vfill
-  \nextoddpage
-}
-
-\def\availablenow#1#2{
-  \nextoddpage
-  \previewtitleblock{#1}{#2}
-  \centerline{Available now at your favorite retailers}
-  \vfill
-  \centerline{\linelogo}
-  \vfill\line{}\vfill
-}
 
 \raggedbottom
 
@@ -212,6 +169,8 @@
 % Logo
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\font\logofont=ProximaNova-Regular-lf-titling-ly1 at \cheadsize
 
 \newdimen\logobarthickness
 \logobarthickness=\fontdimen6\logofont
@@ -283,7 +242,6 @@
 \normalbaselineskip=\leading
 \normalbaselines
 \emergencystretch=1.5em
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
