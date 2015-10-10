@@ -221,21 +221,23 @@
 \newdimen\logobarthickness
 \logobarthickness=\fontdimen6\logofont
 \divide\logobarthickness by 16
+\def\logolineskip{\vskip4\logobarthickness}
 
 % \stackedlogo{left glue}{right glue}
 \def\stackedlogo#1#2{%
   \begingroup%
+  \offinterlineskip%
   \logofont%
   \setbox0=\hbox{DRISCOLL}%
   \vbox{%
     \hrule height \logobarthickness%
-    \vskip4\logobarthickness%
+    \logolineskip%
     \copy0%
-    \vskip2\logobarthickness%
+    \logolineskip%
     \hbox to \wd0{#1BROOK#2}%
-    \vskip2\logobarthickness%
+    \logolineskip%
     \hbox to \wd0{#1PRESS#2}%
-    \vskip4\logobarthickness%
+    \logolineskip%
     \hrule height \logobarthickness%
   }%
   \endgroup%
@@ -252,9 +254,9 @@
   \logofont%
   \vbox{%
     \hrule height \logobarthickness%
-    \vskip4\logobarthickness%
+    \logolineskip%
     \hbox{DRISCOLL BROOK PRESS}%
-    \vskip4\logobarthickness%
+    \logolineskip%
     \hrule height \logobarthickness%
   }%
   \endgroup%
