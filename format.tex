@@ -135,8 +135,8 @@
 \def\titlepage#1#2#3{
   \nextoddpage
   \useemptypageframe
-  \baselinebox{\typesetbooktitle{#1}}{10}{0}
-  \baselinebox{\typesetauthorname{#2}}{6}{6}
+  \baselinebox{\booktitle{#1}}{10}{0}
+  \baselinebox{\authorname{#2}}{6}{6}
   \rightline{#3}
   \eject
 }
@@ -209,8 +209,8 @@
 % \baselinebox{content}{bottom (baselines)}{skip (baselines)}
 \long\def\baselinebox#1#2#3{\vbox to #2\leading{\line{}\vfill#1}\vskip#3\leading}
 
-\def\typesetbooktitle#1{{\usefont\booktitlefont\raggedleft{\expandafter\uppercase{#1}}\par}}
-\def\typesetauthorname#1{{\authornamefont\raggedleft{\expandafter\uppercase{#1}}\par}}
+\def\booktitle#1{{\usefont\booktitlefont\raggedleft{\expandafter\uppercase{#1}}\par}}
+\def\authorname#1{{\authornamefont\raggedleft{\expandafter\uppercase{#1}}\par}}
 \def\typesetparttitle#1{{\raggedleft\usefont\parttitlefont#1\par}}
 \def\typesetchaptertitle#1{{\ifodd\pageno\raggedleft\else\raggedright\fi\usefont\chaptertitlefont{#1}\par}}
 
