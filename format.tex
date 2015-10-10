@@ -86,16 +86,17 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\useemptypageframe{
+\def\useemptyframethispage{\clearedpagetrue\displaypagefalse}
+\def\usedisplayframethispage{\displaypagetrue\clearedpagefalse}
+
+\def\useemptypageframes{
   \global\headline={\line{}}
   \global\footline={\line{}}
   \global\clearedpagefalse
   \global\displaypagefalse
 }
 
-\def\usedisplaypageframe{\displaypagetrue\clearedpagefalse}
-
-\def\usenormalpageframe{
+\def\usenormalpageframes{
   \global\headline={\runningheaderfont\normalpageheadline}
   \global\footline={\runningheaderfont\normalpagefootline}
   \global\clearedpagefalse
@@ -107,7 +108,6 @@
 \def\normalpagefootline{\line{}}
 \def\normaloddpageheadline{\title\hfil\folio}
 \def\normalevenpageheadline{\folio\hfil\author}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -123,7 +123,7 @@
 % Halftitle page: \titlepage{title}{}{}
 \def\titlepage#1#2#3{
   \nextoddpage
-  \useemptypageframe
+  \useemptypageframes
   \baselinebox{{\raggedleft\booktitle{#1}\par}}{10}{0}
   \baselinebox{{\raggedleft\authorname{#2}\par}}{6}{6}
   \rightline{#3}
@@ -170,28 +170,28 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\frontmatter{\nextoddpage\pageno=-1\useemptypageframe}
-\def\mainmatter{\nextoddpage\pageno=1\usenormalpageframe}
+\def\frontmatter{\nextoddpage\pageno=-1\useemptypageframes}
+\def\mainmatter{\nextoddpage\pageno=1\usenormalpageframes}
 \def\backmatter{\frontmatter}
 
 % TODO: Move all positioning here.
 \def\part#1{
   \nextoddpage
-  \usedisplaypageframe
+  \useemptyframethispage
   \baselinebox{{\raggedleft\parttitle{#1}}}{10}{0}
   \nextoddpage
 }
 
 \def\chapter#1{
   \nextpage
-  \usedisplaypageframe
+  \usedisplayframethispage
   \baselinebox{{\ifodd\pageno\raggedleft\else\raggedright\fi\chaptertitle{#1}}}{10}{1}
 }
 
 % \bookinfo is a named frontmatter or backmatter division.
 \def\bookinfo#1{
   \nextpage
-  \useemptypageframe
+  \useemptypageframes
   {\centered\chaptertitle{#1}\par}
 }
 
