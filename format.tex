@@ -125,44 +125,39 @@
 \def\titlepage#1#2#3{
   \nextoddpage
   \useemptypageframe
-  \baselinebox{\booktitle{#1}}{10}{0}
-  \baselinebox{\authorname{#2}}{6}{6}
+  \baselinebox{{\raggedleft\booktitle{#1}\par}}{10}{0}
+  \baselinebox{{\raggedleft\authorname{#2}\par}}{6}{6}
   \rightline{#3}
   \eject
 }
 
-\def\previewannouncementpage#1{
+\def\previewtitleblock#1#2{
+  \vfill
+  {\centered\booktitle{#1}\par}
+  \bigskip
+  \centerline{by}
+  \bigskip
+  \centerline{{\authorname{#2}}}
+  \vfill
+}
+
+\def\announcing#1#2{
   \nextoddpage
   \line{}\vfill
   \centerline{\linelogo}
-  \vskip\baselineskip
-  \centerline{\rm proudly announces}
   \vfill
-  {\booktitlefont\centered #1\par}
-  \vskip\baselineskip
-  \centerline{by}
-  \vskip\baselineskip
-  \centerline{\authornamefont\author}
-  \vfill
+  \centerline{proudly announces}
+  \previewtitleblock{#1}{#2}
   \centerline{Turn the page for a preview}
   \vfill
-}
-\def\previewpage#1{
   \nextoddpage
-  \chapter{#1}
-  \useemptypageframe
 }
 
-\def\previewavailablepage#1{
+\def\availablenow#1#2{
   \nextoddpage
-  \line{}\vfill
-  \line{\hss{\booktitlefont #1}\hss}
-  \vskip\baselineskip
-  \centerline{by}
-  \vskip\baselineskip
-  \centerline{\authornamefont\previewauthor}
-  \vfill
-  \centerline{Available now from your favorite retailer}
+  \line{}
+  \previewtitleblock{#1}{#2}
+  \centerline{Available now at your favorite retailers}
   \vfill
   \centerline{\linelogo}
   \vfill
@@ -182,19 +177,28 @@
 
 % TODO: Move all positioning here.
 \def\part#1{
-  \nextoddpage\usedisplaypageframe
-  \baselinebox{\parttitle{#1}}{10}{0}
+  \nextoddpage
+  \usedisplaypageframe
+  \baselinebox{{\raggedleft\parttitle{#1}}}{10}{0}
   \nextoddpage
 }
 
-\def\chapter#1{\nextpage\baselinebox{{\ifodd\pageno\raggedleft\else\raggedright\fi\chaptertitle{#1}}}{10}{1}}
+\def\chapter#1{
+  \nextpage
+  \usedisplaypageframe
+  \baselinebox{{\ifodd\pageno\raggedleft\else\raggedright\fi\chaptertitle{#1}}}{10}{1}
+}
 
 % \bookinfo is a named frontmatter or backmatter division.
-\def\bookinfo#1{\nextpage\useemptypageframe{\centered\chaptertitle{#1}\par}}
+\def\bookinfo#1{
+  \nextpage
+  \useemptypageframe
+  {\centered\chaptertitle{#1}\par}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Headings
+% Titles
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -202,11 +206,10 @@
 \long\def\baselinebox#1#2#3{\vbox to #2\leading{\line{}\vfill#1}\vskip#3\leading}
 
 % TODO: Move positioning out of here into divisions section
-\def\booktitle#1{{\booktitlefont\titlespacing\raggedleft{\expandafter\uppercase{#1}}\par}}
-\def\authorname#1{{\authornamefont\titlespacing\raggedleft{\expandafter\uppercase{#1}}\par}}
-\def\parttitle#1{{\raggedleft\parttitlefont\titlespacing#1\par}}
+\def\booktitle#1{{\booktitlefont\titlespacing\expandafter\uppercase{#1}\par}}
+\def\authorname#1{{\authornamefont\titlespacing\expandafter\uppercase{#1}\par}}
+\def\parttitle#1{{\parttitlefont\titlespacing{#1}\par}}
 \def\chaptertitle#1{{\chaptertitlefont\titlespacing{#1}\par}}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
