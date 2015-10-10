@@ -67,16 +67,14 @@
 \newdimen\booktitlesize \booktitlesize=36pt
 \newdimen\aheadsize \aheadsize=24pt
 \newdimen\bheadsize \bheadsize=18pt
-
 \newdimen\textsize \textsize=11pt
 \newdimen\smalltextsize \smalltextsize=10pt
-\newdimen\pageframesize \pageframesize=8pt
+\newdimen\runningheadersize \runningheadersize=8pt
 
-\font\booktitlefont=GaramondPremrPro-Disp-lf-titling-ly1 % at design size: 36pt
+\font\booktitlefont=GaramondPremrPro-Disp-lf-titling-ly1 at \booktitlesize
 \font\authornamefont=GaramondPremrPro-Disp-lf-titling-ly1 at \aheadsize
 \font\logofont=ProximaNova-Regular-lf-titling-ly1 at \bheadsize
-
-\font\pageframefont=GaramondPremrPro-Capt-osf-sc-ly1 % at design size: 8pt
+\font\runningheaderfont=GaramondPremrPro-Capt-osf-sc-ly1 at \runningheadersize
 
 % Shapes
 \def\romantext{GaramondPremrPro-osf-ly1 }
@@ -113,13 +111,13 @@
 \def\usedisplaypageframe{\@display@pagetrue\@cleared@pagefalse}
 
 \def\usenormalpageframe{
-  \global\headline={\pageframefont\normalpageheadline}
-  \global\footline={\pageframefont\normalpagefootline}
+  \global\headline={\runningheaderfont\normalpageheadline}
+  \global\footline={\runningheaderfont\normalpagefootline}
   \global\@cleared@pagefalse
   \global\@display@pagefalse
 }
 
-\def\displaypagefootline{\pageframefont\hfil\folio\hfil}
+\def\displaypagefootline{\runningheaderfont\hfil\folio\hfil}
 \def\normalpageheadline{\ifodd\pageno\normaloddpageheadline\else\normalevenpageheadline\fi}
 \def\normalpagefootline{\line{}}
 \def\normaloddpageheadline{\title\hfil\folio}
