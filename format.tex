@@ -54,9 +54,6 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Sets the font and uses its size as leading.
-\def\usefont#1{#1\baselineskip=\fontdimen6#1}
-
 % Garamond Premier Pro Optical Sizes
 % - Caption 8 (5.9-8.9)
 % - Regular 11 (8.9-14.9)
@@ -148,7 +145,7 @@
   \vskip\baselineskip
   \centerline{\rm proudly announces}
   \vfill
-  {\usefont\booktitlefont\centered #1\par}
+  {\offinterlineskip\booktitlefont\centered #1\par}
   \vskip\baselineskip
   \centerline{by}
   \vskip\baselineskip
@@ -166,7 +163,7 @@
 \def\previewavailablepage#1{
   \nextoddpage
   \line{}\vfill
-  \line{\hss{\usefont\booktitlefont #1}\hss}
+  \line{\hss{\offinterlineskip\booktitlefont #1}\hss}
   \vskip\baselineskip
   \centerline{by}
   \vskip\baselineskip
@@ -198,7 +195,7 @@
 \def\chapter#1{\baselinebox{\chaptertitle{#1}}{3}{1}}
 
 % \bookinfo is a named frontmatter or backmatter division.
-\def\bookinfo#1{\nextpage\useemptypageframe{\usefont\chaptertitlefont\centered#1\par}}
+\def\bookinfo#1{\nextpage\useemptypageframe{\offinterlineskip\chaptertitlefont\centered#1\par}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -209,10 +206,10 @@
 % \baselinebox{content}{bottom (baselines)}{skip (baselines)}
 \long\def\baselinebox#1#2#3{\vbox to #2\leading{\line{}\vfill#1}\vskip#3\leading}
 
-\def\booktitle#1{{\usefont\booktitlefont\raggedleft{\expandafter\uppercase{#1}}\par}}
+\def\booktitle#1{{\offinterlineskip\booktitlefont\raggedleft{\expandafter\uppercase{#1}}\par}}
 \def\authorname#1{{\authornamefont\raggedleft{\expandafter\uppercase{#1}}\par}}
-\def\parttitle#1{{\raggedleft\usefont\parttitlefont#1\par}}
-\def\chaptertitle#1{{\ifodd\pageno\raggedleft\else\raggedright\fi\usefont\chaptertitlefont{#1}\par}}
+\def\parttitle#1{{\raggedleft\offinterlineskip\parttitlefont#1\par}}
+\def\chaptertitle#1{{\offinterlineskip\ifodd\pageno\raggedleft\else\raggedright\fi\chaptertitlefont{#1}\par}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
