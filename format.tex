@@ -61,32 +61,25 @@
 % - Display 36 (22.9-72)
 
 % Sizes
-\newdimen\booktitlesize \booktitlesize=36pt
-\newdimen\aheadsize \aheadsize=24pt
-\newdimen\bheadsize \bheadsize=18pt
+\newdimen\aheadsize \aheadsize=36pt
+\newdimen\bheadsize \bheadsize=24pt
+\newdimen\cheadsize \cheadsize=18pt
 \newdimen\textsize \textsize=11pt
 \newdimen\smalltextsize \smalltextsize=10pt
 \newdimen\runningheadersize \runningheadersize=8pt
 
-\font\booktitlefont=GaramondPremrPro-Disp-lf-titling-ly1 at \booktitlesize
-\font\authornamefont=GaramondPremrPro-Disp-lf-titling-ly1 at \aheadsize
-\font\logofont=ProximaNova-Regular-lf-titling-ly1 at \bheadsize
+\font\booktitlefont=GaramondPremrPro-Disp-lf-titling-ly1 at \aheadsize
+\font\authornamefont=GaramondPremrPro-Disp-lf-titling-ly1 at \bheadsize
+\font\logofont=ProximaNova-Regular-lf-titling-ly1 at \cheadsize
 \font\runningheaderfont=GaramondPremrPro-Capt-osf-sc-ly1 at \runningheadersize
 \font\parttitlefont=GaramondPremrPro-Disp-osf-sc-ly1  at \aheadsize
-\font\chaptertitlefont=GaramondPremrPro-Subh-osf-sc-ly1  at \bheadsize
-
-% Shapes
-\def\romantext{GaramondPremrPro-osf-ly1 }
-\def\italictext{GaramondPremrPro-It-osf-ly1 }
-\def\smallcaptext{GaramondPremrPro-osf-sc-ly1 }
-\def\romantitlingtext{GaramondPremrPro-lf-titling-ly1 }
-\def\romantitlingdisplay{GaramondPremrPro-Disp-lf-titling-ly1 }
+\font\chaptertitlefont=GaramondPremrPro-Subh-osf-sc-ly1  at \cheadsize
 
 % Text Fonts
-\font\rm=\romantext at \textsize
-\font\it=\italictext at \textsize
-\font\sc=\smallcaptext at \textsize
-\font\fineprint=\romantext at \smalltextsize
+\font\rm=GaramondPremrPro-osf-ly1 at \textsize
+\font\it=GaramondPremrPro-It-osf-ly1 at \textsize
+\font\sc=GaramondPremrPro-osf-sc-ly1 at \textsize
+\font\fineprint=GaramondPremrPro-osf-ly1 at 10pt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -187,15 +180,17 @@
 \def\mainmatter{\nextoddpage\pageno=1\usenormalpageframe}
 \def\backmatter{\frontmatter}
 
+% TODO: Move all positioning here.
 \def\part#1{
   \nextoddpage\usedisplaypageframe
-  \baselinebox{\parttitle{#1}\nobreak}{6}{}
+  \baselinebox{\parttitle{#1}}{10}{0}
+  \nextoddpage
 }
 
-\def\chapter#1{\baselinebox{\chaptertitle{#1}}{3}{1}}
+\def\chapter#1{\nextpage\baselinebox{\chaptertitle{#1}}{10}{1}}
 
 % \bookinfo is a named frontmatter or backmatter division.
-\def\bookinfo#1{\nextpage\useemptypageframe{\chaptertitlefont\titlespacing\centered#1\par}}
+\def\bookinfo#1{\nextpage\useemptypageframe{\centered\chaptertitle#1\par}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -206,10 +201,11 @@
 % \baselinebox{content}{bottom (baselines)}{skip (baselines)}
 \long\def\baselinebox#1#2#3{\vbox to #2\leading{\line{}\vfill#1}\vskip#3\leading}
 
+% TODO: Move positioning out of here into divisions section
 \def\booktitle#1{{\booktitlefont\titlespacing\raggedleft{\expandafter\uppercase{#1}}\par}}
 \def\authorname#1{{\authornamefont\titlespacing\raggedleft{\expandafter\uppercase{#1}}\par}}
 \def\parttitle#1{{\raggedleft\parttitlefont\titlespacing#1\par}}
-\def\chaptertitle#1{{\ifodd\pageno\raggedleft\else\raggedright\fi\chaptertitlefont\titlespacing{#1}\par}}
+\def\chaptertitle#1{{\chaptertitlefont\titlespacing{#1}\par}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -279,7 +275,10 @@
 \def\genre#1{\authorinfoheading{#1}}
 \def\genrebook#1{\authorinfoitem{#1}}
 
-\def\titlespacing{\baselineskip=1.1\fontdimen6\the\font}
+\def\titlespacing{\linespacing{1.1}}
+
+\def\linespacing#1{\baselineskip=#1\fontdimen6\the\font}
+
 % TODO Create macros to set these parameters up.
 \parindent=1em
 \normalbaselineskip=\leading
@@ -297,7 +296,6 @@
 %       Or give a way to go back to roman.
 %       Or switch to {\rm ...} and {\it ...}.
 \def\emph#1{{\it #1}}
-
 \def\leadin#1{\nobreak\noindent{\sc #1}}
 \rm
 
