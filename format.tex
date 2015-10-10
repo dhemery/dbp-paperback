@@ -141,7 +141,7 @@
 \def\previewannouncementpage#1{
   \nextoddpage
   \line{}\vfill
-  \centerline{\linelogo{20pt}}
+  \centerline{\linelogo}
   \vskip\baselineskip
   \centerline{\rm proudly announces}
   \vfill
@@ -171,7 +171,7 @@
   \vfill
   \centerline{Available now from your favorite retailer}
   \vfill
-  \centerline{\linelogo{20pt}}
+  \centerline{\linelogo}
   \vfill
 }
 
@@ -218,46 +218,44 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \stackedlogo{size}{left glue}{right glue}
-\def\stackedlogo#1#2#3{%
+\newdimen\logobarthickness
+\logobarthickness=\fontdimen6\logofont
+\divide\logobarthickness by 16
+
+% \stackedlogo{left glue}{right glue}
+\def\stackedlogo#1#2{%
   \begingroup%
-  \dimen0=\fontdimen6\logofont\divide\dimen0 by 16%
-  \logofont\baselineskip=0pt%
+  \logofont%
   \setbox0=\hbox{DRISCOLL}%
   \vbox{%
-    \hrule height \dimen0%
-    \vskip4\dimen0%
+    \hrule height \logobarthickness%
+    \vskip4\logobarthickness%
     \copy0%
-    \vskip2\dimen0%
-    \hbox to \wd0{#2BROOK#3}%
-    \vskip2\dimen0%
-    \hbox to \wd0{#2PRESS#3}%
-    \vskip4\dimen0%
-    \hrule height \dimen0%
+    \vskip2\logobarthickness%
+    \hbox to \wd0{#1BROOK#2}%
+    \vskip2\logobarthickness%
+    \hbox to \wd0{#1PRESS#2}%
+    \vskip4\logobarthickness%
+    \hrule height \logobarthickness%
   }%
   \endgroup%
 }
 
-% \leftlogo{font size}
-\def\leftlogo#1{\stackedlogo{#1}{}{\hss}}
-
-% \centerlogo{font size}
-\def\centerlogo#1{\stackedlogo{#1}{\hss}{\hss}}
-
-% \rightlogo{font size}
-\def\rightlogo#1{\stackedlogo{#1}{\hss}{}}
+\def\leftlogo{\stackedlogo{}{\hss}}
+\def\centerlogo{\stackedlogo{\hss}{\hss}}
+\def\rightlogo{\stackedlogo{\hss}{}}
 
 % \linelogo{font size}
-\def\linelogo#1{%
+\def\linelogo{%
   \begingroup%
-  \dimen0=\fontdimen6\logofont\divide\dimen0 by 16%
-  \logofont\baselineskip=0pt%
+  \offinterlineskip%
+  \logofont%
   \vbox{%
-    \hrule height \dimen0%
-    \vskip4\dimen0%
+    \hrule height \logobarthickness%
+    \vskip4\logobarthickness%
     \hbox{DRISCOLL BROOK PRESS}%
-    \vskip4\dimen0%
-    \hrule height \dimen0%
+    \vskip4\logobarthickness%
+    \hrule height \logobarthickness%
   }%
   \endgroup%
 }
