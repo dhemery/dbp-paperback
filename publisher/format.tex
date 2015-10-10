@@ -49,38 +49,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Fonts
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Garamond Premier Pro Optical Sizes
-% - Caption 8 (5.9-8.9)
-% - Regular 11 (8.9-14.9)
-% - Subhead 18 (14.9-22.9)
-% - Display 36 (22.9-72)
-
-% Sizes
-\newdimen\aheadsize \aheadsize=36pt
-\newdimen\bheadsize \bheadsize=24pt
-\newdimen\cheadsize \cheadsize=18pt
-\newdimen\textsize \textsize=11pt
-\newdimen\smalltextsize \smalltextsize=10pt
-\newdimen\runningheadersize \runningheadersize=8pt
-
-\font\booktitlefont=GaramondPremrPro-Disp-lf-titling-ly1 at \aheadsize
-\font\authornamefont=GaramondPremrPro-Disp-lf-titling-ly1 at \bheadsize
-\font\runningheaderfont=GaramondPremrPro-Capt-osf-sc-ly1 at \runningheadersize
-\font\parttitlefont=GaramondPremrPro-Disp-lf-sc-ly1  at \aheadsize
-\font\chaptertitlefont=GaramondPremrPro-Subh-lf-sc-ly1 at \cheadsize
-
-% Text Fonts
-\font\rm=GaramondPremrPro-osf-ly1 at \textsize
-\font\it=GaramondPremrPro-It-osf-ly1 at \textsize
-\font\sc=GaramondPremrPro-osf-sc-ly1 at \textsize
-\font\fineprint=GaramondPremrPro-tlf-ly1 at 10pt
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
 % Page Frame (Headline and Footline)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -254,6 +222,9 @@
 %       Or switch to {\rm ...} and {\it ...}.
 \def\emph#1{{\it #1}}
 \def\leadin#1{\nobreak\noindent{\sc #1}}
+
+\chardef\copyright=169
+
 \rm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -266,5 +237,4 @@
 \pdfadjustspacing=2
 \pdfprotrudechars=2
 
-\chardef\copyright=169
 \catcode`\@=12

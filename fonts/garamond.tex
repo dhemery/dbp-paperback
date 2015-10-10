@@ -1,0 +1,32 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Garamond Titling and Text Fonts
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Garamond Premier Pro Optical Sizes
+% - Caption 8 (5.9-8.9)
+% - Regular 11 (8.9-14.9)
+% - Subhead 18 (14.9-22.9)
+% - Display 36 (22.9-72)
+
+% Title and Text Sizes
+\newdimen\aheadsize \aheadsize=36pt % Book and part titles
+\newdimen\bheadsize \bheadsize=24pt % Author name
+\newdimen\cheadsize \cheadsize=18pt % Chapter titles and publisher logo
+\newdimen\textsize \textsize=11pt
+\newdimen\smalltextsize \smalltextsize=10pt
+\newdimen\runningheadersize \runningheadersize=8pt
+
+% Titling Fonts
+\font\booktitlefont=GaramondPremrPro-Disp-lf-titling-ly1 at \aheadsize
+\font\authornamefont=GaramondPremrPro-Disp-lf-titling-ly1 at \bheadsize
+\font\runningheaderfont=GaramondPremrPro-Capt-osf-sc-ly1 at \runningheadersize
+\font\parttitlefont=GaramondPremrPro-Disp-lf-sc-ly1 at \aheadsize
+\font\chaptertitlefont=GaramondPremrPro-Subh-lf-sc-ly1 at \cheadsize
+
+% Text Fonts
+\font\rm=GaramondPremrPro-osf-ly1 at \textsize
+\font\it=GaramondPremrPro-It-osf-ly1 at \textsize
+\font\sc=GaramondPremrPro-osf-sc-ly1 at \textsize
+\font\smalltextfont=GaramondPremrPro-tlf-ly1 at \smalltextsize
