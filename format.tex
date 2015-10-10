@@ -85,9 +85,6 @@
 \def\romantitlingtext{GaramondPremrPro-lf-titling-ly1 }
 \def\romantitlingdisplay{GaramondPremrPro-Disp-lf-titling-ly1 }
 
-% Heading Fonts
-\font\authorinfotitlefont \romantitlingtext at \smalltextsize
-
 % Text Fonts
 \font\rm=\romantext at \textsize
 \font\it=\italictext at \textsize
@@ -279,7 +276,7 @@
 \def\centered{\raggedleft\raggedright}
 \newdimen\leading \leading=15pt
 
-\def\authorinfoheading#1{\bigskip{\authorinfotitlefont\centered\uppercase\expandafter{#1}\par}}
+\def\authorinfoheading#1{\bigskip{\sc\centered#1\par}}
 \def\authorinfoitem#1{\smallskip{\centered#1\par}}
 \def\connect#1#2{\authorinfoheading{#1}\authorinfoitem{#2}}
 \def\genre#1{\authorinfoheading{#1}}
