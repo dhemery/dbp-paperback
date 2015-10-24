@@ -1,0 +1,90 @@
+From plain.tex
+\advancepageno !!
+\bigskip !!
+\break !!
+\bye !!
+\centerline !!
+\chardef !!
+\copy !!
+\copyright !!
+\dosupereject !!
+\eject !!
+\emergencystretch !!
+\folio !!
+\footline !!
+\headline !!
+\it !!
+\ldots !!
+\line !!
+\makefootline !!
+\makeheadline !!
+\medskip !!
+\newdimen !!
+\newif !!
+\nobreak !!
+\normalbaselines !!
+\normalbaselineskip !!
+\offinterlineskip !!
+\pagebody !!
+\pageno !!
+\raggedbottom !!
+\raggedright !!
+\rightline !!
+\rm !!
+\thinspace !!
+
+TeX Primitives
+\advance
+\baselineskip
+\begingroup
+\catcode
+\def
+\dimen
+\divide
+\else
+\endgroup
+\expandafter
+\fi
+\font
+\fontdimen
+\global
+\hbox
+\hfil
+\hrule
+\hsize
+\hss
+\ifnum
+\ifodd
+\input
+\leftskip
+\long
+\moveright
+\noindent
+\output
+\outputpenalty
+\par
+\parfillskip
+\parindent
+\relax
+\rightskip
+\setbox
+\shipout
+\the
+\uppercase
+\vbox
+\vfil
+\vfill
+\voffset
+\vsize
+\vskip
+\wd
+\write
+
+pdfTeX Primitives
+\pdfadjustspacing
+\pdffontexpand
+\pdfhorigin
+\pdfpageheight
+\pdfpagewidth
+\pdfprotrudechars
+\pdfvorigin
