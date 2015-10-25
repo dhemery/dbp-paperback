@@ -74,14 +74,14 @@
   \expandafter\xdef\csname#1@size\endcsname{#5}%
 }
 
-\def\style#1{
-  \edef\font@family{\csname#1@family\endcsname}
-  \edef\font@base@name{\csname\font@family @base@name\endcsname}
-  \edef\font@default@shape{\csname\font@family @default@shape\endcsname}
-  \edef\font@optical@size{\csname#1@optical@size\endcsname}
-  \edef\font@figures{\csname#1@figures\endcsname}
-  \edef\font@size{\csname#1@size\endcsname}
-  \rm
+\def\style#1{%
+  \edef\font@family{\csname#1@family\endcsname}%
+  \edef\font@base@name{\csname\font@family @base@name\endcsname}%
+  \edef\font@default@shape{\csname\font@family @default@shape\endcsname}%
+  \edef\font@optical@size{\csname#1@optical@size\endcsname}%
+  \edef\font@figures{\csname#1@figures\endcsname}%
+  \edef\font@size{\csname#1@size\endcsname}%
+  \rm%
 }
 
 \gdef\withfontbasename#1{\edef\font@base@name{#1}}
@@ -93,7 +93,8 @@
 \gdef\withfontvariant#1{\edef\font@variant{#1}}
 \gdef\withfontweight#1{\edef\font@weight{#1}}
 
-\gdef\selectfont{\font\current@font=\font@spec\current@font}
+\gdef\allowfontadjustment{\pdffontexpand\font 30 30 10 autoexpand}
+\gdef\selectfont{\font\current@font=\font@spec\current@font\allowfontadjustment}
 
 \gdef\rm{\withfontweight{\csname\font@family @regular@weight\endcsname}\withfontslant{}\withfontvariant{}\withfontencoding{t1}\selectfont}
 \gdef\it{\withfontslant{\csname\font@family @italics@slant\endcsname}\selectfont}
@@ -338,7 +339,7 @@
 \def\genre#1{\authorinfoheading{#1}}
 \def\genrebook#1{\authorinfoitem{\emph{#1}}}
 
-\def\titleleading{\linespacing{1.1}}
+\def\titleleading{\linespacing1}
 
 \def\linespacing#1{\baselineskip=#1\fontdimen6\the\font}
 
@@ -368,6 +369,5 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \begingroup\rm\pdffontexpand\font 30 30 10 autoexpand\endgroup
 \pdfadjustspacing=2
 \pdfprotrudechars=2
