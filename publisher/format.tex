@@ -93,8 +93,7 @@
 \gdef\withfontvariant#1{\edef\font@variant{#1}}
 \gdef\withfontweight#1{\edef\font@weight{#1}}
 
-\gdef\allowfontadjustment{\pdffontexpand\font 30 30 10 autoexpand}
-\gdef\selectfont{\font\current@font=\font@spec\current@font\allowfontadjustment}
+\gdef\selectfont{\font\current@font=\font@spec\current@font\definefontexpandability}
 
 \gdef\rm{\withfontweight{\csname\font@family @regular@weight\endcsname}\withfontslant{}\withfontvariant{}\withfontencoding{t1}\selectfont}
 \gdef\it{\withfontslant{\csname\font@family @italics@slant\endcsname}\selectfont}
@@ -274,12 +273,11 @@
 % Logo
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\logotextsize{\cheadsize}
 \newfamily{proxima}{ProximaNova}{Regular}{It}{Bold}{Regular}
-\newstyle{logo}{proxima}{}{osf}{}
+\newstyle{logo}{proxima}{}{osf}{\logotextsize}
 
-\newdimen\logobarthickness
-\begingroup\style{logo}\global\logobarthickness=\fontdimen6\font\endgroup
-
+\newdimen\logobarthickness \logobarthickness=\logotextsize
 \divide\logobarthickness by 16
 \def\logolineskip{\vskip4\logobarthickness}
 
@@ -288,10 +286,10 @@
   \begingroup%
   \offinterlineskip%
   \style{logo}%
-  \setbox0=\hbox{DRISCOLL}%
   \vbox{%
     \hrule height \logobarthickness%
     \logolineskip%
+    \setbox0=\hbox{DRISCOLL}%
     \copy0%
     \logolineskip%
     \hbox to \wd0{#1BROOK#2}%
@@ -307,7 +305,6 @@
 \def\centerlogo{\stackedlogo{\hss}{\hss}}
 \def\rightlogo{\stackedlogo{\hss}{}}
 
-% \linelogo{font size}
 \def\linelogo{%
   \begingroup%
   \offinterlineskip%
@@ -369,5 +366,6 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\gdef\definefontexpandability{\pdffontexpand\font 30 30 10 autoexpand}
 \pdfadjustspacing=2
 \pdfprotrudechars=2
