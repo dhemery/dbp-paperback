@@ -75,23 +75,23 @@
 }
 
 \def\style#1{
-  \xdef\font@family{\csname#1@family\endcsname}
-  \xdef\font@base@name{\csname\font@family @base@name\endcsname}
-  \xdef\font@default@shape{\csname\font@family @default@shape\endcsname}
-  \xdef\font@optical@size{\csname#1@optical@size\endcsname}
-  \xdef\font@figures{\csname#1@figures\endcsname}
-  \xdef\font@size{\csname#1@size\endcsname}
+  \edef\font@family{\csname#1@family\endcsname}
+  \edef\font@base@name{\csname\font@family @base@name\endcsname}
+  \edef\font@default@shape{\csname\font@family @default@shape\endcsname}
+  \edef\font@optical@size{\csname#1@optical@size\endcsname}
+  \edef\font@figures{\csname#1@figures\endcsname}
+  \edef\font@size{\csname#1@size\endcsname}
   \rm
 }
 
-\gdef\withfontbasename#1{\xdef\font@base@name{#1}}
-\gdef\withfontencoding#1{\xdef\font@encoding{#1}}
-\gdef\withfontfigures#1{\xdef\font@figures{#1}}
-\gdef\withfontopticalsize#1{\xdef\font@optical@size{#1}}
+\gdef\withfontbasename#1{\edef\font@base@name{#1}}
+\gdef\withfontencoding#1{\edef\font@encoding{#1}}
+\gdef\withfontfigures#1{\edef\font@figures{#1}}
+\gdef\withfontopticalsize#1{\edef\font@optical@size{#1}}
 \gdef\withfontshape#1#2#3{\withfontweight{#1}\withfontslant{#2}\withfontopticalsize{#3}}
-\gdef\withfontslant#1{\xdef\font@slant{#1}}
-\gdef\withfontvariant#1{\xdef\font@variant{#1}}
-\gdef\withfontweight#1{\xdef\font@weight{#1}}
+\gdef\withfontslant#1{\edef\font@slant{#1}}
+\gdef\withfontvariant#1{\edef\font@variant{#1}}
+\gdef\withfontweight#1{\edef\font@weight{#1}}
 
 \gdef\selectfont{\font\current@font=\font@spec\current@font}
 
@@ -214,14 +214,14 @@
 \def\part#1{
   \nextoddpage
   \useemptyframethispage
-  \baselinebox{\raggedleft\parttitle#1\par}{10}{0}
+  \baselinebox{\raggedleft\parttitle{#1}\par}{10}{0}
   \nextoddpage
 }
 
 \def\chapter#1{
   \nextpage
   \usedisplayframethispage
-  \baselinebox{{\ifodd\pageno\raggedleft\else\raggedright\fi\chaptertitle#1\par}}{10}{1}
+  \baselinebox{{\ifodd\pageno\raggedleft\else\raggedright\fi\chaptertitle{#1}\par}}{10}{1}
 }
 
 % \bookinfo is a named frontmatter or backmatter division.
@@ -263,10 +263,10 @@
 % \baselinebox{content}{bottom (baselines)}{skip (baselines)}
 \long\def\baselinebox#1#2#3{\vbox to #2\leading{\line{}\vfill#1}\vskip#3\leading}
 
-\def\booktitle#1{{\style{booktitle}\titleleading\uppercase\expandafter{#1}}}
-\def\authorname#1{{\style{authorname}\titleleading\uppercase\expandafter{#1}}}
-\def\parttitle#1{{\style{parttitle}\titleleading#1}}
-\def\chaptertitle#1{{\style{chaptertitle}\titleleading#1}}
+\def\booktitle#1{{\style{booktitle}\titleleading\uppercase\expandafter{#1}\par}}
+\def\authorname#1{{\style{authorname}\titleleading\uppercase\expandafter{#1}\par}}
+\def\parttitle#1{{\style{parttitle}\sc\titleleading#1\par}}
+\def\chaptertitle#1{{\style{chaptertitle}\sc\titleleading#1\par}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -336,7 +336,7 @@
 \def\authorinfoitem#1{\medskip{\centered#1\par}}
 \def\connect#1#2{\authorinfoheading{#1}\authorinfoitem{#2}}
 \def\genre#1{\authorinfoheading{#1}}
-\def\genrebook#1{\authorinfoitem{#1}}
+\def\genrebook#1{\authorinfoitem{\emph{#1}}}
 
 \def\titleleading{\linespacing{1.1}}
 
@@ -357,7 +357,7 @@
 % TODO: Make this handle nested emphasis.
 %       Or give a way to go back to roman.
 %       Or switch to {\rm ...} and {\it ...}.
-\def\emph#1{{\it #1}}
+\def\emph#1{{\it #1\/}}
 \def\leadin#1{\nobreak\noindent{\sc #1}}
 
 \def\copyright{{\sym\char"A9}}
@@ -368,6 +368,6 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begingroup\rm\pdffontexpand\font 30 30 10 autoexpand\endgroup
+% \begingroup\rm\pdffontexpand\font 30 30 10 autoexpand\endgroup
 \pdfadjustspacing=2
 \pdfprotrudechars=2
