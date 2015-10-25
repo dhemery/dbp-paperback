@@ -177,17 +177,17 @@
 }
 
 \def\usenormalpageframes{
-  \global\headline={\style{runningheader}\normalpageheadline}
-  \global\footline={\style{runningheader}\normalpagefootline}
+  \global\headline={\normalpageheadline}
+  \global\footline={\normalpagefootline}
   \global\clearedpagefalse
   \global\displaypagefalse
 }
 
-\def\displaypagefootline{\style{runningheader}\hfil\folio\hfil}
-\def\normalpageheadline{\ifodd\pageno\normaloddpageheadline\else\normalevenpageheadline\fi}
+\def\displaypagefootline{\style{runningheader}\sc\hfil\folio\hfil}
+\def\normalpageheadline{\style{runningheader}\sc\ifodd\pageno\normaloddpageheadline\else\normalevenpageheadline\fi}
 \def\normalpagefootline{\line{}}
-\def\normaloddpageheadline{\title\hfil\folio}
-\def\normalevenpageheadline{\folio\hfil\author}
+\def\normaloddpageheadline{\style{runningheader}\sc\title\hfil\folio}
+\def\normalevenpageheadline{\style{runningheader}\sc\folio\hfil\author}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
