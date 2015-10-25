@@ -281,43 +281,33 @@
 \divide\logobarthickness by 16
 \def\logolineskip{\vskip4\logobarthickness}
 
-% \stackedlogo{left glue}{right glue}
-\def\stackedlogo#1#2{%
+\def\logostack#1#2{%
+  \setbox0=\hbox{DRISCOLL}%
+  \copy0%
+  \logolineskip%
+  \hbox to \wd0{#1BROOK#2}%
+  \logolineskip%
+  \hbox to \wd0{#1PRESS#2}%
+}
+
+\def\logo#1{
   \begingroup%
   \offinterlineskip%
   \style{logo}%
   \vbox{%
     \hrule height \logobarthickness%
     \logolineskip%
-    \setbox0=\hbox{DRISCOLL}%
-    \copy0%
-    \logolineskip%
-    \hbox to \wd0{#1BROOK#2}%
-    \logolineskip%
-    \hbox to \wd0{#1PRESS#2}%
+    #1%
     \logolineskip%
     \hrule height \logobarthickness%
-  }%
+    }%
   \endgroup%
 }
 
-\def\leftlogo{\stackedlogo{}{\hss}}
-\def\centerlogo{\stackedlogo{\hss}{\hss}}
-\def\rightlogo{\stackedlogo{\hss}{}}
-
-\def\linelogo{%
-  \begingroup%
-  \offinterlineskip%
-  \style{logo}%
-  \vbox{%
-    \hrule height \logobarthickness%
-    \logolineskip%
-    \hbox{DRISCOLL BROOK PRESS}%
-    \logolineskip%
-    \hrule height \logobarthickness%
-  }%
-  \endgroup%
-}
+\def\leftlogo{\logo{\logostack{}{\hss}}}
+\def\centerlogo{\logo{\logostack{\hss}{\hss}}}
+\def\rightlogo{\logo{\logostack{\hss}{}}}
+\def\linelogo{\logo{\hbox{DRISCOLL BROOK PRESS}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
