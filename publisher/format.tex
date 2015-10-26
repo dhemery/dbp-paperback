@@ -247,6 +247,7 @@
 \def\frontmatter{\nextoddpage\pageno=-1\useemptypageframes}
 \def\mainmatter{\nextoddpage\pageno=1\usenormalpageframes}
 \def\backmatter{\frontmatter}
+\def\endbook{\nextoddpage\end}
 
 \def\part#1{
   \nextoddpage
@@ -372,5 +373,3 @@
 \gdef\definefontexpandability{\pdffontexpand\font 30 30 10 autoexpand}
 \pdfadjustspacing=2
 \pdfprotrudechars=2
-
-\def\endbook{\nextoddpage\end}
