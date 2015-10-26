@@ -106,6 +106,31 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+% Text and Title Styles
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\aheadsize{36pt} % Book and part titles
+\def\bheadsize{24pt} % Author name
+\def\cheadsize{18pt} % Chapter titles and publisher logo
+\def\bodytextsize{11pt}
+\def\smalltextsize{10pt}
+\def\runningheadersize{8pt}
+
+\def\definestyles{%
+  \newstyle{booktitle}{\booktitlefamily}{\aheadopticalsize}{tlf}{\aheadsize}%
+  \newstyle{authorname}{\authornamefamily}{\bheadopticalsize}{tlf}{\bheadsize}%
+  \newstyle{parttitle}{\parttitlefamily}{\aheadopticalsize}{osf}{\aheadsize}%
+  \newstyle{chaptertitle}{\chaptertitlefamily}{\cheadopticalsize}{osf}{\cheadsize}%
+  \newstyle{bodytext}{\bodytextfamily}{\bodytextopticalsize}{osf}{\bodytextsize}%
+  \newstyle{smalltext}{\smalltextfamily}{\smalltextopticalsize}{osf}{\smalltextsize}%
+  \newstyle{runningheader}{\runningheaderfamily}{\runningheaderopticalsize}{osf}{\runningheadersize}%
+}
+
+\newdimen\leading \leading=15pt
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
 % Textblock Size and Position on the Page
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -159,6 +184,18 @@
 \catcode`@=11
 
 \output{\facingpages}
+
+%TODO: Remove magic numbers from \makeheadline and \makefootline
+% 22.5pt = topskip - strut height - 2(baselineskip)
+% 8.5pt = headline text height
+\newdimen\headlineskip
+\headlineskip=\topskip
+\advance\headlineskip by -\runningheadersize
+\advance\headlineskip by -2\leading
+
+\def\makeheadline{\vbox to 0pt{\vskip\headlineskip\line{\vbox to\runningheadersize{}\the\headline}\vss\nointerlineskip}}
+% 24pt = 2(baselineskip)
+\def\makefootline{\baselineskip=2\leading\lineskiplimit=0pt\line{\the\footline}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -233,29 +270,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Text and Title Styles
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\def\aheadsize{36pt} % Book and part titles
-\def\bheadsize{24pt} % Author name
-\def\cheadsize{18pt} % Chapter titles and publisher logo
-\def\bodytextsize{11pt}
-\def\smalltextsize{10pt}
-\def\runningheadersize{8pt}
-
-\def\definestyles{%
-  \newstyle{booktitle}{\booktitlefamily}{\aheadopticalsize}{tlf}{\aheadsize}%
-  \newstyle{authorname}{\authornamefamily}{\bheadopticalsize}{tlf}{\bheadsize}%
-  \newstyle{parttitle}{\parttitlefamily}{\aheadopticalsize}{osf}{\aheadsize}%
-  \newstyle{chaptertitle}{\chaptertitlefamily}{\cheadopticalsize}{osf}{\cheadsize}%
-  \newstyle{bodytext}{\bodytextfamily}{\bodytextopticalsize}{osf}{\bodytextsize}%
-  \newstyle{smalltext}{\smalltextfamily}{\smalltextopticalsize}{osf}{\smalltextsize}%
-  \newstyle{runningheader}{\runningheaderfamily}{\runningheaderopticalsize}{osf}{\runningheadersize}%
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
 % Titles
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -318,7 +332,6 @@
 \def\raggedleft{\parindent=0pt\parfillskip=0pt\leftskip=0pt plus \hsize\relax}
 \def\raggedright{\parindent=0pt\parfillskip=0pt\rightskip=0pt plus \hsize\relax}
 \def\centered{\raggedleft\raggedright}
-\newdimen\leading \leading=15pt
 
 \def\authorinfoheading#1{\bigskip\bigskip{\sc\centered#1\par}}
 \def\authorinfoitem#1{\medskip{\centered#1\par}}
