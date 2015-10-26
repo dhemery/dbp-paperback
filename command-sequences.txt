@@ -1,37 +1,34 @@
 From plain.tex
-\advancepageno !!
-\bigskip !!
-\break !!
-\bye !!
-\centerline !!
-\chardef !!
-\copy !!
-\copyright !!
-\dosupereject !!
-\eject !!
-\emergencystretch !!
-\folio !!
-\footline !!
-\headline !!
-\it !!
-\ldots !!
-\line !!
-\makefootline !!
-\makeheadline !!
-\medskip !!
-\newdimen !!
-\newif !!
-\nobreak !!
-\normalbaselines !!
-\normalbaselineskip !!
-\offinterlineskip !!
-\pagebody !!
-\pageno !!
-\raggedbottom !!
-\raggedright !!
-\rightline !!
-\rm !!
-\thinspace !!
+\advancepageno
+\bigskip
+\break
+\centerline
+\chardef
+\copy
+\copyright
+\dosupereject
+\eject
+\emergencystretch
+\folio
+\footline
+\headline
+\it
+\ldots
+\line
+\medskip
+\newdimen
+\newif
+\nobreak
+\normalbaselines
+\normalbaselineskip
+\offinterlineskip
+\pagebody
+\pageno
+\raggedbottom
+\raggedright
+\rightline
+\rm
+\thinspace
 
 TeX Primitives
 \advance
@@ -88,3 +85,10 @@ pdfTeX Primitives
 \pdfpagewidth
 \pdfprotrudechars
 \pdfvorigin
+
+Moved from plain.tex to my format.tex
+\makefootline
+\makeheadline
+
+No longer used
+\bye

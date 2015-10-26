@@ -233,9 +233,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\nextpage{\vfil\eject\global\clearedpagetrue\global\displaypagefalse\relax}
-\def\nextoddpage{\nextpage\ifodd\pageno \else \line{}\nextpage\fi}
+\def\nextoddpage{\nextpage\onoddpage}
 \def\nextevenpage{\nextpage\ifodd\pageno \line{}\nextpage\else \fi}
-
+\def\onoddpage{\ifodd\pageno \else \line{}\nextpage\fi}
 \raggedbottom
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -372,3 +372,5 @@
 \gdef\definefontexpandability{\pdffontexpand\font 30 30 10 autoexpand}
 \pdfadjustspacing=2
 \pdfprotrudechars=2
+
+\def\endbook{\nextoddpage\end}
