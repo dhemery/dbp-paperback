@@ -184,16 +184,17 @@
 
 \output{\facingpages}
 
-%TODO: Remove magic numbers from \makeheadline and \makefootline
-% 22.5pt = topskip - strut height - 2(baselineskip)
-% 8.5pt = headline text height
+% TODO: ?? Make this a macro so that it can be called after
+% \runningheadersize and \leading are defined?
 \newdimen\headlineskip
 \headlineskip=\topskip
 \advance\headlineskip by -\runningheadersize
 \advance\headlineskip by -2\leading
 
+% Write the headline 2 baselines above the textblock's first baseline.
 \def\makeheadline{\vbox to 0pt{\vskip\headlineskip\line{\vbox to\runningheadersize{}\the\headline}\vss\nointerlineskip}}
-% 24pt = 2(baselineskip)
+
+% Write the footline 2 baselines below the textblock's last baseline.
 \def\makefootline{\baselineskip=2\leading\lineskiplimit=0pt\line{\the\footline}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
