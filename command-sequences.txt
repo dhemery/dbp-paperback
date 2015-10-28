@@ -3,16 +3,12 @@ From plain.tex
 \bigskip
 \break
 \centerline
-\chardef
-\copy
-\copyright
 \dosupereject
 \eject
 \emergencystretch
 \folio
 \footline
 \headline
-\it
 \ldots
 \line
 \medskip
@@ -27,7 +23,6 @@ From plain.tex
 \raggedbottom
 \raggedright
 \rightline
-\rm
 \thinspace
 
 TeX Primitives
@@ -86,9 +81,14 @@ pdfTeX Primitives
 \pdfprotrudechars
 \pdfvorigin
 
-Moved from plain.tex to my format.tex
+Moved (and perhaps redefined) from plain.tex to my format.tex
+\copyright
+\it
 \makefootline
 \makeheadline
+\rm
 
 No longer used
 \bye
+\chardef
+\copy

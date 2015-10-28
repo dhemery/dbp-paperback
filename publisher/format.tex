@@ -127,7 +127,10 @@
   \newstyle{runningheader}{\runningheaderfamily}{\runningheaderopticalsize}{osf}{\runningheadersize}%
 }
 
-\newdimen\leading \leading=15pt
+\newdimen\leading
+
+% TODO: Move this elsewhere
+\leading=15pt
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -135,29 +138,29 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\catcode`\@=11
-
-\newdimen\textblock@odd@left
-\newdimen\textblock@even@left
-
-\def\setspinemargin#1{
-  \textblock@odd@left=#1
-  \textblock@even@left=\pdfpagewidth
-    \advance\textblock@even@left by -\hsize
-    \advance\textblock@even@left by -#1
-}
-
-\catcode`\@=12
-
 \pdfhorigin=0pt
 \pdfvorigin=0pt
-\pdfpagewidth=5 true in
-\pdfpageheight=8 true in
-\hsize=22pc
-\vsize=39pc
-\voffset=4.5pc
 
-\setspinemargin{4.5pc}
+\newdimen\edgemargin
+\newdimen\spinemargin
+\def\setspinemargin#1{
+  \edgemargin=#1
+  \spinemargin=\pdfpagewidth
+    \advance\spinemargin by -\hsize
+    \advance\spinemargin by -#1
+}
+
+% Use edge margin for left/even pages,
+% spine margin for odd/right pages
+\def\leftmargin{\ifodd\pageno\edgemargin\else\spinemargin\fi}
+
+% TODO: Move these assignments elsewhere
+\pdfpagewidth=5 true in   % page width
+\pdfpageheight=8 true in  % page height
+\hsize=22pc               % textblock width
+\vsize=39pc               % textblock height
+\voffset=4.5pc            % top margin
+\setspinemargin{4.5pc}    % spine margin
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -168,20 +171,16 @@
 \newif\ifclearedpage
 \newif\ifdisplaypage
 
-\catcode`@=11
-
-% Write one page (textblock, headline, and footline).
+% Write one page (headline, textblock, and footline).
 \def\facingpages{%
   \ifclearedpage\headline={\line{}}\footline={\line{}}\fi%
   \ifdisplaypage\headline={\line{}}\footline={\displaypagefootline}\fi%
   \global\clearedpagefalse%
   \global\displaypagefalse%
-  \dimen0=\ifodd\pageno\textblock@odd@left\else\textblock@even@left\fi%
-  \shipout\vbox{\moveright\dimen0\vbox{\makeheadline\pagebody\makefootline}}%
+  \shipout\vbox{\moveright\leftmargin\vbox{\makeheadline\pagebody\makefootline}}%
   \advancepageno%
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
-\catcode`@=11
 
 \output{\facingpages}
 
