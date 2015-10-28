@@ -184,16 +184,16 @@
 
 \output{\facingpages}
 
+\newdimen\headlineskip
+
+% Position the headline 2 baselines above the textblock's first baseline.
 % TODO: ?? Make this a macro so that it can be called after
 % \runningheadersize and \leading are defined?
-\newdimen\headlineskip
-\headlineskip=\topskip
-\advance\headlineskip by -\runningheadersize
-\advance\headlineskip by -2\leading
+\headlineskip=\topskip % skip to textblock's first baseline
+\advance\headlineskip by -2\leading % skip two lines above first baseline
+\advance\headlineskip by -\runningheadersize % skip up to make room for headline
 
-% Write the headline 2 baselines above the textblock's first baseline.
-\def\makeheadline{\vbox to 0pt{\vskip\headlineskip\line{\vbox to\runningheadersize{}\the\headline}\vss\nointerlineskip}}
-
+\def\makeheadline{\vbox to 0pt{\vskip\headlineskip\line{\the\headline}\vss\nointerlineskip}}
 % Write the footline 2 baselines below the textblock's last baseline.
 \def\makefootline{\baselineskip=2\leading\lineskiplimit=0pt\line{\the\footline}}
 
