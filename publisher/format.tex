@@ -251,14 +251,14 @@
 \def\part#1{
   \nextoddpage
   \useemptyframethispage
-  \baselinebox{\raggedleft\parttitle{#1}\par}{10}{0}
+  \baselinebox{\raggedspine\parttitle{#1}\par}{10}{0}
   \nextoddpage
 }
 
 \def\chapter#1{
   \nextpage
   \usedisplayframethispage
-  \baselinebox{{\ifodd\pageno\raggedleft\else\raggedright\fi\chaptertitle{#1}\par}}{10}{1}
+  \baselinebox{\raggedspine\chaptertitle{#1}}{10}{1}
 }
 
 % \bookinfo is a named frontmatter or backmatter division.
@@ -332,6 +332,7 @@
 \def\raggedleft{\parindent=0pt\parfillskip=0pt\leftskip=0pt plus \hsize\relax}
 \def\raggedright{\parindent=0pt\parfillskip=0pt\rightskip=0pt plus \hsize\relax}
 \def\centered{\raggedleft\raggedright}
+\def\raggedspine{\ifodd\pageno\raggedleft\else\raggedright\fi}
 
 \def\authorinfoheading#1{\bigskip\bigskip{\sc\centered#1\par}}
 \def\authorinfoitem#1{\medskip{\centered#1\par}}
