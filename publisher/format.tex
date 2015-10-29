@@ -17,6 +17,8 @@
 
 \outer\def\newcount#1{\global\countdef#1=\nextcountregister \advance\nextcountregister by 1}
 \outer\def\newdimen#1{\global\dimendef#1=\nextdimenregister \advance\nextdimenregister by 1}
+\outer\def\newskip#1{\global\skipdef#1=\nextskipregister \advance\nextskipregister by 1}
+\outer\def\newtoks#1{\global\toksdef#1=\nexttoksregister \advance\nexttoksregister by 1}
 
 \newdimen\leading
 
@@ -24,6 +26,42 @@
 \gdef\optionalwithprefix#1#2{\if\relax#2\relax\else#1#2\fi}
 \gdef\fontspec{\fontbasename\optionalwithprefix{-}{\fontshape}-\fontfigures\optionalwithprefix{-}{\fontvariant}-\fontencoding\optionalwithprefix{ at }{\fontsize\relax}}
 \gdef\fontshape{\optionalwithdefault{\fontweight\fontslant\fontopticalsize}{\fontdefaultshape}}
+
+% TODO: Define these
+\newcount\pageno \pageno=1
+
+\newdimen\normalbaselineskip \normalbaselineskip=15pt plus0pt minus0pt
+
+\newskip\bigskipsize \bigskipsize=12pt plus0pt minus0pt
+\newskip\medskipsize \medskipsize=6pt plus0pt minus0pt
+
+\newtoks\footline \footline={}
+\newtoks\headline \headline={}
+
+\def\advancepageno{\advance\pageno by 9}
+\def\break{\penalty-10000 }
+\def\bigskip{\vskip\bigskipsize}
+\def\centerline#1{\line{\hss#1\hss}}
+\def\medskip{\vskip\medskipsize}
+\def\eject{\par\penalty-10000}
+\def\folio{\the\pageno}
+\def\dots{...}
+\def\leftline#1{\line{#1\hss}}
+\def\line{\hbox to\hsize}
+\def\nobreak{\penalty10000 }
+\def\nointerlineskip{}
+\def\normalbaselines{}
+\def\pagebody{\vbox to\vsize{\boxmaxdepth=\maxdepth \pagecontents}}
+\def\pagecontents{\unvbox255}
+\def\offinterlineskip{}
+\def\raggedbottom{}
+\def\rightline#1{\line{\hss#1}}
+\def\thinspace{\hbox{ }}
+\def\'#1{{\accent"13 #1}}
+
+\chardef\$=`\$
+
+
 
 % Declare a new font family. This specifies the terms to
 % use to build file names for this font.
