@@ -164,19 +164,19 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\clearedpagetrue{\global\let\ifclearedpage=\iftrue}
-\def\clearedpagefalse{\global\let\ifclearedpage=\iffalse}
-\def\displaypagetrue{\global\let\ifdisplaypage=\iftrue}
-\def\displaypagefalse{\global\let\ifdisplaypage=\iffalse}
-\clearedpagefalse
-\displaypagefalse
+\def\runningpageframe{0}
+\def\clearedpageframe{1}
+\def\displaypageframe{2}
+\def\useemptyframethispage{\global\let\pageframe=\clearedpageframe}
+\def\usedisplayframethispage{\global\let\pageframe=\displaypageframe}
+\def\userunningpageframe{\global\let\pageframe=\runningpageframe}
+\userunningpageframe
 
 % Write one page (headline, textblock, and footline).
 \def\facingpages{%
-  \ifclearedpage\headline={\line{}}\footline={\line{}}\fi%
-  \ifdisplaypage\headline={\line{}}\footline={\displaypagefootline}\fi%
-  \global\clearedpagefalse%
-  \global\displaypagefalse%
+  \if\pageframe\clearedpageframe\headline={\line{}}\footline={\line{}}\fi%
+  \if\pageframe\displaypageframe\headline={\line{}}\footline={\displaypagefootline}\fi%
+  \userunningpageframe
   \shipout\vbox{\moveright\leftmargin\vbox{\makeheadline\pagebody\makefootline}}%
   \advancepageno%
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
@@ -203,21 +203,16 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\useemptyframethispage{\clearedpagetrue\displaypagefalse}
-\def\usedisplayframethispage{\displaypagetrue\clearedpagefalse}
-
-\def\useemptypageframes{
+\def\useemptypageframe{
   \global\headline={\line{}}
   \global\footline={\line{}}
-  \global\clearedpagefalse
-  \global\displaypagefalse
+  \userunningpageframe
 }
 
-\def\usenormalpageframes{
+\def\usenormalpageframe{
   \global\headline={\normalpageheadline}
   \global\footline={\normalpagefootline}
-  \global\clearedpagefalse
-  \global\displaypagefalse
+  \userunningpageframe
 }
 
 \def\displaypagefootline{\style{runningheader}\sc\hfil\folio\hfil}
@@ -232,7 +227,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\nextpage{\vfil\eject\global\clearedpagetrue\global\displaypagefalse\relax}
+\def\nextpage{\vfil\eject\useemptyframethispage}
 \def\nextoddpage{\nextpage\onoddpage}
 \def\nextevenpage{\nextpage\ifodd\pageno \line{}\nextpage\else \fi}
 \def\onoddpage{\ifodd\pageno \else \line{}\nextpage\fi}
@@ -244,8 +239,8 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\frontmatter{\nextoddpage\pageno=-1\useemptypageframes}
-\def\mainmatter{\nextoddpage\pageno=1\usenormalpageframes}
+\def\frontmatter{\nextoddpage\pageno=-1\useemptypageframe}
+\def\mainmatter{\nextoddpage\pageno=1\usenormalpageframe}
 \def\backmatter{\frontmatter}
 \def\endbook{\nextoddpage\end}
 
@@ -265,7 +260,7 @@
 % \bookinfo is a named frontmatter or backmatter division.
 \def\bookinfo#1{
   \nextpage
-  \useemptypageframes
+  \useemptypageframe
   {\centered\chaptertitle{#1}\par}
 }
 
