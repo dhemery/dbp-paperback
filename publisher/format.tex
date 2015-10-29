@@ -1,9 +1,7 @@
-\catcode`@=11
-
-\gdef\@defaulting#1#2{\if\relax#1\relax#2\else#1\fi}
-\gdef\@optional#1#2{\if\relax#2\relax\else#1#2\fi}
-\gdef\font@spec{\font@base@name\@optional{-}{\font@shape}-\font@figures\@optional{-}{\font@variant}-\font@encoding\@optional{ at }{\font@size\relax}}
-\gdef\font@shape{\@defaulting{\font@weight\font@slant\font@optical@size}{\font@default@shape}}
+\gdef\optionalwithdefault#1#2{\if\relax#1\relax#2\else#1\fi}
+\gdef\optionalwithprefix#1#2{\if\relax#2\relax\else#1#2\fi}
+\gdef\fontspec{\fontbasename\optionalwithprefix{-}{\fontshape}-\fontfigures\optionalwithprefix{-}{\fontvariant}-\fontencoding\optionalwithprefix{ at }{\fontsize\relax}}
+\gdef\fontshape{\optionalwithdefault{\fontweight\fontslant\fontopticalsize}{\fontdefaultshape}}
 
 % Declare a new font family. This specifies the terms to
 % use to build file names for this font.
@@ -29,11 +27,11 @@
 %     regular weight, roman slant, and book or text optical
 %     size. This is usually empty, but may be Regular.
 \def\newfamily#1#2#3#4#5#6{%
-  \expandafter\xdef\csname#1@base@name\endcsname{#2}%
-  \expandafter\xdef\csname#1@regular@weight\endcsname{#3}%
-  \expandafter\xdef\csname#1@italics@slant\endcsname{#4}%
-  \expandafter\xdef\csname#1@bold@weight\endcsname{#5}%
-  \expandafter\xdef\csname#1@default@shape\endcsname{#6}%
+  \expandafter\xdef\csname#1basename\endcsname{#2}%
+  \expandafter\xdef\csname#1regularweight\endcsname{#3}%
+  \expandafter\xdef\csname#1italicslant\endcsname{#4}%
+  \expandafter\xdef\csname#1boldweight\endcsname{#5}%
+  \expandafter\xdef\csname#1defaultshape\endcsname{#6}%
 }
 
 % Declare a new font style. This specifies the terms to use
@@ -68,41 +66,39 @@
 %     may be empty, in which case the font's default size
 %     will be used.
 \def\newstyle#1#2#3#4#5{%
-  \expandafter\xdef\csname#1@family\endcsname{#2}%
-  \expandafter\xdef\csname#1@optical@size\endcsname{#3}%
-  \expandafter\xdef\csname#1@figures\endcsname{#4}%
-  \expandafter\xdef\csname#1@size\endcsname{#5}%
+  \expandafter\xdef\csname#1family\endcsname{#2}%
+  \expandafter\xdef\csname#1opticalsize\endcsname{#3}%
+  \expandafter\xdef\csname#1figures\endcsname{#4}%
+  \expandafter\xdef\csname#1size\endcsname{#5}%
 }
 
 \def\style#1{%
-  \edef\font@family{\csname#1@family\endcsname}%
-  \edef\font@base@name{\csname\font@family @base@name\endcsname}%
-  \edef\font@default@shape{\csname\font@family @default@shape\endcsname}%
-  \edef\font@optical@size{\csname#1@optical@size\endcsname}%
-  \edef\font@figures{\csname#1@figures\endcsname}%
-  \edef\font@size{\csname#1@size\endcsname}%
+  \edef\fontfamily{\csname#1family\endcsname}%
+  \edef\fontbasename{\csname\fontfamily basename\endcsname}%
+  \edef\fontdefaultshape{\csname\fontfamily defaultshape\endcsname}%
+  \edef\fontopticalsize{\csname#1opticalsize\endcsname}%
+  \edef\fontfigures{\csname#1figures\endcsname}%
+  \edef\fontsize{\csname#1size\endcsname}%
   \rm%
 }
 
-\gdef\withfontbasename#1{\edef\font@base@name{#1}}
-\gdef\withfontencoding#1{\edef\font@encoding{#1}}
-\gdef\withfontfigures#1{\edef\font@figures{#1}}
-\gdef\withfontopticalsize#1{\edef\font@optical@size{#1}}
+\gdef\withfontbasename#1{\edef\fontbasename{#1}}
+\gdef\withfontencoding#1{\edef\fontencoding{#1}}
+\gdef\withfontfigures#1{\edef\fontfigures{#1}}
+\gdef\withfontopticalsize#1{\edef\fontopticalsize{#1}}
 \gdef\withfontshape#1#2#3{\withfontweight{#1}\withfontslant{#2}\withfontopticalsize{#3}}
-\gdef\withfontslant#1{\edef\font@slant{#1}}
-\gdef\withfontvariant#1{\edef\font@variant{#1}}
-\gdef\withfontweight#1{\edef\font@weight{#1}}
+\gdef\withfontslant#1{\edef\fontslant{#1}}
+\gdef\withfontvariant#1{\edef\fontvariant{#1}}
+\gdef\withfontweight#1{\edef\fontweight{#1}}
 
-\gdef\selectfont{\font\current@font=\font@spec\current@font\definefontexpandability}
+\gdef\selectfont{\font\currentfont=\fontspec\currentfont\definefontexpandability}
 
-\gdef\rm{\withfontweight{\csname\font@family @regular@weight\endcsname}\withfontslant{}\withfontvariant{}\withfontencoding{t1}\selectfont}
-\gdef\it{\withfontslant{\csname\font@family @italics@slant\endcsname}\selectfont}
-\gdef\bf{\withfontweight{\csname\font@family @bold@weight\endcsname}\selectfont}
+\gdef\rm{\withfontweight{\csname\fontfamily regularweight\endcsname}\withfontslant{}\withfontvariant{}\withfontencoding{t1}\selectfont}
+\gdef\it{\withfontslant{\csname\fontfamily italicslant\endcsname}\selectfont}
+\gdef\bf{\withfontweight{\csname\fontfamily boldweight\endcsname}\selectfont}
 \gdef\sc{\withfontvariant{sc}\selectfont}
 \gdef\tl{\withfontvariant{titling}\withfontfigures{tlf}\selectfont}
 \gdef\sym{\withfontencoding{ts1}\selectfont}
-
-\catcode`\@=12
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
