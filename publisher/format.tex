@@ -164,8 +164,12 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newif\ifclearedpage
-\newif\ifdisplaypage
+\def\clearedpagetrue{\global\let\ifclearedpage=\iftrue}
+\def\clearedpagefalse{\global\let\ifclearedpage=\iffalse}
+\def\displaypagetrue{\global\let\ifdisplaypage=\iftrue}
+\def\displaypagefalse{\global\let\ifdisplaypage=\iffalse}
+\clearedpagefalse
+\displaypagefalse
 
 % Write one page (headline, textblock, and footline).
 \def\facingpages{%
