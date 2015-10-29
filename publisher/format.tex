@@ -164,20 +164,16 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\runningpageframe{0}
-\def\clearedpageframe{1}
-\def\displaypageframe{2}
-\def\useemptyframethispage{\global\let\pageframe=\clearedpageframe}
-\def\usedisplayframethispage{\global\let\pageframe=\displaypageframe}
-\def\userunningpageframe{\global\let\pageframe=\runningpageframe}
-\userunningpageframe
+\def\runningheadline{\line{}}
+\def\runningfootline{\line{}}
+\def\useclearedframethispage{\global\headline={\clearedheadline}\global\footline={\clearedfootline}}
+\def\usedisplayframethispage{\global\headline={\displayheadline}\global\footline={\displayfootline}}
+\def\userunningpageframe{\global\headline={\runningheadline}\global\footline={\runningfootline}}
 
 % Write one page (headline, textblock, and footline).
 \def\facingpages{%
-  \if\pageframe\clearedpageframe\headline={\line{}}\footline={\line{}}\fi%
-  \if\pageframe\displaypageframe\headline={\line{}}\footline={\displaypagefootline}\fi%
-  \userunningpageframe
   \shipout\vbox{\moveright\leftmargin\vbox{\makeheadline\pagebody\makefootline}}%
+  \userunningpageframe%
   \advancepageno%
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
@@ -203,23 +199,45 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Running headline and footline for cleared pages
+% (pages begun by \nextpage, \nextoddpage, and \nextevenpage).
+% You may want to change these for debugging.
+\def\clearedheadline{\line{}}
+\def\clearedfootline{\line{}}
+
+% Running headline and footline for display pages
+% (pages that begin with a major display item such as a part or chapter title)
+\def\displayheadline{\line{}}
+\def\displayfootline{\style{runningheader}\sc\hfil\folio\hfil}
+
+% Running headline and footline after user calls \useemptypageframe.
+% By default, this format uses empty frames for frontmatter and backmatter pages.
+% You may want to change these for debugging.
+\def\emptyheadline{\line{}}
+\def\emptyfootline{\line{}}
+
+% Running headline and footline for most content pages.
+% We use different headlines on even and odd pages.
+% Redefine to suit your formatting needs.
+\def\normalheadline{\style{runningheader}\sc\ifodd\pageno\normaloddpageheadline\else\normalevenpageheadline\fi}
+% No footline on normal pages
+\def\normalfootline{\line{}}
+% Odd (right) pages: title at inner margin, page number at outer margin
+\def\normaloddpageheadline{\style{runningheader}\sc\title\hfil\folio}
+% Even (left) pages: page number at outer margin, author name at inner margin
+\def\normalevenpageheadline{\style{runningheader}\sc\folio\hfil\author}
+
 \def\useemptypageframe{
-  \global\headline={\line{}}
-  \global\footline={\line{}}
+  \gdef\runningheadline{\emptyheadline}
+  \gdef\runningfootline{\emptyfootline}
   \userunningpageframe
 }
 
 \def\usenormalpageframe{
-  \global\headline={\normalpageheadline}
-  \global\footline={\normalpagefootline}
+  \gdef\runningheadline{\normalheadline}
+  \gdef\runningfootline{\normalfootline}
   \userunningpageframe
 }
-
-\def\displaypagefootline{\style{runningheader}\sc\hfil\folio\hfil}
-\def\normalpageheadline{\style{runningheader}\sc\ifodd\pageno\normaloddpageheadline\else\normalevenpageheadline\fi}
-\def\normalpagefootline{\line{}}
-\def\normaloddpageheadline{\style{runningheader}\sc\title\hfil\folio}
-\def\normalevenpageheadline{\style{runningheader}\sc\folio\hfil\author}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -227,7 +245,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\nextpage{\vfil\eject\useemptyframethispage}
+\def\nextpage{\vfil\eject\useclearedframethispage}
 \def\nextoddpage{\nextpage\onoddpage}
 \def\nextevenpage{\nextpage\ifodd\pageno \line{}\nextpage\else \fi}
 \def\onoddpage{\ifodd\pageno \else \line{}\nextpage\fi}
@@ -246,7 +264,6 @@
 
 \def\part#1{
   \nextoddpage
-  \useemptyframethispage
   \baselinebox{\raggedspine\parttitle{#1}\par}{10}{0}
   \nextoddpage
 }
