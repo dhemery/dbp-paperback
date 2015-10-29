@@ -1,3 +1,25 @@
+\catcode`\{=1 % begin group
+\catcode`\}=2 % end group
+\catcode`\$=3 % shift into and out of math mode
+\catcode`\&=4 % alignment tab
+\catcode`\#=6 % macro parameter prefix
+\catcode`\^=7 % superscript operator
+\catcode`\_=8 % subscript operator
+\catcode`\^^I=10 % Treat tab as like space
+\catcode`\~=13 % Tilde is active
+\catcode`\^^L=13 \outer\def\^^L{\par}   % Convert form feed to \par
+
+\countdef\nextboxregister=20 \nextboxregister=10
+\countdef\nextcountregister=21 \nextcountregister=10
+\countdef\nextdimenregister=22 \nextdimenregister=10
+\countdef\nextskipregister=23 \nextskipregister=10
+\countdef\nexttoksregister=24 \nexttoksregister=10
+
+\outer\def\newcount#1{\global\countdef#1=\nextcountregister \advance\nextcountregister by 1}
+\outer\def\newdimen#1{\global\dimendef#1=\nextdimenregister \advance\nextdimenregister by 1}
+
+\newdimen\leading
+
 \gdef\optionalwithdefault#1#2{\if\relax#1\relax#2\else#1\fi}
 \gdef\optionalwithprefix#1#2{\if\relax#2\relax\else#1#2\fi}
 \gdef\fontspec{\fontbasename\optionalwithprefix{-}{\fontshape}-\fontfigures\optionalwithprefix{-}{\fontvariant}-\fontencoding\optionalwithprefix{ at }{\fontsize\relax}}
