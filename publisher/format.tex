@@ -10,90 +10,41 @@
 \catcode`\^^L=13 \outer\def\^^L{\par}   % Convert form feed to \par
 
 \countdef\nextboxregister=20 \nextboxregister=10
-\countdef\nextcountregister=21 \nextcountregister=10
+\countdef\nextcountregister=21 \nextcountregister=30
 \countdef\nextdimenregister=22 \nextdimenregister=10
 \countdef\nextskipregister=23 \nextskipregister=10
 \countdef\nexttoksregister=24 \nexttoksregister=10
 
-\outer\def\newcount#1{\global\countdef#1=\nextcountregister \advance\nextcountregister by 1}
-\outer\def\newdimen#1{\global\dimendef#1=\nextdimenregister \advance\nextdimenregister by 1}
-\outer\def\newskip#1{\global\skipdef#1=\nextskipregister \advance\nextskipregister by 1}
-\outer\def\newtoks#1{\global\toksdef#1=\nexttoksregister \advance\nexttoksregister by 1}
+\def\newcount#1{\global\countdef#1=\nextcountregister \advance\nextcountregister by 1}
+\def\newdimen#1{\global\dimendef#1=\nextdimenregister \advance\nextdimenregister by 1}
+\def\newskip#1{\global\skipdef#1=\nextskipregister \advance\nextskipregister by 1}
+\def\newtoks#1{\global\toksdef#1=\nexttoksregister \advance\nexttoksregister by 1}
 
-\gdef\optionalwithdefault#1#2{\if\relax#1\relax#2\else#1\fi}
-\gdef\optionalwithprefix#1#2{\if\relax#2\relax\else#1#2\fi}
-\gdef\fontspec{\fontbasename\optionalwithprefix{-}{\fontshape}-\fontfigures\optionalwithprefix{-}{\fontvariant}-\fontencoding\optionalwithprefix{ at }{\fontsize\relax}}
-\gdef\fontshape{\optionalwithdefault{\fontweight\fontslant\fontopticalsize}{\fontdefaultshape}}
+\def\optionalwithdefault#1#2{\if\relax#1\relax#2\else#1\fi}
+\def\optionalwithprefix#1#2{\if\relax#2\relax\else#1#2\fi}
+\def\fontspec{\fontbasename\optionalwithprefix{-}{\fontshape}-\fontfigures\optionalwithprefix{-}{\fontvariant}-\fontencoding\optionalwithprefix{ at }{\fontsize\relax}}
+\def\fontshape{\optionalwithdefault{\fontweight\fontslant\fontopticalsize}{\fontdefaultshape}}
 
-% Declare a new font family. This specifies the terms to
-% use to build file names for this font.
-%
-% The parameters are:
-% 1 family tag
-%     A tag to identify this font family.
-% 2 file name prefix
-%     The filename prefix that names this family's font
-%     files. e.g. GaramondPremrPro
-% 3 regular weight tag
-%     The word that selects regular weight in this font's
-%     file names. Usually empty, but may be Regular.
-% 4 italic tag
-%     The word that selects italic slant in this font's
-%     file names. This is usually either It or Italic.
-% 5 bold tag
-%     The word that selects bold weight in this font's file
-%     names. This is usually either Bd or Bold.
-% 6 default shape tag
-%     The word that selects the default font in this font's
-%     file names. That is, it selects the font that is
-%     regular weight, roman slant, and book or text optical
-%     size. This is usually empty, but may be Regular.
-\def\newfamily#1#2#3#4#5#6{%
-  \expandafter\xdef\csname#1basename\endcsname{#2}%
-  \expandafter\xdef\csname#1regularweight\endcsname{#3}%
-  \expandafter\xdef\csname#1italicslant\endcsname{#4}%
-  \expandafter\xdef\csname#1boldweight\endcsname{#5}%
-  \expandafter\xdef\csname#1defaultshape\endcsname{#6}%
+% Declare a new font family.
+% This specifies terms to identify parts of file names for this family
+\def\newfamily#1#2#3#4#5#6{% #1 name for this family
+  \expandafter\xdef\csname#1basename\endcsname{#2}% #2: the words that identify the family in this family's file names (e.g. GaramondPremrPro)
+  \expandafter\xdef\csname#1regularweight\endcsname{#3}% #3: the possibly empty word that identifies the regular weight in this family's file names
+  \expandafter\xdef\csname#1italicslant\endcsname{#4}% #4: the word that identifies italic slant in this family's file names
+  \expandafter\xdef\csname#1boldweight\endcsname{#5}% #5: the word that identifies bold weight in this family's file names
+  \expandafter\xdef\csname#1defaultshape\endcsname{#6}% #6: the possibly empty word that identifies regular roman book style in this family's file names
 }
 
 % Declare a new font style. This specifies the terms to use
 % to build file names for this style.
-%
-% The parameters are:
-% 1 style tag
-%     A tag to identify this style.
-% 2 family tag
-%     Selects the font family to use for this tag.
-% 3 figure style tag
-%     The word that selects the desired figure style (the
-%     kind of digits to use) in this font's file names.
-%     This is one of:
-%     - osf
-%         Old style figures.
-%         Variable height, proportional width.
-%     - tosf
-%         Tabular old style figures.
-%         Variable height, fixed width.
-%     - lf
-%         Lining figures.
-%         Fixed height, variable width.
-%     - tlf
-%         Tabular lining figures.
-%         Fixed width, fixed height.
-% 4 optical size tag
-%     The word that selects the desired optical size in
-%     this font's file names.
-% 5 size
-%     The point size at which to render this style. This
-%     may be empty, in which case the font's default size
-%     will be used.
-\def\newstyle#1#2#3#4#5{%
-  \expandafter\xdef\csname#1family\endcsname{#2}%
-  \expandafter\xdef\csname#1opticalsize\endcsname{#3}%
-  \expandafter\xdef\csname#1figures\endcsname{#4}%
-  \expandafter\xdef\csname#1size\endcsname{#5}%
+\def\newstyle#1#2#3#4#5{% #1: a name for the style
+  \expandafter\xdef\csname#1family\endcsname{#2}% #2: the name of this style's font family
+  \expandafter\xdef\csname#1opticalsize\endcsname{#3}% #3: the word that identifies this style's optical size in the family's file names
+  \expandafter\xdef\csname#1figures\endcsname{#4}% #4: the word that identifies this style's figure style in the family's file names
+  \expandafter\xdef\csname#1size\endcsname{#5}% #5: the possibly empty point size at which to render this style
 }
 
+% Select a style and switch to its \rm font
 \def\style#1{%
   \edef\fontfamily{\csname#1family\endcsname}%
   \edef\fontbasename{\csname\fontfamily basename\endcsname}%
@@ -104,23 +55,23 @@
   \rm%
 }
 
-\gdef\withfontbasename#1{\edef\fontbasename{#1}}
-\gdef\withfontencoding#1{\edef\fontencoding{#1}}
-\gdef\withfontfigures#1{\edef\fontfigures{#1}}
-\gdef\withfontopticalsize#1{\edef\fontopticalsize{#1}}
-\gdef\withfontshape#1#2#3{\withfontweight{#1}\withfontslant{#2}\withfontopticalsize{#3}}
-\gdef\withfontslant#1{\edef\fontslant{#1}}
-\gdef\withfontvariant#1{\edef\fontvariant{#1}}
-\gdef\withfontweight#1{\edef\fontweight{#1}}
+\def\withfontbasename#1{\edef\fontbasename{#1}}
+\def\withfontencoding#1{\edef\fontencoding{#1}}
+\def\withfontfigures#1{\edef\fontfigures{#1}}
+\def\withfontopticalsize#1{\edef\fontopticalsize{#1}}
+\def\withfontshape#1#2#3{\withfontweight{#1}\withfontslant{#2}\withfontopticalsize{#3}}
+\def\withfontslant#1{\edef\fontslant{#1}}
+\def\withfontvariant#1{\edef\fontvariant{#1}}
+\def\withfontweight#1{\edef\fontweight{#1}}
 
-\gdef\selectfont{\font\currentfont=\fontspec\currentfont\definefontexpandability}
+\def\selectfont{\font\currentfont=\fontspec\currentfont\definefontexpandability}
 
-\gdef\rm{\withfontweight{\csname\fontfamily regularweight\endcsname}\withfontslant{}\withfontvariant{}\withfontencoding{t1}\selectfont}
-\gdef\it{\withfontslant{\csname\fontfamily italicslant\endcsname}\selectfont}
-\gdef\bf{\withfontweight{\csname\fontfamily boldweight\endcsname}\selectfont}
-\gdef\sc{\withfontvariant{sc}\selectfont}
-\gdef\tl{\withfontvariant{titling}\withfontfigures{tlf}\selectfont}
-\gdef\sym{\withfontencoding{ts1}\selectfont}
+\def\rm{\withfontweight{\csname\fontfamily regularweight\endcsname}\withfontslant{}\withfontvariant{}\withfontencoding{t1}\selectfont}
+\def\it{\withfontslant{\csname\fontfamily italicslant\endcsname}\selectfont}
+\def\bf{\withfontweight{\csname\fontfamily boldweight\endcsname}\selectfont}
+\def\sc{\withfontvariant{sc}\selectfont}
+\def\tl{\withfontvariant{titling}\withfontfigures{tlf}\selectfont}
+\def\sym{\withfontencoding{ts1}\selectfont}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -187,8 +138,8 @@
 
 \def\makeheadline{\vbox to 0pt{\positionheadline\line{\the\headline}\vss\nointerlineskip}}
 \def\makefootline{\positionfootline\line{\the\footline}}
-\def\positionheadline{\vskip-\headlineskip}
-\def\positionfootline{\baselineskip=\footlineskip\lineskiplimit=0pt}
+\def\positionheadline{\vskip-\headlineposition}
+\def\positionfootline{\baselineskip=\footlineposition \lineskiplimit=0pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -428,7 +379,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\gdef\definefontexpandability{\pdffontexpand\font 30 30 10 autoexpand}
+\def\definefontexpandability{\pdffontexpand\font 30 30 10 autoexpand}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -446,6 +397,8 @@
 
 % Page Output
 \output{\facingpages}
+\pageno=1
+\pagenoincrement=1
 % \tracingoutput % positive if showing boxes that are shipped out
 
 % Textblock
@@ -456,10 +409,8 @@
 \topskip=10pt % glue at top of main pages
 
 % Page Frames
-\pageno=1
-\pagenoincrement=1
-\headlineskip=2\leading % Place headline two lines above first baseline
-\footlineskip=2\leading % Place footline two lines below the textblock's last baseline
+\def\headlineposition{2\leading} % Place headline two lines above first baseline
+\def\footlineposition{2\leading} % Place footline two lines below the textblock's last baseline
 
 % Page Breaks
 % \interlinepenalty % penalty for page break between lines
@@ -471,16 +422,6 @@
 \clubpenalty=150 % penalty for create a club line at bottom of page
 \widowpenalty=150 % penalty for creating a widow line at top of page
 \displaywidowpenalty=50 % ditto, before a display
-
-% Paragraphs
-\parskip=0pt plus 1pt % extra glue just above paragraphs
-\parindent=1em % width of \indent
-\emergencystretch=1.5em % reduces badness on final pass of line-breaking
-\parfillskip=0pt plus 1fil % additional rightskip at end of paragraphs
-% \looseness % change to the number of lines in a paragraph
-% \tracingparagraphs % positive if showing line-break calculations
-% \hangindent % amount of hanging indentation
-% \hangafter % hanging indentation changes after this many lines
 
 % Lines
 \leading=15pt
@@ -515,6 +456,16 @@
 \pdfadjustspacing=2
 \pdfprotrudechars=2
 
+% Paragraphs
+\parskip=0pt plus 1pt % extra glue just above paragraphs
+\parindent=\leading % width of \indent
+\emergencystretch=1.5\leading % reduces badness on final pass of line-breaking
+\parfillskip=0pt plus 1fil % additional rightskip at end of paragraphs
+% \looseness % change to the number of lines in a paragraph
+% \tracingparagraphs % positive if showing line-break calculations
+% \hangindent % amount of hanging indentation
+% \hangafter % hanging indentation changes after this many lines
+
 % Debugging
 \errorcontextlines=5 % maximum extra context shown when errors occur
 \hbadness=1000 % badness above which bad hboxes will be shown
@@ -522,9 +473,9 @@
 \hfuzz=0.1pt % maximum overrun before overfull hbox messages occur
 \vfuzz=0.1pt % maximum overrun before overfull vbox messages occur
 \overfullrule=5pt % width of rules appended to overfull boxes
-\tracinglostchars=1 % positive if showing characters not in the font
 \showboxbreadth=5 % maximum items per level when boxes are shown
 \showboxdepth=3 % maximum level when boxes are shown
+\tracinglostchars=1 % positive if showing characters not in the font
 % \tracingonline % positive if showing diagnostic info on the terminal
 % \tracingmacros % positive if showing macros as they are expanded
 % \tracintstats % positive if showing statistics about memory usage
