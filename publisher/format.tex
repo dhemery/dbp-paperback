@@ -20,48 +20,10 @@
 \outer\def\newskip#1{\global\skipdef#1=\nextskipregister \advance\nextskipregister by 1}
 \outer\def\newtoks#1{\global\toksdef#1=\nexttoksregister \advance\nexttoksregister by 1}
 
-\newdimen\leading
-
 \gdef\optionalwithdefault#1#2{\if\relax#1\relax#2\else#1\fi}
 \gdef\optionalwithprefix#1#2{\if\relax#2\relax\else#1#2\fi}
 \gdef\fontspec{\fontbasename\optionalwithprefix{-}{\fontshape}-\fontfigures\optionalwithprefix{-}{\fontvariant}-\fontencoding\optionalwithprefix{ at }{\fontsize\relax}}
 \gdef\fontshape{\optionalwithdefault{\fontweight\fontslant\fontopticalsize}{\fontdefaultshape}}
-
-% TODO: Define these
-\newcount\pageno \pageno=1
-
-\newdimen\normalbaselineskip \normalbaselineskip=15pt plus0pt minus0pt
-
-\newskip\bigskipsize \bigskipsize=12pt plus0pt minus0pt
-\newskip\medskipsize \medskipsize=6pt plus0pt minus0pt
-
-\newtoks\footline \footline={}
-\newtoks\headline \headline={}
-
-\def\advancepageno{\advance\pageno by 9}
-\def\break{\penalty-10000 }
-\def\bigskip{\vskip\bigskipsize}
-\def\centerline#1{\line{\hss#1\hss}}
-\def\medskip{\vskip\medskipsize}
-\def\eject{\par\penalty-10000}
-\def\folio{\the\pageno}
-\def\dots{...}
-\def\leftline#1{\line{#1\hss}}
-\def\line{\hbox to\hsize}
-\def\nobreak{\penalty10000 }
-\def\nointerlineskip{}
-\def\normalbaselines{}
-\def\pagebody{\vbox to\vsize{\boxmaxdepth=\maxdepth \pagecontents}}
-\def\pagecontents{\unvbox255}
-\def\offinterlineskip{}
-\def\raggedbottom{}
-\def\rightline#1{\line{\hss#1}}
-\def\thinspace{\hbox{ }}
-\def\'#1{{\accent"13 #1}}
-
-\chardef\$=`\$
-
-
 
 % Declare a new font family. This specifies the terms to
 % use to build file names for this font.
@@ -183,19 +145,11 @@
   \newstyle{runningheader}{\runningheaderfamily}{\runningheaderopticalsize}{osf}{\runningheadersize}%
 }
 
-\newdimen\leading
-
-% TODO: Move this elsewhere
-\leading=15pt
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Textblock Size and Position on the Page
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\pdfhorigin=0pt
-\pdfvorigin=0pt
 
 \newdimen\edgemargin
 \newdimen\spinemargin
@@ -210,25 +164,16 @@
 % spine margin for odd/right pages
 \def\leftmargin{\ifodd\pageno\edgemargin\else\spinemargin\fi}
 
-% TODO: Move these assignments elsewhere
-\pdfpagewidth=5 true in   % page width
-\pdfpageheight=8 true in  % page height
-\hsize=22pc               % textblock width
-\vsize=39pc               % textblock height
-\voffset=4.5pc            % top margin
-\setspinemargin{4.5pc}    % spine margin
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Output Routine
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\runningheadline{\line{}}
-\def\runningfootline{\line{}}
-\def\useclearedframethispage{\global\headline={\clearedheadline}\global\footline={\clearedfootline}}
-\def\usedisplayframethispage{\global\headline={\displayheadline}\global\footline={\displayfootline}}
-\def\userunningpageframe{\global\headline={\runningheadline}\global\footline={\runningfootline}}
+\newtoks\headline
+\newtoks\footline
+\newdimen\headlineskip % Distance from textblock first baseline to top of headline
+\newdimen\footlineskip % Distance from textblock last baseline to footline baseline
 
 % Write one page (headline, textblock, and footline).
 \def\facingpages{%
@@ -238,26 +183,24 @@
   \ifnum\outputpenalty>-20000 \else\dosupereject\fi%
 }
 
-\output{\facingpages}
+\def\pagebody{\vbox to\vsize{\unvbox255}}
 
-\newdimen\headlineskip
-
-% Position the headline 2 baselines above the textblock's first baseline.
-% TODO: ?? Make this a macro so that it can be called after
-% \runningheadersize and \leading are defined?
-\headlineskip=\topskip % skip to textblock's first baseline
-\advance\headlineskip by -2\leading % skip two lines above first baseline
-\advance\headlineskip by -\runningheadersize % skip up to make room for headline
-
-\def\makeheadline{\vbox to 0pt{\vskip\headlineskip\line{\the\headline}\vss\nointerlineskip}}
-% Write the footline 2 baselines below the textblock's last baseline.
-\def\makefootline{\baselineskip=2\leading\lineskiplimit=0pt\line{\the\footline}}
+\def\makeheadline{\vbox to 0pt{\positionheadline\line{\the\headline}\vss\nointerlineskip}}
+\def\makefootline{\positionfootline\line{\the\footline}}
+\def\positionheadline{\vskip-\headlineskip}
+\def\positionfootline{\baselineskip=\footlineskip\lineskiplimit=0pt}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Page Frame (Headline and Footline)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\runningheadline{\line{}}
+\def\runningfootline{\line{}}
+\def\useclearedframethispage{\global\headline={\clearedheadline}\global\footline={\clearedfootline}}
+\def\usedisplayframethispage{\global\headline={\displayheadline}\global\footline={\displayfootline}}
+\def\userunningpageframe{\global\headline={\runningheadline}\global\footline={\runningfootline}}
 
 % Running headline and footline for cleared pages
 % (pages begun by \nextpage, \nextoddpage, and \nextevenpage).
@@ -309,7 +252,19 @@
 \def\nextoddpage{\nextpage\onoddpage}
 \def\nextevenpage{\nextpage\ifodd\pageno \line{}\nextpage\else \fi}
 \def\onoddpage{\ifodd\pageno \else \line{}\nextpage\fi}
-\raggedbottom
+
+% Breaking pages
+\def\break{\penalty-10000 }
+\def\nobreak{\penalty10000 }
+\def\eject{\par\break}
+\def\raggedbottom{}
+
+% Page numbering
+\newcount\pagenoincrement
+\newcount\pageno
+
+\def\advancepageno{\global\advance\pageno by \pagenoincrement}
+\def\folio{\number\pageno}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -317,8 +272,8 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\def\frontmatter{\nextoddpage\pageno=-1\useemptypageframe}
-\def\mainmatter{\nextoddpage\pageno=1\usenormalpageframe}
+\def\frontmatter{\nextoddpage\global\pageno=-1\global\pagenoincrement=-1\useemptypageframe}
+\def\mainmatter{\nextoddpage\global\pageno=1\global\pagenoincrement=1\usenormalpageframe}
 \def\backmatter{\frontmatter}
 \def\endbook{\nextoddpage\end}
 
@@ -398,7 +353,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-% Paragraph Styles
+% Paragraphs
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -407,35 +362,58 @@
 \def\centered{\raggedleft\raggedright}
 \def\raggedspine{\ifodd\pageno\raggedleft\else\raggedright\fi}
 
-\def\authorinfoheading#1{\bigskip\bigskip{\sc\centered#1\par}}
-\def\authorinfoitem#1{\medskip{\centered#1\par}}
+\def\authorinfoheading#1{\skipline\skipline{\sc\centered#1\par}}
+\def\authorinfoitem#1{\skiphalfline{\centered#1\par}}
 \def\connect#1#2{\authorinfoheading{#1}\authorinfoitem{#2}}
 \def\genre#1{\authorinfoheading{#1}}
 \def\genrebook#1{\authorinfoitem{\emph{#1}}}
 
-\def\titleleading{\linespacing1}
+\def\leadin#1{\nobreak\noindent{\sc #1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Lines
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Spacing lines
+\newdimen\leading
+\newdimen\normalbaselineskip
 
 \def\linespacing#1{\baselineskip=#1\fontdimen6\the\font}
+\def\normalbaselines{}
+\def\nointerlineskip{}
+\def\offinterlineskip{}
+\def\titleleading{\linespacing1}
 
-% TODO Create macros to set these parameters up.
-\parindent=1em
-\normalbaselineskip=\leading
-\normalbaselines
-\emergencystretch=1.5em
+% Skipping lines
+\def\skipline{\vskip\leading plus0pt minus0pt}
+\def\skiphalfline{\vskip.5\leading plus0pt minus0pt}
+
+% Making single line boxes
+\def\line{\hbox to\hsize}
+\def\leftline#1{\line{#1\hss}}
+\def\centerline#1{\line{\hss#1\hss}}
+\def\rightline#1{\line{\hss#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
+% Characters
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Adding characters and spaces to lines
+\def\dots{...}
+\def\thinspace{\hbox{ }}
+\def\'#1{{\accent"13 #1}}
+\chardef\$=`\$
+\def\copyright{{\sym\char"A9}}
+
 % Character Styles
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % TODO: Make this handle nested emphasis.
 %       Or give a way to go back to roman.
 %       Or switch to {\rm ...} and {\it ...}.
 \def\emph#1{{\it #1\/}}
-\def\leadin#1{\nobreak\noindent{\sc #1}}
-
-\def\copyright{{\sym\char"A9}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -444,5 +422,50 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \gdef\definefontexpandability{\pdffontexpand\font 30 30 10 autoexpand}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Default Values
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% PDF
+\pdfhorigin=0pt
+\pdfvorigin=0pt
+
+% Paper
+\pdfpagewidth=5 true in   % width
+\pdfpageheight=8 true in  % height
+
+% Textblock
+\hsize=22pc               % width
+\vsize=39pc               % height
+\voffset=4.5pc            % top margin
+\setspinemargin{4.5pc}    % spine margin
+
+% Page
+\output{\facingpages}
+
+% Pages
+\pageno=1
+\pagenoincrement=1
+\raggedbottom
+
+% Paragraphs
+\parindent=1em
+\emergencystretch=1.5em
+
+% Lines
+\leading=15pt
+\normalbaselineskip=\leading
+\normalbaselines
+
+% Headline
+\headlineskip=2\leading % Two lines above first baseline
+
+% Footline
+\footlineskip=2\leading % two lines below the textblock's last baseline
+
+% Microtypography
 \pdfadjustspacing=2
 \pdfprotrudechars=2
