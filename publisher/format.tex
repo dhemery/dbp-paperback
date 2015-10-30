@@ -429,18 +429,18 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% PDF
-\pdfhorigin=0pt
-\pdfvorigin=0pt
+\newdimen\maxdimen \maxdimen=16383.99999pt
 
 % Paper
-\pdfpagewidth=5 true in   % width
-\pdfpageheight=8 true in  % height
+\pdfhorigin=0pt
+\pdfvorigin=0pt
+\pdfpagewidth=5 true in
+\pdfpageheight=8 true in
 
 % Textblock
-\hsize=22pc               % width
-\vsize=39pc               % height
-\voffset=4.5pc            % top margin
+\hsize=22pc               % line width in horizontal mode
+\vsize=39pc               % page height in vertical mode
+\voffset=4.5pc            % horizontal offeset in \shipout (top margin)
 \setspinemargin{4.5pc}    % spine margin
 
 % Page
@@ -452,8 +452,8 @@
 \raggedbottom
 
 % Paragraphs
-\parindent=1em
-\emergencystretch=1.5em
+\parindent=1em % width of \indent
+\emergencystretch=1.5em % reduces badness on final pass of line-breaking
 
 % Lines
 \leading=15pt
@@ -470,57 +470,110 @@
 \pdfadjustspacing=2
 \pdfprotrudechars=2
 
-% Stuff I don't understand yet
-
-% TeXbook page 347
-\newdimen\maxdimen \maxdimen=16383.99999pt
+% Integer parameters (TeXbook page 272)
+% \interlinepenalty % penalty for page break between lines
+% \floatingpenalty % penalty for insertions that are split
+% \outputpenalty % penalty at the current page break
+% \looseness % change to the number of lines in a paragraph
+% \pausing % positive if pausing after each line is read from a file
+% \holdinginserts % positive if insertions remain dormant in output box
+% \tracingonline % positive if showing diagnostic info on the terminal
+% \tracingmacros % positive if showing macros as they are expanded
+% \tracintstats % positive if showing statistics about memory usage
+% \tracingparagraphs % positive if showing line-break calculations
+% \tracingpages % positive if showing page-break calculations
+% \tracingoutput % positive if showing boxes that are shipped out
+% \tracingcommands % positive if showing commands before they are executed
+% \tracingrestores % positive if showing deassinments when groups end
+% \language % the current set of hyphenation rules
+% \lefthyphenmin % smellest fragment at beginning of hyphenated word
+% \righthyphenmin % smallest fragment at end of hyphenated word
+% \globaldefs % nonzero if overriding \global specifications
+% \escapechar % escape character in the out put of control sequence tokens
+% \endlinechar % character placed at the right end of an input line
+% \maxdeadcycles % upper bound on \deadcycles
+% \hangafter % hanging indentation changes after this many lines
+% \fam % the current family number
+% \mag % magnification ratio, times 1000
+% \time
+% \day
+% \month
+% \year
 
 % TeXbook page 348
-\pretolerance=100
-\tolerance=200
-\hbadness=1000
-\vbadness=1000
-\linepenalty=10
-\hyphenpenalty=50
-\exhyphenpenalty=50
-\binoppenalty=700
-\relpenalty=500
-\clubpenalty=150
-\widowpenalty=150
-\displaywidowpenalty=50
-\brokenpenalty=100
-\predisplaypenalty=10000
-\doublehyphendemerits=10000
-\finalhyphendemerits=5000
-\adjdemerits=10000
-\tracinglostchars=1
-\uchyph=1
-\delimiterfactor=901
-\defaulthyphenchar=`\-
-\defaultskewchar=-1
-\newlinechar=-1
-\showboxbreadth=5
-\showboxdepth=3
-\errorcontextlines=5
+\pretolerance=100 % badness tolerance before hyphenation
+\tolerance=200 % badness tolerance after hyphenation
+\hbadness=1000 % badness above which bad hboxes will be shown
+\vbadness=1000 % badness above which bad vboxes will be shown
+\linepenalty=10 % amount added to badness of every line in a paragraph
+\hyphenpenalty=50 % penalty for line break after discretionary hyphen
+\exhyphenpenalty=50 % penalty for like break after explicit hyphen
+\binoppenalty=700 % penalty for line break after binary operation
+\relpenalty=500 % penalty for line break after math relation
+\clubpenalty=150 % penalty for create a club line at bottom of page
+\widowpenalty=150 % penalty for creating a widow line at top of page
+\displaywidowpenalty=50 % ditto, before a display
+\brokenpenalty=100 % penalty for page break after a hyphenated line
+\predisplaypenalty=10000 % penalty for page break just before a display
+\doublehyphendemerits=10000 % demerits for consecutive broken lines
+\finalhyphendemerits=5000 % demerits for a penultimate broken line
+\adjdemerits=10000 % demerits for adjacent incompatible lines
+\tracinglostchars=1 % positive if showing characters not in the font
+\uchyph=1 % positive if hyphenating words beginning with capital letters
+\delimiterfactor=901 % ratio for variable delimiters, times 1000
+\defaulthyphenchar=`\- % \hyphencharacter value when a font is loaded
+\defaultskewchar=-1 % \skewchar value when a font is loaded
+\newlinechar=-1 % character that starts a new output line
+\showboxbreadth=5 % maximum items per level when boxes are shown
+\showboxdepth=3 % maximum level when boxes are shown
+\errorcontextlines=5 % maximum extra context shown when errors occur
 
-\hfuzz=0.1pt
-\vfuzz=0.1pt
-\overfullrule=5pt
-\maxdepth=4pt
-\splitmaxdepth=\maxdimen
-\boxmaxdepth=\maxdimen
-\delimitershortfall=5pt
-\nulldelimiterspace=1.2pt
-\scriptspace=0.5pt
+% dimen parameters (TeXbook page 374)
+\hfuzz=0.1pt % maximum overrun before overfull hbox messages occur
+\vfuzz=0.1pt % maximum overrun before overfull vbox messages occur
+\overfullrule=5pt % width of rules appended to overfull boxes
+\maxdepth=4pt % maximum depth of boxes on main pages
+\splitmaxdepth=\maxdimen % maximum depth of boxes on split pages
+\boxmaxdepth=\maxdimen % maximum depth of boxes on explicit pages
+% \lineskiplimit % threshold where \baselineskip changes to \lineskip
+\delimitershortfall=5pt % maximum space not covered by a delimiter
+\nulldelimiterspace=1.2pt % width of a null delimiter
+\scriptspace=0.5pt % extra space after a subscript or superscript
+% \mathsurround % kerning before and after math in text
+% \predisplaysize % length of text preceding a display
+% \displaywidth % length of a line for displayed equation
+% \displayindent % indentation of line for displayed equation
+% \hangindent % amount of hanging indentation
 
-\parskip=0pt plus 1pt
-\abovedisplayskip=12pt plus 3pt minus 9pt
-\abovedisplayshortskip=0pt plus 3pt
-\belowdisplayskip=12pt plus 3pt minus 9pt
-\belowdisplayshortskip=7pt plus 3pt minus 4pt
-\topskip=10pt
-\splittopskip=10pt
-\parfillskip=0pt plus 1fil
-\thinmuskip=3mu
-\medmuskip=4mu plus 2mu minus 4mu
-\thickmuskip=5mu plus 5mu
+% glue parameters (TeXbook page 374)
+% \baselineskip % desired glue between baselines
+% \lineskip % interline glue if \baselineskip isn't feasible
+\parskip=0pt plus 1pt % extra glue just above paragraphs
+\abovedisplayskip=12pt plus 3pt minus 9pt % extra glue just above displays
+\abovedisplayshortskip=0pt plus 3pt % ditto, following short lines
+\belowdisplayskip=12pt plus 3pt minus 9pt % extra glue just below displays
+\belowdisplayshortskip=7pt plus 3pt minus 4pt % ditto, following short lines
+% \leftskip % glue at left of justified lines
+% \rightskip % glue at right of justified lines
+\topskip=10pt % glue at top of main pages
+\splittopskip=10pt % glue at top of split pages
+% \tabskip % glue between aligned entries
+% \spaceskip % glue between words, if nonzero
+% \xspaceskip, % glue between sentences, if nonzero
+\parfillskip=0pt plus 1fil % additional rightskip at end of paragraphs
+
+% muglue parameters (TeXbook page 374)
+\thinmuskip=3mu % thin space in math formulas
+\medmuskip=4mu plus 2mu minus 4mu % medium space in math formulas
+\thickmuskip=5mu plus 5mu % thick space in math formulas
+
+% token list parameters (TeXbook page 375)
+% \output % the user's output routine
+% \everypar % tokens to insert when a paragraph begins
+% \everymath % tokens to insert when math in text begins
+% \everydisplay % tokens to insert when display math begins
+% \everyhbox % tokens to insert when an hbox begins
+% \everyvbox % tokens to insert when a vbox begins
+% \everyjob % tokens to insert when the job begins
+% \everycr % tokens to insert after every \cr or nonredundant \crcr
+% \errhelp % tokens that supplement an \errmessage
