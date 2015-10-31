@@ -1,0 +1,62 @@
+The utf8cseq.tex file
+maps the appropriate UTF-8 character sequences
+to these TeX control sequences.
+
+I must ensure that these are defined.
+
+The utf8cseq.tex file says these are defined
+in either plain.tex or t1macro.tex. But a few
+are defined in utf8seq.tex
+
+If a control sequence is defined in t1macro.tex,
+then it's in the T1 font encoding
+and there is nothing more for me to do.
+
+If a control sequence is defined in utf8cseq.tex,
+then it has some special meaning (not simply an
+output character). Anyway, there's nothing more
+for me to do.
+
+If a control sequence is defined in plain.tex,
+I will have to define it in my own format file,
+given that I am not using plain.tex.
+
+DONE: T1MACRO.TEX
+\clqq % double low-9 quotation mark
+\crqq % left double quotation mark
+\flqq % left-pointing double angle quotation mark
+\frqq % right-pointing double angle quotation mark
+\clq % single low-9 quotation mark
+\crq  % left single quotation mark
+\pound % pound sign
+
+TODO: T1MACRO.TEX
+\registered % registered TODO: Math mode. Is this in T1 or TS1?
+\trademark % TODO: Hand-alignment. Is this in T1 or TS1?
+\pipe % TODO: Hand-aligned. Is this in T1 or TS1?
+\promile % per mile sign TODO: Compound. Is this in T1 or TS1?
+
+TODO: PLAIN.TEX
+\aa % latin small letter a with ring above
+\AA % latin capital letter a with ring above
+\ae % latin small ligature ae
+\AE % latin capital ligature ae
+\copyright % copyright
+\dag % dagger
+\ddag % double dagger
+\dots % horizontal ellipsis
+\o % latin small letter o slash
+\O % latin capital letter o slash
+\oe % latin small ligature oe
+\OE % latin capital ligature oe
+\P % pilcrow sign
+\quad % em space
+\S % section sign
+\ss % latin small letter sharp s
+
+DONE: UTF8CSEQ.TEX
+\nbsp % no-break space
+\utfhyphen
+
+DONE: TEX PRIMITIVE
+\- % soft hyphen (actually a TeX primitive)

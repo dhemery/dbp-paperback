@@ -9,6 +9,13 @@
 \catcode`\~=13 % Tilde is active
 \catcode`\^^L=13 \outer\def\^^L{\par}   % Convert form feed to \par
 
+% utf8-t1 requires \bgroup and \loop
+\let\bgroup={ \let\egroup=}
+\def\loop#1\repeat{\def\body{#1}\iterate}
+\def\iterate{\body \let\next\iterate \else\let\next\relax\fi \next}
+\let\repeat=\fi
+\input utf8-t1
+
 \countdef\nextboxregister=20 \nextboxregister=10
 \countdef\nextcountregister=21 \nextcountregister=30
 \countdef\nextdimenregister=22 \nextdimenregister=10
