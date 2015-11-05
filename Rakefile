@@ -10,7 +10,7 @@ log_file = "#{slug}.log"
 task default: :show
 
 file pdf_file => tex_file do |t|
-  `pdftex -fmt #{fmt_name} #{tex_file}`
+  print %x{pdftex -fmt #{fmt_name} #{tex_file}}
 end
 
 desc 'Typeset the book as a PDF file'
