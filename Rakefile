@@ -7,18 +7,23 @@ tex_file = "#{slug}.tex"
 pdf_file = "#{slug}.pdf"
 log_file = "#{slug}.log"
 
-task default: :show
+task default: [:clean, :build, :show]
 
-file pdf_file => tex_file do |t|
-  print %x{pdftex -fmt #{fmt_name} #{tex_file}}
-end
+file pdf_file
 
 desc 'Typeset the book as a PDF file'
-task build: pdf_file
+task :build do
+  `pdftex -interaction=batchmode -fmt #{fmt_name} #{tex_file}`
+end
 
 desc 'Show the PDF file'
-task show: :build do
+task :show do
   `open #{pdf_file}`
+end
+
+desc 'Show the log file'
+task :log do
+  print `cat #{log_file}`
 end
 
 CLEAN << pdf_file
