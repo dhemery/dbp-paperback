@@ -7,7 +7,7 @@ tex_file = "#{slug}.tex"
 pdf_file = "#{slug}.pdf"
 log_file = "#{slug}.log"
 
-task default: [:clean, :build, :show]
+task default: [:clean, :build, :log, :show]
 
 file pdf_file
 
