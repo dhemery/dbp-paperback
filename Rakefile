@@ -1,6 +1,6 @@
 require 'rake/clean'
 
-slug = 'example'
+slug = 'book'
 fmt_name = 'dbp'
 
 tex_file = "#{slug}.tex"
