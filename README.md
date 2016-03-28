@@ -1,2 +1,5 @@
 # dbp-paperback
-TeX template to format [Driscoll Brook Press](Driscoll Brook Press) paperback front matter and back matter.
+Template to format [Driscoll Brook Press](Driscoll Brook Press) paperback front matter and back matter.
+
+All content © 2014—2016 Driscoll Brook Press.
+All rights reserved.
